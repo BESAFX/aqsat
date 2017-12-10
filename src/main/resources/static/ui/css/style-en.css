@@ -565,15 +565,15 @@ WebKit inertia scrolling is being added here for any present/future devices that
 *                                 *
 **********************************/
 .ui-select-bootstrap>.ui-select-match>.btn{
-    text-align: right!important;
+    text-align: left!important;
     padding: 10px!important;
 }
 .ui-select-bootstrap .ui-select-toggle>.caret{
-    left: 10px!important;
-    right:auto!important;
+    right: 10px!important;
+    left:auto!important;
 }
 .dropdown-menu{
-    text-align: right!important;
+    text-align: left!important;
 }
 /*********************************/
 

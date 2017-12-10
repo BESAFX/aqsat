@@ -50,9 +50,9 @@
                                                required=""
                                                disable-validation-message=""
                                                theme="bootstrap">
-                                        <ui-select-match placeholder="اختر العميل">
+                                        <ui-select-match placeholder="{{lang==='AR' ? 'اختر العميل...' : 'Select Customer...'}}">
                                             <span ng-if="contract.customer.id">
-                                                <span ng-if="lang==='AR'">[{{$select.selected.code}}] {{$select.selected.name}}</span>
+                                                <span>[{{$select.selected.code}}] {{$select.selected.name}}</span>
                                             </span>
                                         </ui-select-match>
                                         <ui-select-choices
@@ -85,9 +85,9 @@
                                                required=""
                                                disable-validation-message=""
                                                theme="bootstrap">
-                                        <ui-select-match placeholder="اختر التاجر">
+                                        <ui-select-match placeholder="{{lang==='AR' ? 'اختر التاجر...' : 'Select Seller Man...'}}">
                                             <span ng-if="contract.supplier.id">
-                                                <span ng-if="lang==='AR'">[{{$select.selected.code}}] {{$select.selected.name}}</span>
+                                                <span>[{{$select.selected.code}}] {{$select.selected.name}}</span>
                                             </span>
                                         </ui-select-match>
                                         <ui-select-choices

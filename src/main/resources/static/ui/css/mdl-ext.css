@@ -3149,7 +3149,7 @@ fieldset[disabled] .mdlext-selectfield .mdlext-selectfield__label,
   letter-spacing: normal;
   word-wrap: normal;
   white-space: nowrap;
-  direction: ltr;
+  /*direction: ltr;*/
   vertical-align: middle;
   -webkit-font-smoothing: antialiased;
   -webkit-font-feature-settings: 'liga';
@@ -3260,6 +3260,7 @@ fieldset[disabled] .mdlext-selectfield .mdlext-selectfield__label,
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 12px;
 }
 
 .mdlext-accordion__tab > *:first-child {
