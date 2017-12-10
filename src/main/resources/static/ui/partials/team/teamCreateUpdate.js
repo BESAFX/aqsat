@@ -118,20 +118,20 @@ app.controller('teamCreateUpdateCtrl', ['TeamService', '$scope', '$rootScope', '
             },
             {
                 id: 20,
-                name: $rootScope.lang === 'AR' ? 'إنشاء سندات القبض' : 'Create Receipt In',
-                value: 'ROLE_RECEIPT_IN_CREATE',
+                name: $rootScope.lang === 'AR' ? 'إنشاء سندات القبض' : 'Create Receipt',
+                value: 'ROLE_CONTRACT_RECEIPT_CREATE',
                 selected: false
             },
             {
                 id: 21,
-                name: $rootScope.lang === 'AR' ? 'تعديل بيانات سندات القبض' : 'Update Receipt In Information',
-                value: 'ROLE_RECEIPT_IN_UPDATE',
+                name: $rootScope.lang === 'AR' ? 'تعديل بيانات سندات القبض' : 'Update Receipt Information',
+                value: 'ROLE_CONTRACT_RECEIPT_UPDATE',
                 selected: false
             },
             {
                 id: 22,
-                name: $rootScope.lang === 'AR' ? 'حذف سندات القبض' : 'Delete Receipt In',
-                value: 'ROLE_RECEIPT_IN_DELETE',
+                name: $rootScope.lang === 'AR' ? 'حذف سندات القبض' : 'Delete Receipt',
+                value: 'ROLE_CONTRACT_RECEIPT_DELETE',
                 selected: false
             },
             {

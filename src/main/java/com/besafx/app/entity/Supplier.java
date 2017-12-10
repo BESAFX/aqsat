@@ -37,6 +37,8 @@ public class Supplier implements Serializable {
 
     private String mobile;
 
+    private String identityNumber;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date registerDate;
 

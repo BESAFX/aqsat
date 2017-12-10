@@ -1,8 +1,8 @@
 package com.besafx.app.entity.enums;
 
 public enum AqsatMethod {
-    Cash("شهري"),
-    Check("سنوي");
+    Monthly("شهري"),
+    Annual("سنوي");
     private String name;
 
     AqsatMethod(String name) {

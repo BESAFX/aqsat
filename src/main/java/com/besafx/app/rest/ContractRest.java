@@ -1,10 +1,11 @@
 package com.besafx.app.rest;
 
 import com.besafx.app.config.CustomException;
-import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Contract;
-import com.besafx.app.service.PersonService;
+import com.besafx.app.entity.Person;
+import com.besafx.app.search.ContractSearch;
 import com.besafx.app.service.ContractService;
+import com.besafx.app.service.PersonService;
 import com.besafx.app.util.JSONConverter;
 import com.besafx.app.util.Options;
 import com.besafx.app.ws.Notification;
@@ -19,12 +20,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -33,11 +32,14 @@ public class ContractRest {
 
     private final static Logger log = LoggerFactory.getLogger(ContractRest.class);
 
-    public static final String FILTER_TABLE = "**,customer[id,code,name],supplier[id,code,name],lastPerson[id,name]";
+    public static final String FILTER_TABLE = "**,-contractReceipts,customer[id,code,name],supplier[id,code,name],lastPerson[id,name]";
     public static final String FILTER_CONTRACT_COMBO = "id,code,name,mobile";
 
     @Autowired
     private ContractService contractService;
+
+    @Autowired
+    private ContractSearch contractSearch;
 
     @Autowired
     private PersonService personService;
@@ -60,7 +62,7 @@ public class ContractRest {
         contract.setLastPerson(caller);
         contract = contractService.save(contract);
         String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
-        notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم انشاء حساب التاجر بنجاح" : "Create Contract Account Successfully").type("success").icon("fa-plus-square").build(), principal.getName());
+        notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم انشاء حساب العقد بنجاح" : "Create Contract Account Successfully").type("success").icon("fa-plus-square").build(), principal.getName());
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contract);
     }
 
@@ -78,7 +80,7 @@ public class ContractRest {
             contract.setLastPerson(caller);
             contract = contractService.save(contract);
             String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
-            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم تعديل بيانات حساب التاجر بنجاح" : "Update Contract Account Information Successfully").type("warning").icon("fa-edit").build(), principal.getName());
+            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم تعديل بيانات حساب العقد بنجاح" : "Update Contract Account Information Successfully").type("warning").icon("fa-edit").build(), principal.getName());
             return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contract);
         } else {
             return null;
@@ -94,7 +96,7 @@ public class ContractRest {
             contractService.delete(id);
             Person caller = personService.findByEmail(principal.getName());
             String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
-            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم حذف حساب التاجر وكل ما يتعلق به من حسابات بنجاح" : "Delete Contract Account With All Related Successfully").type("error").icon("fa-trash").build(), principal.getName());
+            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم حذف حساب العقد وكل ما يتعلق به من حسابات بنجاح" : "Delete Contract Account With All Related Successfully").type("error").icon("fa-trash").build(), principal.getName());
         }
     }
 
@@ -118,5 +120,59 @@ public class ContractRest {
     @ResponseBody
     public String findOne(@PathVariable Long id) {
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractService.findOne(id));
+    }
+
+    @RequestMapping(value = "filter", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String filter(
+            @RequestParam(value = "code", required = false) final Long code,
+            @RequestParam(value = "registerDateFrom", required = false) final Long registerDateFrom,
+            @RequestParam(value = "registerDateTo", required = false) final Long registerDateTo,
+            @RequestParam(value = "amountFrom", required = false) final Double amountFrom,
+            @RequestParam(value = "amountTo", required = false) final Double amountTo,
+            @RequestParam(value = "customerName", required = false) final String customerName,
+            @RequestParam(value = "customerMobile", required = false) final String customerMobile,
+            @RequestParam(value = "customerIdentityNumber", required = false) final String customerIdentityNumber,
+            @RequestParam(value = "supplierName", required = false) final String supplierName,
+            @RequestParam(value = "supplierMobile", required = false) final String supplierMobile,
+            @RequestParam(value = "supplierIdentityNumber", required = false) final String supplierIdentityNumber) {
+        List<Contract> list = contractSearch.filter(
+                code,
+                registerDateFrom,
+                registerDateTo,
+                amountFrom,
+                amountTo,
+                customerName,
+                customerMobile,
+                customerIdentityNumber,
+                supplierName,
+                supplierMobile,
+                supplierIdentityNumber
+        );
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), list);
+    }
+
+    @RequestMapping(value = "findByToday", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String findByToday() {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractSearch.findByToday());
+    }
+
+    @RequestMapping(value = "findByWeek", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String findByWeek() {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractSearch.findByWeek());
+    }
+
+    @RequestMapping(value = "findByMonth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String findByMonth() {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractSearch.findByMonth());
+    }
+
+    @RequestMapping(value = "findByYear", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String findByYear() {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractSearch.findByYear());
     }
 }

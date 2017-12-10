@@ -34,9 +34,9 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="form-group row">
 
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <label for="name" class="control-label">
                                         <span ng-if="lang==='AR'">الاسم كاملاً</span>
                                         <span ng-if="lang==='EN'">Name</span>
@@ -51,7 +51,7 @@
                                            ng-model="supplier.name">
                                 </div>
 
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <label for="mobile" class="control-label">
                                         <span ng-if="lang==='AR'">الجوال</span>
                                         <span ng-if="lang==='EN'">Mobile</span>
@@ -65,7 +65,25 @@
                                            ng-model="supplier.mobile">
                                 </div>
 
-                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                            </div>
+
+                            <div class="form-group row">
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="identityNumber" class="control-label">
+                                        <span ng-if="lang==='AR'">رقم البطاقة</span>
+                                        <span ng-if="lang==='EN'">Identity Card Number</span>
+                                    </label>
+                                    <input id="identityNumber"
+                                           type="text"
+                                           required="required"
+                                           disable-validation-message=""
+                                           class="form-control"
+                                           placeholder="{{lang==='AR' ? 'اذكر رقم الجوال...' : 'Type Person Mobile...'}}"
+                                           ng-model="supplier.identityNumber">
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
 
                                     <label for="email" class="control-label">
                                         <span ng-if="lang==='AR'">البريد الإلكتروني</span>

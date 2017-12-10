@@ -46,12 +46,12 @@
                                         </a>
                                     </label>
                                     <ui-select id="customer"
-                                               ng-model="contract.customer"
+                                               ng-model="contractReceipt.customer"
                                                required=""
                                                disable-validation-message=""
                                                theme="bootstrap">
                                         <ui-select-match placeholder="اختر العميل">
-                                            <span ng-if="contract.customer.id">
+                                            <span ng-if="contractReceipt.customer.id">
                                                 <span ng-if="lang==='AR'">[{{$select.selected.code}}] {{$select.selected.name}}</span>
                                             </span>
                                         </ui-select-match>
@@ -81,12 +81,12 @@
                                         </a>
                                     </label>
                                     <ui-select id="seller"
-                                               ng-model="contract.supplier"
+                                               ng-model="contractReceipt.supplier"
                                                required=""
                                                disable-validation-message=""
                                                theme="bootstrap">
                                         <ui-select-match placeholder="اختر التاجر">
-                                            <span ng-if="contract.supplier.id">
+                                            <span ng-if="contractReceipt.supplier.id">
                                                 <span ng-if="lang==='AR'">[{{$select.selected.code}}] {{$select.selected.name}}</span>
                                             </span>
                                         </ui-select-match>
@@ -112,15 +112,15 @@
 
                                 <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="dateType==='H'">
                                     <label for="registerDate" class="control-label">
-                                        <span ng-if="lang==='AR'">تاريخ العقد</span>
-                                        <span ng-if="lang==='EN'">Contract Date</span>
+                                        <span ng-if="lang==='AR'">تاريخ السند</span>
+                                        <span ng-if="lang==='EN'">ContractReceipt Date</span>
                                     </label>
                                     <div dir="ltr" class="input-group">
                                         <input dir="rtl"
                                                id="registerDate"
                                                type="text"
                                                class="form-control is-calendarPicker"
-                                               ng-model="contract.registerDate"
+                                               ng-model="contractReceipt.registerDate"
                                                calendarType="ummalqura"
                                                language="en"
                                                dateFormat="yyyy/mm/dd"
@@ -132,14 +132,14 @@
 
                                 <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="dateType==='G'">
                                     <label for="G-registerDate" class="control-label">
-                                        <span ng-if="lang==='AR'">تاريخ العقد</span>
-                                        <span ng-if="lang==='EN'">Contract Date</span>
+                                        <span ng-if="lang==='AR'">تاريخ السند</span>
+                                        <span ng-if="lang==='EN'">ContractReceipt Date</span>
                                     </label>
                                     <input id="G-registerDate"
                                            class="form-control "
                                            type="date"
                                            name="input"
-                                           ng-model="contract.registerDate"
+                                           ng-model="contractReceipt.registerDate"
                                            placeholder="yyyy-MM-dd"
                                            min="2017-01-01"
                                            max="2030-12-31"/>
@@ -155,7 +155,7 @@
                                                id="startPaymentDate"
                                                type="text"
                                                class="form-control is-calendarPicker"
-                                               ng-model="contract.startPaymentDate"
+                                               ng-model="contractReceipt.startPaymentDate"
                                                calendarType="ummalqura"
                                                language="en"
                                                dateFormat="yyyy/mm/dd"
@@ -174,7 +174,7 @@
                                            class="form-control "
                                            type="date"
                                            name="input"
-                                           ng-model="contract.startPaymentDate"
+                                           ng-model="contractReceipt.startPaymentDate"
                                            placeholder="yyyy-MM-dd"
                                            min="2017-01-01"
                                            max="2030-12-31"/>
@@ -193,7 +193,7 @@
                                             class="form-control"
                                             required="required"
                                             disable-validation-message=""
-                                            ng-model="contract.aqsatMethod">
+                                            ng-model="contractReceipt.aqsatMethod">
                                         <option ng-if="lang==='AR'" value="Monthly">شهري</option>
                                         <option ng-if="lang==='EN'" value="Monthly">Monthly</option>
                                         <option ng-if="lang==='AR'" value="Annual">سنوي</option>
@@ -203,8 +203,8 @@
 
                                 <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <label for="amount" class="control-label">
-                                        <span ng-if="lang==='AR'">قيمة العقد</span>
-                                        <span ng-if="lang==='EN'">Contract Amount</span>
+                                        <span ng-if="lang==='AR'">قيمة السند</span>
+                                        <span ng-if="lang==='EN'">ContractReceipt Amount</span>
                                     </label>
                                     <div dir="ltr" class="input-group" id="amount">
                                         <span class="input-group-addon">SAR</span>
@@ -214,7 +214,7 @@
                                                required="required"
                                                disable-validation-message=""
                                                class="form-control "
-                                               ng-model="contract.amount">
+                                               ng-model="contractReceipt.amount">
                                     </div>
                                 </div>
 

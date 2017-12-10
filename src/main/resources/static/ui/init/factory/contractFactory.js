@@ -28,6 +28,31 @@ app.factory("ContractService",
                 return $http.put("/api/contract/update", contract).then(function (response) {
                     return response.data;
                 });
+            },
+            filter: function (search) {
+                return $http.get("/api/contract/filter?" + search).then(function (response) {
+                    return response.data;
+                });
+            },
+            findByToday: function () {
+                return $http.get("/api/contract/findByToday").then(function (response) {
+                    return response.data;
+                });
+            },
+            findByWeek: function () {
+                return $http.get("/api/contract/findByWeek").then(function (response) {
+                    return response.data;
+                });
+            },
+            findByMonth: function () {
+                return $http.get("/api/contract/findByMonth").then(function (response) {
+                    return response.data;
+                });
+            },
+            findByYear: function () {
+                return $http.get("/api/contract/findByYear").then(function (response) {
+                    return response.data;
+                });
             }
         };
     }]);

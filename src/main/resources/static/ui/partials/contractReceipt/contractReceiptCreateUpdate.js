@@ -1,7 +1,7 @@
-app.controller('contractCreateUpdateCtrl', ['ContractService', 'CustomerService', 'SupplierService', 'ModalProvider', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'title', 'action', 'contract',
-    function (ContractService, CustomerService, SupplierService, ModalProvider, $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, contract) {
+app.controller('contractReceiptCreateUpdateCtrl', ['ContractReceiptService', 'CustomerService', 'SupplierService', 'ModalProvider', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'title', 'action', 'contractReceipt',
+    function (ContractReceiptService, CustomerService, SupplierService, ModalProvider, $scope, $rootScope, $timeout, $log, $uibModalInstance, title, action, contractReceipt) {
 
-        $scope.contract = contract;
+        $scope.contractReceipt = contractReceipt;
 
         $scope.title = title;
 
@@ -39,13 +39,13 @@ app.controller('contractCreateUpdateCtrl', ['ContractService', 'CustomerService'
         $scope.submit = function () {
             switch ($scope.action) {
                 case 'create' :
-                    ContractService.create($scope.contract).then(function (data) {
+                    ContractReceiptService.create($scope.contractReceipt).then(function (data) {
                         $uibModalInstance.close(data);
                     });
                     break;
                 case 'update' :
-                    ContractService.update($scope.contract).then(function (data) {
-                        $scope.contract = data;
+                    ContractReceiptService.update($scope.contractReceipt).then(function (data) {
+                        $scope.contractReceipt = data;
                     });
                     break;
             }

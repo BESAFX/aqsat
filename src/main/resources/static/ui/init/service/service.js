@@ -83,7 +83,6 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
             controller: 'supplierCreateUpdateCtrl',
             backdrop: 'static',
             keyboard: false,
-            size: 'lg',
             resolve: {
                 title: function () {
                     return $rootScope.lang === 'AR' ? 'انشاء حساب تاجر جديد' : 'New Supplier';
@@ -107,7 +106,6 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
             controller: 'supplierCreateUpdateCtrl',
             backdrop: 'static',
             keyboard: false,
-            size: 'lg',
             resolve: {
                 title: function () {
                     return $rootScope.lang === 'AR' ? 'تعديل حساب تاجر' : 'Update Supplier Information';
@@ -139,7 +137,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
             size: 'lg',
             resolve: {
                 title: function () {
-                    return $rootScope.lang === 'AR' ? 'انشاء حساب تاجر جديد' : 'New Contract';
+                    return $rootScope.lang === 'AR' ? 'انشاء عقد جديد' : 'New Contract';
                 },
                 action: function () {
                     return 'create';
@@ -163,7 +161,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
             size: 'lg',
             resolve: {
                 title: function () {
-                    return $rootScope.lang === 'AR' ? 'تعديل حساب تاجر' : 'Update Contract Information';
+                    return $rootScope.lang === 'AR' ? 'تعديل عقد' : 'Update Contract Information';
                 },
                 action: function () {
                     return 'update';
@@ -172,6 +170,41 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
                     return contract;
                 }
             }
+        });
+    };
+
+    this.openContractReceiptCreateInnerModel = function (contract) {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: '/ui/partials/contract/contractReceiptCreate.html',
+            controller: 'contractReceiptCreateCtrl',
+            backdrop: 'static',
+            keyboard: false,
+            resolve: {
+                contract: function () {
+                    return contract;
+                }
+            }
+        });
+    };
+
+    /**************************************************************
+     *                                                            *
+     * ContractReceipt Model                                      *
+     *                                                            *
+     *************************************************************/
+    this.openContractReceiptCreateModel = function () {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: '/ui/partials/contractReceipt/contractReceiptCreateUpdate.html',
+            controller: 'contractReceiptCreateUpdateCtrl',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'lg'
         });
     };
 

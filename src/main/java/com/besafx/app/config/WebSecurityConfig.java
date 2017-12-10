@@ -57,17 +57,17 @@ WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/**").permitAll()
                 .antMatchers("/company").access("hasRole('ROLE_COMPANY_UPDATE')")
 
-                .antMatchers("/employee").denyAll()
-                .antMatchers("/customer").denyAll()
-                .antMatchers("/receipt").denyAll()
 
+                .antMatchers("/employee").denyAll()
                 .antMatchers("/employee/list")
                 .access("hasRole('ROLE_EMPLOYEE_READ') or hasRole('ROLE_EMPLOYEE_CREATE') or hasRole('ROLE_EMPLOYEE_UPDATE') or hasRole('ROLE_EMPLOYEE_DELETE')")
 
+                .antMatchers("/customer").denyAll()
                 .antMatchers("/customer/list", "/customer/details")
                 .access("hasRole('ROLE_CUSTOMER_READ') or hasRole('ROLE_CUSTOMER_CREATE') or hasRole('ROLE_CUSTOMER_UPDATE') or hasRole('ROLE_CUSTOMER_DELETE')")
 
                 .antMatchers("/contract").access("hasRole('ROLE_CONTRACT_READ') or hasRole('ROLE_CONTRACT_CREATE') or hasRole('ROLE_CONTRACT_UPDATE') or hasRole('ROLE_CONTRACT_DELETE')")
+                .antMatchers("/contractReceipt").access("hasRole('ROLE_CONTRACT_RECEIPT_READ') or hasRole('ROLE_CONTRACT_RECEIPT_CREATE') or hasRole('ROLE_CONTRACT_RECEIPT_UPDATE') or hasRole('ROLE_CONTRACT_RECEIPT_DELETE')")
                 .antMatchers("/supplier").access("hasRole('ROLE_SUPPLIER_READ') or hasRole('ROLE_SUPPLIER_CREATE') or hasRole('ROLE_SUPPLIER_UPDATE') or hasRole('ROLE_SUPPLIER_DELETE')")
                 .antMatchers("/team").access("hasRole('ROLE_TEAM_READ') or hasRole('ROLE_TEAM_CREATE') or hasRole('ROLE_TEAM_UPDATE') or hasRole('ROLE_TEAM_DELETE')")
                 .anyRequest().authenticated();

@@ -200,63 +200,17 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$cssPr
 
         /**************************************************************
          *                                                            *
-         * Receipt State                                              *
+         * ContractReceipt State                                      *
          *                                                            *
          *************************************************************/
-        $stateProvider.state("receipt", {
-            url: "/receipt",
-            templateUrl: "/ui/partials/receipt/receipt.html",
-            controller: "receiptCtrl",
-            controllerAs: "receiptCtrl"
-        });
-
-        $stateProvider.state("receipt.in", {
-            url: "/in",
+        $stateProvider.state("contractReceipt", {
+            url: "/contractReceipt",
             css: [
-                '/ui/css/mdl-style-indigo-pink.css',
-                '/ui/css/mdl-ext.css',
+                '/ui/css/mdl-style-red-deep_orange.css',
                 '/ui/css/theme-black.css'
             ],
-            views:{
-                'body@receipt':{
-                    templateUrl: "/ui/partials/receipt/in/in.html"
-                },
-                'options@receipt':{
-                    templateUrl: "/ui/partials/receipt/in/inOptions.html"
-                }
-            }
-        });
-
-        $stateProvider.state("receipt.out", {
-            url: "/out",
-            css: [
-                '/ui/css/mdl-style-light_green-lime.css',
-                '/ui/css/theme-black.css'
-            ],
-            views:{
-                'body@receipt':{
-                    templateUrl: "/ui/partials/receipt/out/out.html"
-                },
-                'options@receipt':{
-                    templateUrl: "/ui/partials/receipt/out/outOptions.html"
-                }
-            }
-        });
-
-        $stateProvider.state("receipt.term", {
-            url: "/term",
-            css: [
-                '/ui/css/mdl-style-lime-orange.css',
-                '/ui/css/theme-black.css'
-            ],
-            views:{
-                'body@receipt':{
-                    templateUrl: "/ui/partials/receipt/term/term.html"
-                },
-                'options@receipt':{
-                    templateUrl: "/ui/partials/receipt/term/termOptions.html"
-                }
-            }
+            templateUrl: "/ui/partials/contractReceipt/contractReceipt.html",
+            controller: "contractReceiptCtrl"
         });
 
         /**************************************************************
@@ -268,6 +222,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$cssPr
             url: "/contract",
             css: [
                 '/ui/css/mdl-style-red-deep_orange.css',
+                '/ui/css/mdl-ext.css',
                 '/ui/css/theme-black.css'
             ],
             templateUrl: "/ui/partials/contract/contract.html",

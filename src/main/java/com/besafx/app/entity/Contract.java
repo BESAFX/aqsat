@@ -10,7 +10,10 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -69,6 +72,9 @@ public class Contract implements Serializable {
     @JoinColumn(name = "lastPerson")
     private Person lastPerson;
 
+    @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY)
+    private List<ContractReceipt> contractReceipts = new ArrayList<>();
+
     @JsonCreator
     public static Contract Create(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -81,6 +87,28 @@ public class Contract implements Serializable {
             return this.aqsatMethod.getName();
         } catch (Exception ex) {
             return "";
+        }
+    }
+
+    public Double getPaid() {
+        try {
+            return this.contractReceipts.stream()
+                    .map(ContractReceipt::getReceipt)
+                    .collect(Collectors.toList())
+                    .stream()
+                    .mapToDouble(Receipt::getAmountNumber)
+                    .sum();
+
+        } catch (Exception ex) {
+            return 0.0;
+        }
+    }
+
+    public Double getRemain() {
+        try {
+            return this.getAmount() - this.getPaid();
+        } catch (Exception ex) {
+            return 0.0;
         }
     }
 }

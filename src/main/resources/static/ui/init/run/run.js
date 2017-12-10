@@ -52,21 +52,13 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                     break;
                 }
                 case 'employee':
-                case 'employee.list':
-                case 'employee.vacationType':
-                case 'employee.vacation':
-                case 'employee.deductionType':
-                case 'employee.deduction':
-                case 'employee.salary': {
+                case 'employee.list': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'person_pin_circle';
                     $rootScope.applyCssLang();
                     break;
                 }
-                case 'receipt':
-                case 'receipt.in':
-                case 'receipt.out':
-                case 'receipt.term': {
+                case 'contractReceipt': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'attach_money';
                     $rootScope.applyCssLang();
@@ -204,21 +196,13 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                         break;
                     case 'employee':
                     case 'employee.list':
-                    case 'employee.vacationType':
-                    case 'employee.vacation':
-                    case 'employee.deductionType':
-                    case 'employee.deduction':
-                    case 'employee.salary':
                         if ($rootScope.lang === 'AR') {
                             $rootScope.pageTitle = 'الموظفون';
                         } else {
                             $rootScope.pageTitle = 'Employees';
                         }
                         break;
-                    case 'receipt':
-                    case 'receipt.in':
-                    case 'receipt.out':
-                    case 'receipt.term':
+                    case 'contractReceipt':
                         if ($rootScope.lang === 'AR') {
                             $rootScope.pageTitle = 'السندات';
                         } else {
