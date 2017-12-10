@@ -261,6 +261,21 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$cssPr
 
         /**************************************************************
          *                                                            *
+         * Contract State                                             *
+         *                                                            *
+         *************************************************************/
+        $stateProvider.state("contract", {
+            url: "/contract",
+            css: [
+                '/ui/css/mdl-style-red-deep_orange.css',
+                '/ui/css/theme-black.css'
+            ],
+            templateUrl: "/ui/partials/contract/contract.html",
+            controller: "contractCtrl"
+        });
+
+        /**************************************************************
+         *                                                            *
          * Team State                                                 *
          *                                                            *
          *************************************************************/

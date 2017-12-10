@@ -133,7 +133,26 @@ app.controller('teamCreateUpdateCtrl', ['TeamService', '$scope', '$rootScope', '
                 name: $rootScope.lang === 'AR' ? 'حذف سندات القبض' : 'Delete Receipt In',
                 value: 'ROLE_RECEIPT_IN_DELETE',
                 selected: false
+            },
+            {
+                id: 23,
+                name: $rootScope.lang === 'AR' ? 'إنشاء العقود' : 'Create Contracts',
+                value: 'ROLE_CONTRACT_CREATE',
+                selected: false
+            },
+            {
+                id: 24,
+                name: $rootScope.lang === 'AR' ? 'تعديل بيانات العقود' : 'Update Contracts Information',
+                value: 'ROLE_CONTRACT_UPDATE',
+                selected: false
+            },
+            {
+                id: 25,
+                name: $rootScope.lang === 'AR' ? 'حذف العقود' : 'Delete Contracts',
+                value: 'ROLE_CONTRACT_DELETE',
+                selected: false
             }
+
         ];
 
 

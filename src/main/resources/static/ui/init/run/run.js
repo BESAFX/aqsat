@@ -45,6 +45,12 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                     $rootScope.applyCssLang();
                     break;
                 }
+                case 'contract': {
+                    $rootScope.applyTitleLang();
+                    $rootScope.MDLIcon = 'import_contacts';
+                    $rootScope.applyCssLang();
+                    break;
+                }
                 case 'employee':
                 case 'employee.list':
                 case 'employee.vacationType':
@@ -187,6 +193,13 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                             $rootScope.pageTitle = 'التجار';
                         } else {
                             $rootScope.pageTitle = 'Sellers';
+                        }
+                        break;
+                    case 'contract':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'العقود';
+                        } else {
+                            $rootScope.pageTitle = 'Contract';
                         }
                         break;
                     case 'employee':

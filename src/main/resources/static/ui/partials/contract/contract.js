@@ -25,7 +25,7 @@ app.controller("contractCtrl", ['ContractService', 'ModalProvider', '$scope', '$
 
         $scope.delete = function (contract) {
             if (contract) {
-                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف التاجر وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
+                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف العقد وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
                     ContractService.remove(contract.id).then(function () {
                         var index = $scope.contracts.indexOf(contract);
                         $scope.contracts.splice(index, 1);
@@ -35,7 +35,7 @@ app.controller("contractCtrl", ['ContractService', 'ModalProvider', '$scope', '$
                 return;
             }
 
-            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف التاجر وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
+            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف العقد وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
                 ContractService.remove($scope.selected.id).then(function () {
                     var index = $scope.contracts.indexOf($scope.selected);
                     $scope.contracts.splice(index, 1);
@@ -64,7 +64,7 @@ app.controller("contractCtrl", ['ContractService', 'ModalProvider', '$scope', '$
                 }
             },
             {
-                html: '<div class="drop-menu">تعديل بيانات التاجر<span class="fa fa-edit fa-lg"></span></div>',
+                html: '<div class="drop-menu">تعديل بيانات العقد<span class="fa fa-edit fa-lg"></span></div>',
                 enabled: function () {
                     return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_CONTRACT_UPDATE']);
                 },
@@ -73,7 +73,7 @@ app.controller("contractCtrl", ['ContractService', 'ModalProvider', '$scope', '$
                 }
             },
             {
-                html: '<div class="drop-menu">حذف التاجر<span class="fa fa-trash fa-lg"></span></div>',
+                html: '<div class="drop-menu">حذف العقد<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
                     return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_CONTRACT_DELETE']);
                 },
@@ -84,7 +84,6 @@ app.controller("contractCtrl", ['ContractService', 'ModalProvider', '$scope', '$
         ];
 
         $timeout(function () {
-            $scope.fetchTableData();
             window.componentHandler.upgradeAllRegistered();
         }, 1500);
 

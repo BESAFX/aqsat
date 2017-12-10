@@ -1,17 +1,4 @@
-app.controller("reportCtrl", ['DrugService', '$rootScope', '$scope', '$timeout',
-    function (DrugService, $rootScope, $scope, $timeout) {
-
-    $scope.printDrugsList = function () {
-        $rootScope.showConfirmNotify("التقارير", "هل تود طباعة التقرير ؟", "notification", "fa-info", function () {
-            DrugService.findAll().then(function (data) {
-                var ids = [];
-                angular.forEach(data, function (drug) {
-                    ids.push(drug.id);
-                });
-                window.open('/report/drugs?ids=' + ids + "&exportType=PDF");
-            });
-        });
-    };
+app.controller("reportCtrl", ['$rootScope', '$scope', '$timeout', function ($rootScope, $scope, $timeout) {
 
     $timeout(function () {
         window.componentHandler.upgradeAllRegistered();

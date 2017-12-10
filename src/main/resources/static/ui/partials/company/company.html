@@ -4,6 +4,7 @@
      ng-class="{'mdl-layout--fixed-drawer' : stickSideMenu===true}">
 
     <header class="mdl-layout__header">
+
         <div class="mdl-layout__header-row">
 
             <div class="mdl-layout-icon">
@@ -113,6 +114,7 @@
             </ul>
 
         </div>
+
     </header>
 
     <div class="mdl-layout__drawer">
@@ -274,6 +276,15 @@
                     <i class="material-icons mdl-list__item-icon">store</i>
                     <span ng-if="lang==='AR'">التجار</span>
                     <span ng-if="lang==='EN'">SELLERS</span>
+                </span>
+                </a>
+                <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
+                   href="" ui-sref="contract" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
+                   ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_CREATE', 'ROLE_CONTRACT_UPDATE', 'ROLE_CONTRACT_DELETE'])">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-icon">store</i>
+                    <span ng-if="lang==='AR'">العقود</span>
+                    <span ng-if="lang==='EN'">CONTRACTS</span>
                 </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
