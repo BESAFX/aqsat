@@ -88,31 +88,31 @@ app.controller('teamCreateUpdateCtrl', ['TeamService', '$scope', '$rootScope', '
             },
             {
                 id: 15,
-                name: $rootScope.lang === 'AR' ? 'إنشاء حسابات الموردين' : 'Create Supplier',
+                name: $rootScope.lang === 'AR' ? 'إنشاء حسابات التجار' : 'Create Supplier',
                 value: 'ROLE_SUPPLIER_CREATE',
                 selected: false
             },
             {
                 id: 16,
-                name: $rootScope.lang === 'AR' ? 'تعديل بيانات حسابات الموردين' : 'Update Supplier Information',
+                name: $rootScope.lang === 'AR' ? 'تعديل بيانات حسابات التجار' : 'Update Supplier Information',
                 value: 'ROLE_SUPPLIER_UPDATE',
                 selected: false
             },
             {
                 id: 17,
-                name: $rootScope.lang === 'AR' ? 'حذف حسابات الموردين' : 'Delete Supplier',
+                name: $rootScope.lang === 'AR' ? 'حذف حسابات التجار' : 'Delete Supplier',
                 value: 'ROLE_SUPPLIER_DELETE',
                 selected: false
             },
             {
                 id: 18,
-                name: $rootScope.lang === 'AR' ? 'تفعيل حسابات الموردين' : 'Enable Supplier',
+                name: $rootScope.lang === 'AR' ? 'تفعيل حسابات التجار' : 'Enable Supplier',
                 value: 'ROLE_SUPPLIER_ENABLE',
                 selected: false
             },
             {
                 id: 19,
-                name: $rootScope.lang === 'AR' ? 'تعطيل حسابات الموردين' : 'Disable Supplier',
+                name: $rootScope.lang === 'AR' ? 'تعطيل حسابات التجار' : 'Disable Supplier',
                 value: 'ROLE_SUPPLIER_DISABLE',
                 selected: false
             },

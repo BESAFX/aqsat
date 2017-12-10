@@ -86,7 +86,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
             size: 'lg',
             resolve: {
                 title: function () {
-                    return $rootScope.lang === 'AR' ? 'انشاء حساب مورد جديد' : 'New Supplier';
+                    return $rootScope.lang === 'AR' ? 'انشاء حساب تاجر جديد' : 'New Supplier';
                 },
                 action: function () {
                     return 'create';
@@ -110,13 +110,66 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
             size: 'lg',
             resolve: {
                 title: function () {
-                    return $rootScope.lang === 'AR' ? 'تعديل حساب مورد' : 'Update Supplier Information';
+                    return $rootScope.lang === 'AR' ? 'تعديل حساب تاجر' : 'Update Supplier Information';
                 },
                 action: function () {
                     return 'update';
                 },
                 supplier: function () {
                     return supplier;
+                }
+            }
+        });
+    };
+
+    /**************************************************************
+     *                                                            *
+     * Contract Model                                             *
+     *                                                            *
+     *************************************************************/
+    this.openContractCreateModel = function () {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: '/ui/partials/contract/contractCreateUpdate.html',
+            controller: 'contractCreateUpdateCtrl',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'lg',
+            resolve: {
+                title: function () {
+                    return $rootScope.lang === 'AR' ? 'انشاء حساب تاجر جديد' : 'New Contract';
+                },
+                action: function () {
+                    return 'create';
+                },
+                contract: function () {
+                    return {};
+                }
+            }
+        });
+    };
+
+    this.openContractUpdateModel = function (contract) {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: '/ui/partials/contract/contractCreateUpdate.html',
+            controller: 'contractCreateUpdateCtrl',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'lg',
+            resolve: {
+                title: function () {
+                    return $rootScope.lang === 'AR' ? 'تعديل حساب تاجر' : 'Update Contract Information';
+                },
+                action: function () {
+                    return 'update';
+                },
+                contract: function () {
+                    return contract;
                 }
             }
         });

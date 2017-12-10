@@ -67,6 +67,7 @@ WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/customer/list", "/customer/details")
                 .access("hasRole('ROLE_CUSTOMER_READ') or hasRole('ROLE_CUSTOMER_CREATE') or hasRole('ROLE_CUSTOMER_UPDATE') or hasRole('ROLE_CUSTOMER_DELETE')")
 
+                .antMatchers("/contract").access("hasRole('ROLE_CONTRACT_READ') or hasRole('ROLE_CONTRACT_CREATE') or hasRole('ROLE_CONTRACT_UPDATE') or hasRole('ROLE_CONTRACT_DELETE')")
                 .antMatchers("/supplier").access("hasRole('ROLE_SUPPLIER_READ') or hasRole('ROLE_SUPPLIER_CREATE') or hasRole('ROLE_SUPPLIER_UPDATE') or hasRole('ROLE_SUPPLIER_DELETE')")
                 .antMatchers("/team").access("hasRole('ROLE_TEAM_READ') or hasRole('ROLE_TEAM_CREATE') or hasRole('ROLE_TEAM_UPDATE') or hasRole('ROLE_TEAM_DELETE')")
                 .anyRequest().authenticated();

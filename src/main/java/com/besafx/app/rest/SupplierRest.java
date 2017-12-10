@@ -59,7 +59,7 @@ public class SupplierRest {
         supplier = supplierService.save(supplier);
         Person caller = personService.findByEmail(principal.getName());
         String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
-        notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم انشاء حساب المورد بنجاح" : "Create Supplier Account Successfully").type("success").icon("fa-plus-square").build(), principal.getName());
+        notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم انشاء حساب التاجر بنجاح" : "Create Supplier Account Successfully").type("success").icon("fa-plus-square").build(), principal.getName());
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), supplier);
     }
 
@@ -75,7 +75,7 @@ public class SupplierRest {
             supplier = supplierService.save(supplier);
             Person caller = personService.findByEmail(principal.getName());
             String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
-            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم تعديل بيانات حساب المورد بنجاح" : "Update Supplier Account Information Successfully").type("warning").icon("fa-edit").build(), principal.getName());
+            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم تعديل بيانات حساب التاجر بنجاح" : "Update Supplier Account Information Successfully").type("warning").icon("fa-edit").build(), principal.getName());
             return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), supplier);
         } else {
             return null;
@@ -121,7 +121,7 @@ public class SupplierRest {
             supplierService.delete(id);
             Person caller = personService.findByEmail(principal.getName());
             String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
-            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم حذف حساب المورد وكل ما يتعلق به من حسابات بنجاح" : "Delete Supplier Account With All Related Successfully").type("error").icon("fa-trash").build(), principal.getName());
+            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم حذف حساب التاجر وكل ما يتعلق به من حسابات بنجاح" : "Delete Supplier Account With All Related Successfully").type("error").icon("fa-trash").build(), principal.getName());
         }
     }
 

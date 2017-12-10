@@ -35,28 +35,14 @@
 
                             <div class="row">
 
-                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                    <label for="nickname" class="control-label">
-                                        <span ng-if="lang==='AR'">اللقب</span>
-                                        <span ng-if="lang==='EN'">Nickname</span>
-                                    </label>
-                                    <input id="nickname"
-                                           type="text"
-                                           focus-autofocus="1"
-                                           required="required"
-                                           disable-validation-message=""
-                                           class="form-control"
-                                           placeholder="{{lang==='AR' ? 'اذكر اللقب...' : 'Type Person Nickname...'}}"
-                                           ng-model="employee.person.nickname">
-                                </div>
-
-                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
                                     <label for="name" class="control-label">
                                         <span ng-if="lang==='AR'">الاسم كاملاً</span>
                                         <span ng-if="lang==='EN'">Name</span>
                                     </label>
                                     <input id="name"
                                            type="text"
+                                           focus-autofocus="1"
                                            required="required"
                                            disable-validation-message=""
                                            class="form-control"
@@ -64,11 +50,7 @@
                                            ng-model="employee.person.name">
                                 </div>
 
-                            </div>
-
-                            <div class="row">
-
-                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
                                     <label for="nationality" class="control-label">
                                         <span ng-if="lang==='AR'">الجنسية</span>
                                         <span ng-if="lang==='EN'">Nationality</span>
@@ -82,7 +64,7 @@
                                            ng-model="employee.person.nationality">
                                 </div>
 
-                                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
                                     <label for="identityNumber" class="control-label">
                                         <span ng-if="lang==='AR'">رقم الهوية / رخصة الإقامة</span>
                                         <span ng-if="lang==='EN'">Identity Card Number</span>
@@ -98,7 +80,7 @@
 
                             <div class="row">
 
-                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                     <label for="mobile" class="control-label">
                                         <span ng-if="lang==='AR'">الجوال</span>
                                         <span ng-if="lang==='EN'">Mobile</span>
@@ -112,7 +94,7 @@
                                            ng-model="employee.person.mobile">
                                 </div>
 
-                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
 
                                     <label for="qualification" class="control-label">
                                         <span ng-if="lang==='AR'">المهنة</span>
@@ -125,54 +107,39 @@
                                            ng-model="employee.person.qualification">
                                 </div>
 
-                                <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                    <label for="salary" class="control-label">
-                                        <span ng-if="lang==='AR'">الراتب</span>
-                                        <span ng-if="lang==='EN'">Salary</span>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="address" class="control-label">
+                                        <span ng-if="lang==='AR'">العنوان الحالي</span>
+                                        <span ng-if="lang==='EN'">Address</span>
                                     </label>
-                                    <div dir="ltr" class="input-group" id="salary">
-                                        <span class="input-group-addon">
-                                            <span>ريال سعودي</span>
-                                        </span>
-                                        <input dir="rtl"
-                                               type="number"
-                                               min="0"
-                                               required="required"
-                                               disable-validation-message=""
-                                               class="form-control"
-                                               ng-model="employee.salary">
-                                    </div>
+                                    <input id="address"
+                                           type="text"
+                                           class="form-control"
+                                           placeholder="{{lang==='AR' ? 'اذكر العنوان الحالي...' : 'Type Person Address...'}}"
+                                           ng-model="employee.person.address">
                                 </div>
 
-                            </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="team" class="control-label">
+                                        <span ng-if="lang==='AR'">مجموعة الصلاحيات</span>
+                                        <span ng-if="lang==='EN'">Team</span>
+                                    </label>
+                                    <select id="team" data-placeholder="{{lang==='AR' ? 'ابحث عن المجموعة' : 'Search For Team...'}}"
+                                            no-results-text="'{{lang==='AR' ? 'لا توجد مجموعات توافق بحثك' : 'No Results.'}}'"
+                                            placeholder-text-single="'{{lang==='AR' ? 'اختر المجموعة' : 'Please Select Team...'}}'"
+                                            class="form-control"
+                                            chosen=""
+                                            ng-model="employee.person.team"
+                                            required="required"
+                                            disable-validation-message=""
+                                            ng-options="team.name for team in teams track by team.id">
+                                    </select>
+                                </div>
 
-                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <label for="address" class="control-label">
-                                    <span ng-if="lang==='AR'">العنوان الحالي</span>
-                                    <span ng-if="lang==='EN'">Address</span>
-                                </label>
-                                <input id="address"
-                                       type="text"
-                                       class="form-control"
-                                       placeholder="{{lang==='AR' ? 'اذكر العنوان الحالي...' : 'Type Person Address...'}}"
-                                       ng-model="employee.person.address">
-                            </div>
-
-                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                                <label for="team" class="control-label">
-                                    <span ng-if="lang==='AR'">مجموعة الصلاحيات</span>
-                                    <span ng-if="lang==='EN'">Team</span>
-                                </label>
-                                <select id="team" data-placeholder="{{lang==='AR' ? 'ابحث عن المجموعة' : 'Search For Team...'}}"
-                                        no-results-text="'{{lang==='AR' ? 'لا توجد مجموعات توافق بحثك' : 'No Results.'}}'"
-                                        placeholder-text-single="'{{lang==='AR' ? 'اختر المجموعة' : 'Please Select Team...'}}'"
-                                        class="form-control"
-                                        chosen=""
-                                        ng-model="employee.person.team"
-                                        required="required"
-                                        disable-validation-message=""
-                                        ng-options="team.name for team in teams track by team.id">
-                                </select>
                             </div>
 
                             <div class="row">

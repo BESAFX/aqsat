@@ -1,5 +1,6 @@
 <!-- Always shows a header, even in smaller screens. -->
-<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header" ng-init="stickSideMenu=true;showMenuStates=true;showMenuSettings=false"
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header"
+     ng-init="stickSideMenu=true;showMenuStates=true;showMenuSettings=false"
      ng-class="{'mdl-layout--fixed-drawer' : stickSideMenu===true}">
 
     <header class="mdl-layout__header">
@@ -15,11 +16,13 @@
 
             <div class="mdl-layout-spacer"></div>
 
-            <button ng-show="stickSideMenu===false" class="mdl-button mdl-js-button mdl-button--icon mdl-icon-margin" ng-click="toggleDrawer()">
+            <button ng-show="stickSideMenu===false" class="mdl-button mdl-js-button mdl-button--icon mdl-icon-margin"
+                    ng-click="toggleDrawer()">
                 <i class="material-icons">storage</i>
             </button>
 
-            <button id="options-menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon mdl-icon-margin mdl-layout--large-screen-only">
+            <button id="options-menu-lower-left"
+                    class="mdl-button mdl-js-button mdl-button--icon mdl-icon-margin mdl-layout--large-screen-only">
                 <i class="material-icons">settings_applications</i>
             </button>
             <ul ng-class="{'mdl-menu--bottom-left' : lang==='AR', 'mdl-menu--bottom-right' : lang==='EN'}"
@@ -56,14 +59,16 @@
                     </span>
                 </li>
                 <li class="mdl-list__item">
-                    <button href="" ng-click="" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button href="" ng-click=""
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         <span ng-if="lang==='AR'">المزيد من الخيارات</span>
                         <span ng-if="lang==='EN'">MORE...</span>
                     </button>
                 </li>
             </ul>
 
-            <button id="menu-lower-left" class="mdl-button mdl-js-button mdl-button--icon mdl-icon-margin mdl-layout--large-screen-only">
+            <button id="menu-lower-left"
+                    class="mdl-button mdl-js-button mdl-button--icon mdl-icon-margin mdl-layout--large-screen-only">
                 <i class="material-icons">more_vert</i>
             </button>
             <ul ng-class="{'mdl-menu--bottom-left' : lang==='AR', 'mdl-menu--bottom-right' : lang==='EN'}"
@@ -110,13 +115,16 @@
         </div>
         <div class="mdl-layout__header-row" style="height: auto!important;padding: 0px !important;">
             <div class="panel panel-body" style="width: 100%; margin-bottom: 0px !important;">
-                <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
-                    <button id="team-menu-lower-right" style="width: 100%;" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
+                     class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                    <button id="supplier-menu-lower-right" style="width: 100%;"
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
                         <span ng-if="lang==='AR'">العمليات</span>
                         <span ng-if="lang==='EN'">Actions</span>
                     </button>
                     <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
-                        class="mdl-menu mdl-js-menu mdl-js-ripple-effect" for="team-menu-lower-right">
+                        class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
+                        for="supplier-menu-lower-right">
                         <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
                             ng-click="fetchTableData()">
                             <span class="mdl-list__item-primary-content">
@@ -125,37 +133,36 @@
                                 <span ng-if="lang==='EN'">View</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item"
-                            ng-click="newTeam();"
-                            ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE'])">
+                        <li class="mdl-menu__item mdl-list__item" ng-click="newSupplier();"
+                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_CREATE'])">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">add</i>
-                                <span ng-if="lang==='AR'">انشاء صلاحيات جديدة</span>
+                                <span ng-if="lang==='AR'">انشاء تاجر جديد</span>
                                 <span ng-if="lang==='EN'">New...</span>
                             </span>
                         </li>
                         <li class="mdl-menu__item mdl-list__item"
-                            ng-click="ModalProvider.openTeamUpdateModel(selected);"
-                            ng-if="contains(me.team.authorities, ['ROLE_TEAM_UPDATE']) && toggleList===1"
-                            ng-hide="!teams || teams.length==0">
+                            ng-click="ModalProvider.openSupplierUpdateModel(selected);"
+                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_UPDATE']) && toggleList===1"
+                            ng-hide="!suppliers || suppliers.length==0">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">edit</i>
-                                <span ng-if="lang==='AR'">تعديل بيانات الصلاحيات</span>
+                                <span ng-if="lang==='AR'">تعديل بيانات التاجر</span>
                                 <span ng-if="lang==='EN'">Edit...</span>
                             </span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item"
-                            ng-click="delete()"
-                            ng-if="contains(me.team.authorities, ['ROLE_TEAM_DELETE']) && toggleList===1"
-                            ng-hide="!teams || teams.length==0">
+                        <li class="mdl-menu__item mdl-list__item" ng-click="delete()"
+                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_DELETE']) && toggleList===1"
+                            ng-hide="!suppliers || suppliers.length==0">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">delete</i>
-                                <span ng-if="lang==='AR'">حذف الصلاحيات</span>
+                                <span ng-if="lang==='AR'">حذف التاجر</span>
                                 <span ng-if="lang==='EN'">Delete</span>
                             </span>
                         </li>
                     </ul>
                 </div>
+
                 <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=1">
                     <div class="btn-toolbar">
                         <div class="btn-group" data-toggle="buttons">
@@ -373,87 +380,119 @@
                                 <a href=""
                                    ng-click="fetchTableData()"
                                    tooltip-append-to-body="true"
-                                   uib-tooltip="{{lang==='AR' ? 'تحديث البيانات' : 'Refresh'}}">
-                                    <span class="fa fa-refresh"></span>
+                                   uib-tooltip="{{lang==='AR' ? 'تصفية البيانات' : 'Filter'}}">
+                                    <span class="fa fa-filter"></span>
                                 </a>
                                 <a href=""
-                                   ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE'])"
-                                   ng-click="newTeam()"
+                                   ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_CREATE'])"
+                                   ng-click="newSupplier()"
                                    tooltip-append-to-body="true"
-                                   uib-tooltip="{{lang==='AR' ? 'انشاء صلاحيات' : 'New Team...'}}">
+                                   uib-tooltip="{{lang==='AR' ? 'انشاء حساب تاجر جديد' : 'New Supplier...'}}">
                                     <span class="fa fa-plus-square"></span>
                                 </a>
                             </li>
                         </ul>
                         <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
-                            <h3 ng-if="lang==='AR'">قائمة الصلاحيات</h3>
-                            <h3 ng-if="lang==='EN'">Teams List</h3>
+                            <h3 ng-if="lang==='AR'">قائمة التجار</h3>
+                            <h3 ng-if="lang==='EN'">Sellers List</h3>
                         </div>
                     </div>
                     <div class="panel-body panel-body-table">
-                        <div class="table-responsive">
-                            <table st-table="collection1" st-safe-src="teams"
-                                   class="table table-bordered table-hover">
-                                <thead>
-                                <tr>
-                                    <th>
-                                        <span ng-if="lang==='AR'">م</span>
-                                        <span ng-if="lang==='EN'">#</span>
-                                    </th>
-                                    <th>
-                                        <span ng-if="lang==='AR'">رقم المجموعة</span>
-                                        <span ng-if="lang==='EN'">Code</span>
-                                    </th>
-                                    <th>
-                                        <span ng-if="lang==='AR'">اسم المجموعة</span>
-                                        <span ng-if="lang==='EN'">Name</span>
-                                    </th>
-                                    <th>
-                                        <span ng-if="lang==='AR'">عدد المستخدمين</span>
-                                        <span ng-if="lang==='EN'">Users Count</span>
-                                    </th>
+                    <div class="table-responsive">
+                        <table st-table="collection" st-safe-src="suppliers"
+                               class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <span ng-if="lang==='AR'">م</span>
+                                    <span ng-if="lang==='EN'">#</span>
+                                </th>
 
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="team in collection1"
-                                    context-menu="rowMenu"
-                                    ng-click="setSelected(team)"
-                                    ng-right-click="setSelected(team)"
-                                    st-select-mode="single"
-                                    ng-class="{'mdl-color--brown-100':team.isSelected}">
-                                    <td st-select-row-custom="team">{{$index+1}}</td>
-                                    <td st-select-row-custom="team">{{team.code}}</td>
-                                    <td st-select-row-custom="team">{{team.name}}</td>
-                                    <td st-select-row-custom="team">{{team.persons.length}}</td>
-                                </tr>
-                                <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
-                                    ng-show="!collection1 || collection1.length ==0">
-                                    <td colspan="5">
-                                        <span ng-if="lang==='AR'">لا توجد بيانات</span>
-                                        <span ng-if="lang==='EN'">No Data Found.</span>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                <th st-sort="code">
+                                    <span ng-if="lang==='AR'">رقم التاجر</span>
+                                    <span ng-if="lang==='EN'">Code</span>
+                                </th>
+
+                                <th st-sort="name">
+                                    <span ng-if="lang==='AR'">اسم التاجر</span>
+                                    <span ng-if="lang==='EN'">Name</span>
+                                </th>
+
+                                <th st-sort="registerDate">
+                                    <span ng-if="lang==='AR'">تاريخ التسجيل</span>
+                                    <span ng-if="lang==='EN'">Register Date</span>
+                                </th>
+
+                                <th st-sort="mobile">
+                                    <span ng-if="lang==='AR'">الجوال</span>
+                                    <span ng-if="lang==='EN'">Mobile</span>
+                                </th>
+
+                                <th st-sort="email">
+                                    <span ng-if="lang==='AR'">البريد الإلكتروني</span>
+                                    <span ng-if="lang==='EN'">Email</span>
+                                </th>
+
+                            </tr>
+                            <tr>
+                                <th colspan="6">
+                                    <input st-search=""
+                                           class="form-control"
+                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                           type="text"/>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="supplier in collection"
+                                st-select-mode="single"
+                                context-menu="rowMenu"
+                                ng-click="setSelected(supplier)"
+                                ng-right-click="setSelected(supplier)"
+                                ng-class="{'mdl-color--blue-grey-100':supplier.isSelected}">
+                                <td st-select-row-custom="supplier">{{$index+1}}</td>
+                                <td st-select-row-custom="supplier">{{supplier.code}}</td>
+                                <td st-select-row-custom="supplier">
+                                    <span ng-show="supplier.enabled" class="label label-success">مفعل</span>
+                                    <span ng-show="!supplier.enabled" class="label label-danger">معطل</span>
+                                    {{supplier.name}}
+                                </td>
+                                <td st-select-row-custom="supplier">
+                                    {{supplier.registerDate | kdate: 'yyyy-mm-dd' : 'ar' :'ummalqura'}}
+                                    <span class="label label-success">{{supplier.registerDate | date:'h:m a'}}</span>
+                                </td>
+                                <td st-select-row-custom="supplier">{{supplier.mobile}}</td>
+                                <td st-select-row-custom="supplier">{{supplier.email}}</td>
+                            </tr>
+                            <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
+                                ng-show="!collection || collection.length ==0">
+                                <td colspan="6">
+                                    <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                    <span ng-if="lang==='EN'">No Data Found.</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
+                </div>
                 </div>
             </div>
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===2">
-                <div st-table="collection" st-safe-src="teams">
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="team in collection">
+                <div st-table="collection" st-safe-src="suppliers">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="supplier in collection">
                         <!-- CONTACT ITEM -->
                         <div class="panel panel-default">
                             <div class="panel-body profile">
                                 <div class="profile-image">
                                     <img width="100" height="100"
                                          src="/ui/img/no-image.jpg"
-                                         alt="{{team.name}}"/>
+                                         alt="{{supplier.code}}"/>
                                 </div>
                                 <div class="profile-data">
-                                    <div class="profile-data-name">{{team.name}}</div>
+                                    <div class="profile-data-name">
+                                        {{supplier.name}}
+                                    </div>
                                 </div>
                                 <div class="profile-controls">
                                     <!--<a href="" class="profile-control-left"><span class="fa fa-info-circle"></span></a>-->
@@ -463,47 +502,42 @@
                             <div class="panel-body">
                                 <div class="contact-info">
                                     <p>
-                                        <strong ng-if="lang==='AR'">رقم المجموعة</strong>
-                                        <strong ng-if="lang==='EN'">Code</strong>
-                                        {{team.code}}
+                                        <strong ng-if="lang==='AR'">رقم الجوال</strong>
+                                        <strong ng-if="lang==='EN'">Phone</strong>
+                                        {{supplier.mobile}}
                                     </p>
                                     <hr>
                                     <p>
-                                        <strong ng-if="lang==='AR'">اسم المجموعة</strong>
-                                        <strong ng-if="lang==='EN'">Name</strong>
-                                        {{team.name}}
-                                    </p>
-                                    <hr>
-                                    <p>
-                                        <strong ng-if="lang==='AR'">عدد المستخدمون</strong>
-                                        <strong ng-if="lang==='EN'">Users Count</strong>
-                                        {{team.persons.length}}
+                                        <strong ng-if="lang==='AR'">الحالة</strong>
+                                        <strong ng-if="lang==='EN'">Condition</strong>
+                                        <span ng-show="supplier.enabled" class="label label-success">مفعل</span>
+                                        <span ng-show="!supplier.enabled" class="label label-danger">معطل</span>
                                     </p>
                                 </div>
                             </div>
                             <div class="panel-footer">
                                 <div class="row">
-                                    <button uib-tooltip="{{lang==='AR' ? 'انشاء مجموعة جديدة' : 'New...'}}"
+                                    <button uib-tooltip="{{lang==='AR' ? 'انشاء تاجر جديد' : 'New...'}}"
                                             tooltip-append-to-body="true"
                                             type="button"
-                                            ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE'])"
-                                            ng-click="newTeam();"
+                                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_CREATE'])"
+                                            ng-click="newSupplier();"
                                             class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                         <i class="material-icons">add</i>
                                     </button>
                                     <button uib-tooltip="{{lang==='AR' ? 'تعديل' : 'Edit...'}}"
                                             tooltip-append-to-body="true"
                                             type="button"
-                                            ng-if="contains(me.team.authorities, ['ROLE_TEAM_UPDATE'])"
-                                            ng-click="ModalProvider.openTeamUpdateModel(team)"
+                                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_UPDATE'])"
+                                            ng-click="ModalProvider.openSupplierUpdateModel(supplier)"
                                             class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                         <i class="material-icons">edit</i>
                                     </button>
                                     <button uib-tooltip="{{lang==='AR' ? 'حذف' : 'Delete'}}"
                                             tooltip-append-to-body="true"
                                             type="button"
-                                            ng-if="contains(me.team.authorities, ['ROLE_TEAM_DELETE'])"
-                                            ng-click="delete(team)"
+                                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_DELETE'])"
+                                            ng-click="delete(supplier)"
                                             class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
                                         <i class="material-icons">delete</i>
                                     </button>
@@ -520,3 +554,14 @@
     </main>
 
 </div>
+
+
+
+
+
+
+
+
+
+
+

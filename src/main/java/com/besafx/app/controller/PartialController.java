@@ -70,6 +70,7 @@ public class PartialController {
             "/customer/list",
             "/customer/details",
             "/supplier",
+            "/contract",
             "/employee/list",
             "/receipt/in",
             "/help",

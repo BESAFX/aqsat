@@ -180,6 +180,20 @@
                     </div>
 
                     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 parent text-center"
+                         ui-sref="supplier"
+                         ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_CREATE', 'ROLE_CONTRACT_UPDATE', 'ROLE_CONTRACT_DELETE'])">
+                        <div class="card-image mdl-card" style="background-image: url('/ui/img/Suppliers.png')">
+                            <div class="mdl-card__title mdl-card--expand"></div>
+                        </div>
+                        <div class="mdl-card__actions">
+                            <a class="card-image__filename">
+                                <span ng-if="lang==='AR'">العقود</span>
+                                <span ng-if="lang==='EN'">Contracts</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 parent text-center"
                          ui-sref="receipt.in">
                         <div class="card-image mdl-card" style="background-image: url('/ui/img/Receipts.png')">
                             <div class="mdl-card__title mdl-card--expand"></div>

@@ -25,7 +25,7 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$scope', '$
 
         $scope.delete = function (supplier) {
             if (supplier) {
-                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف المورد وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
+                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف التاجر وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
                     SupplierService.remove(supplier.id).then(function () {
                         var index = $scope.suppliers.indexOf(supplier);
                         $scope.suppliers.splice(index, 1);
@@ -35,7 +35,7 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$scope', '$
                 return;
             }
 
-            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف المورد وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
+            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف التاجر وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
                 SupplierService.remove($scope.selected.id).then(function () {
                     var index = $scope.suppliers.indexOf($scope.selected);
                     $scope.suppliers.splice(index, 1);
@@ -66,7 +66,7 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$scope', '$
 
         $scope.rowMenu = [
             {
-                html: '<div class="drop-menu">انشاء مورد جديد<span class="fa fa-pencil fa-lg"></span></div>',
+                html: '<div class="drop-menu">انشاء تاجر جديد<span class="fa fa-pencil fa-lg"></span></div>',
                 enabled: function () {
                     return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_SUPPLIER_CREATE']);
                 },
@@ -75,7 +75,7 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$scope', '$
                 }
             },
             {
-                html: '<div class="drop-menu">تعديل بيانات المورد<span class="fa fa-edit fa-lg"></span></div>',
+                html: '<div class="drop-menu">تعديل بيانات التاجر<span class="fa fa-edit fa-lg"></span></div>',
                 enabled: function () {
                     return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_SUPPLIER_UPDATE']);
                 },
@@ -84,7 +84,7 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$scope', '$
                 }
             },
             {
-                html: '<div class="drop-menu">حذف المورد<span class="fa fa-trash fa-lg"></span></div>',
+                html: '<div class="drop-menu">حذف التاجر<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
                     return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_SUPPLIER_DELETE']);
                 },
