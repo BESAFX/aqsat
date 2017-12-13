@@ -64,6 +64,12 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                     $rootScope.applyCssLang();
                     break;
                 }
+                case 'supplierReceipt': {
+                    $rootScope.applyTitleLang();
+                    $rootScope.MDLIcon = 'attach_money';
+                    $rootScope.applyCssLang();
+                    break;
+                }
                 case 'team': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'security';
@@ -204,9 +210,16 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                         break;
                     case 'contractReceipt':
                         if ($rootScope.lang === 'AR') {
-                            $rootScope.pageTitle = 'السندات';
+                            $rootScope.pageTitle = 'سندات القبض';
                         } else {
-                            $rootScope.pageTitle = 'Receipts';
+                            $rootScope.pageTitle = 'Contract Receipts';
+                        }
+                        break;
+                    case 'supplierReceipt':
+                        if ($rootScope.lang === 'AR') {
+                            $rootScope.pageTitle = 'سندات الصرف';
+                        } else {
+                            $rootScope.pageTitle = 'Seller Receipts';
                         }
                         break;
                     case 'profile':

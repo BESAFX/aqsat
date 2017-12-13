@@ -115,72 +115,111 @@
         </div>
         <div class="mdl-layout__header-row" style="height: auto!important;padding: 0px !important;">
             <div class="panel panel-body" style="width: 100%; margin-bottom: 0px !important;">
-                <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
-                     class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
-                    <button id="contractReceipt-menu-lower-right" style="width: 100%;"
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                        <span ng-if="lang==='AR'">العمليات</span>
-                        <span ng-if="lang==='EN'">Actions</span>
-                    </button>
-                    <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
-                        class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
-                        for="contractReceipt-menu-lower-right">
-                        <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
-                            ng-click="fetchTableData()">
-                            <span class="mdl-list__item-primary-content">
-                                <i class="material-icons mdl-list__item-icon">visibility</i>
-                                <span ng-if="lang==='AR'">عرض البيانات</span>
-                                <span ng-if="lang==='EN'">View</span>
-                            </span>
+
+                <div class="row">
+                    <ul class="breadcrumb">
+                        <li ng-repeat="item in items | orderBy:'id' track by item.id">
+                            <a ng-if="item.type==='link'" href="" ui-sref="{{item.link}}">{{item.name}}</a>
+                            <span ng-if="item.type==='title'">{{item.name}}</span>
                         </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="newContractReceipt();"
-                            ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_CREATE'])">
+                    </ul>
+                </div>
+
+                <div class="row">
+
+                    <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
+                         class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                        <button id="contractReceipt-menu-lower-right" style="width: 100%;"
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                            <span ng-if="lang==='AR'">العمليات</span>
+                            <span ng-if="lang==='EN'">Actions</span>
+                        </button>
+                        <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
+                            class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
+                            for="contractReceipt-menu-lower-right">
+                            <li class="mdl-menu__item mdl-list__item"
+                                ng-click="findContractsReceiptsByToday()">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                                    <span ng-if="lang==='AR'">ايرادات عقود اليوم</span>
+                                    <span ng-if="lang==='EN'">Contracts For Today</span>
+                                </span>
+                            </li>
+                            <li class="mdl-menu__item mdl-list__item"
+                                ng-click="findContractsReceiptsByWeek()">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                                    <span ng-if="lang==='AR'">ايرادات عقود الاسبوع</span>
+                                    <span ng-if="lang==='EN'">Contracts For Week</span>
+                                </span>
+                            </li>
+                            <li class="mdl-menu__item mdl-list__item"
+                                ng-click="findContractsReceiptsByMonth()">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                                    <span ng-if="lang==='AR'">ايرادات عقود الشهر</span>
+                                    <span ng-if="lang==='EN'">Contracts For Month</span>
+                                </span>
+                            </li>
+                            <li class="mdl-menu__item mdl-list__item"
+                                ng-click="findContractsReceiptsByYear()">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                                    <span ng-if="lang==='AR'">ايرادات عقود العام</span>
+                                    <span ng-if="lang==='EN'">Contracts For Year</span>
+                                </span>
+                            </li>
+                            <li class="mdl-menu__item mdl-list__item" ng-click="newContractReceipt();"
+                                ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_CREATE'])">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">add</i>
                                 <span ng-if="lang==='AR'">انشاء سند جديد</span>
                                 <span ng-if="lang==='EN'">New...</span>
                             </span>
-                        </li>
-                        <li class="mdl-menu__item mdl-list__item"
-                            ng-click="ModalProvider.openContractReceiptUpdateModel(selected);"
-                            ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_UPDATE']) && toggleList===1"
-                            ng-hide="!contractReceipts || contractReceipts.length==0">
+                            </li>
+                            <li class="mdl-menu__item mdl-list__item"
+                                ng-click="ModalProvider.openContractReceiptUpdateModel(selected);"
+                                ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_UPDATE']) && toggleList===1"
+                                ng-hide="!contractReceipts || contractReceipts.length==0">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">edit</i>
                                 <span ng-if="lang==='AR'">تعديل بيانات السند</span>
                                 <span ng-if="lang==='EN'">Edit...</span>
                             </span>
-                        </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="delete()"
-                            ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_DELETE']) && toggleList===1"
-                            ng-hide="!contractReceipts || contractReceipts.length==0">
+                            </li>
+                            <li class="mdl-menu__item mdl-list__item" ng-click="delete()"
+                                ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_DELETE']) && toggleList===1"
+                                ng-hide="!contractReceipts || contractReceipts.length==0">
                             <span class="mdl-list__item-primary-content">
                                 <i class="material-icons mdl-list__item-icon">delete</i>
                                 <span ng-if="lang==='AR'">حذف السند</span>
                                 <span ng-if="lang==='EN'">Delete</span>
                             </span>
-                        </li>
-                    </ul>
-                </div>
+                            </li>
+                        </ul>
+                    </div>
 
-                <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=1">
-                    <div class="btn-toolbar">
-                        <div class="btn-group" data-toggle="buttons">
-                            <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
-                                    type="button" ng-click="toggleList=1"
-                                    ng-class="{'active':toggleList===1}">
-                                <input type="radio" name="options"/>
-                                <i class="material-icons">reorder</i>
-                            </button>
-                            <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
-                                    type="button" ng-click="toggleList=2"
-                                    ng-class="{'active':toggleList===2}">
-                                <input type="radio" name="options"/>
-                                <i class="material-icons">view_column</i>
-                            </button>
+                    <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=1">
+                        <div class="btn-toolbar">
+                            <div class="btn-group" data-toggle="buttons">
+                                <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
+                                        type="button" ng-click="toggleList=1"
+                                        ng-class="{'active':toggleList===1}">
+                                    <input type="radio" name="options"/>
+                                    <i class="material-icons">reorder</i>
+                                </button>
+                                <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
+                                        type="button" ng-click="toggleList=2"
+                                        ng-class="{'active':toggleList===2}">
+                                    <input type="radio" name="options"/>
+                                    <i class="material-icons">view_column</i>
+                                </button>
+                            </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
         </div>
     </header>
@@ -390,116 +429,313 @@
         <div class="row" style="margin-top: 10px">
 
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===1">
-                <div class="panel panel-primary">
+                <div class="panel panel-danger">
                     <div class="panel-heading">
                         <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
                             style="margin-top: 2px;">
                             <li>
                                 <a href=""
-                                   ng-click="fetchTableData()"
-                                   tooltip-append-to-body="true"
-                                   uib-tooltip="{{lang==='AR' ? 'تصفية البيانات' : 'Filter'}}">
-                                    <span class="fa fa-refresh"></span>
-                                </a>
-                                <a href=""
                                    ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_CREATE'])"
                                    ng-click="newContractReceipt()"
                                    tooltip-append-to-body="true"
-                                   uib-tooltip="{{lang==='AR' ? 'انشاء حساب سند جديد' : 'New ContractReceipt...'}}">
+                                   uib-tooltip="{{lang==='AR' ? 'انشاء سند جديد' : 'New Receipt...'}}">
                                     <span class="fa fa-plus-square"></span>
                                 </a>
                             </li>
                         </ul>
                         <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
-                            <h3 ng-if="lang==='AR'">قائمة السندات</h3>
-                            <h3 ng-if="lang==='EN'">Receipts List</h3>
+                            <h3 ng-if="lang==='AR'">قائمة سندات القبض</h3>
+                            <h3 ng-if="lang==='EN'">Contract Receipts List</h3>
+                            <span ng-if="lang==='AR'">ايرادات العقود من العملاء</span>
+                            <span ng-if="lang==='EN'">Contract Incomes From Customers</span>
                         </div>
                     </div>
-                    <div class="panel-body panel-body-table">
-                    <div class="table-responsive">
-                        <table st-table="collection" st-safe-src="contractReceipts"
-                               class="table table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>
-                                    <span>#</span>
-                                </th>
+                    <div class="panel-body">
 
-                                <th st-sort="receipt.code">
-                                    <span ng-if="lang==='AR'">رقم السند</span>
-                                    <span ng-if="lang==='EN'">Receipt Code</span>
-                                </th>
+                        <div class="form-group row">
 
-                                <th st-sort="receipt.date">
-                                    <span ng-if="lang==='AR'">تاريخ السند</span>
-                                    <span ng-if="lang==='EN'">Receipt Date</span>
-                                </th>
+                            <ul id="my-accordion"
+                                class="mdlext-accordion mdlext-js-accordion mdlext-accordion--vertical mdlext-js-ripple-effect"
+                                role="tablist" aria-multiselectable="true">
 
-                                <th st-sort="receipt.amount">
-                                    <span ng-if="lang==='AR'">قيمة السند</span>
-                                    <span ng-if="lang==='EN'">Receipt Amount</span>
-                                </th>
+                                <li class="mdlext-accordion__panel" role="presentation">
+                                    <header class="mdlext-accordion__tab" role="tab" aria-expanded="false">
+                                        <i class="material-icons">search</i>
+                                        <span class="mdlext-accordion__tab__caption">
+                                            <span ng-if="lang==='AR'">بحث من خلال بيانات العقد</span>
+                                            <span ng-if="lang==='EN'">Search By Contract Information</span>
+                                        </span>
+                                    </header>
+                                    <section class="mdlext-accordion__tabpanel" role="tabpanel" aria-hidden="true">
 
-                                <th st-sort="receipt.paymentMethod">
-                                    <span ng-if="lang==='AR'">طريقة الدفع</span>
-                                    <span ng-if="lang==='EN'">Payment Method</span>
-                                </th>
+                                        <div class="form-group row">
 
-                                <th st-sort="contract.code">
-                                    <span ng-if="lang==='AR'">رقم العقد</span>
-                                    <span ng-if="lang==='EN'">Contract Code</span>
-                                </th>
+                                            <form name="form" ng-submit="filter()" novalidate="novalidate" focus-group="" focus-stack="" focus-group-head="loop" focus-group-tail="loop">
 
-                                <th st-sort="customer.name">
-                                    <span ng-if="lang==='AR'">العميل</span>
-                                    <span ng-if="lang==='EN'">Customer</span>
-                                </th>
+                                                <div class="row">
 
-                                <th st-sort="supplier.name">
-                                    <span ng-if="lang==='AR'">التاجر</span>
-                                    <span ng-if="lang==='EN'">Seller</span>
-                                </th>
+                                                    <div class="form-group row">
 
-                            </tr>
-                            <tr>
-                                <th colspan="8">
-                                    <input st-search=""
-                                           class="form-control"
-                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
-                                           type="text"/>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="contractReceipt in collection"
-                                st-select-mode="single"
-                                context-menu="rowMenu"
-                                ng-click="setSelected(contractReceipt)"
-                                ng-right-click="setSelected(contractReceipt)">
-                                <td st-select-row-custom="contractReceipt">{{$index+1}}</td>
-                                <td st-select-row-custom="contractReceipt">{{contractReceipt.receipt.code}}</td>
-                                <td st-select-row-custom="contractReceipt">
-                                    <span ng-show="dateType==='H'">{{contractReceipt.receipt.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
-                                    <span ng-show="dateType==='G'">{{contractReceipt.receipt.date | date: 'yyyy-MM-dd'}}</span>
-                                    <span class="label label-success">{{contractReceipt.receipt.date | date:'h:m a'}}</span>
-                                </td>
-                                <td st-select-row-custom="contractReceipt">{{contractReceipt.receipt.amount}} SAR</td>
-                                <td st-select-row-custom="contractReceipt">{{contractReceipt.receipt.paymentMethodInArabic}}</td>
-                                <td st-select-row-custom="contractReceipt">{{contractReceipt.contract.code}}</td>
-                                <td st-select-row-custom="contractReceipt">{{contractReceipt.contract.customer.name}}</td>
-                                <td st-select-row-custom="contractReceipt">{{contractReceipt.contract.supplier.name}}</td>
-                            </tr>
-                            <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
-                                ng-show="!collection || collection.length ==0">
-                                <td colspan="8">
-                                    <span ng-if="lang==='AR'">لا توجد بيانات</span>
-                                    <span ng-if="lang==='EN'">No Data Found.</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                                        <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                            <label for="contractCode" class="control-label">
+                                                                <span ng-if="lang==='AR'">رقم العقد من</span>
+                                                                <span ng-if="lang==='EN'">Contract Code From</span>
+                                                            </label>
+                                                            <input id="contractCode"
+                                                                   type="number"
+                                                                   class="form-control"
+                                                                   ng-model="param.contractCode">
+                                                        </div>
+
+                                                        <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                            <label for="contractCodeTo" class="control-label">
+                                                                <span ng-if="lang==='AR'">رقم العقد إلى</span>
+                                                                <span ng-if="lang==='EN'">Contract Code From</span>
+                                                            </label>
+                                                            <input id="contractCodeTo"
+                                                                   type="number"
+                                                                   class="form-control"
+                                                                   ng-model="param.contractCodeTo">
+                                                        </div>
+
+                                                        <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='H'">
+                                                            <label for="contractRegisterDateFrom" class="control-label">
+                                                                <span ng-if="lang==='AR'">تاريخ العقد من</span>
+                                                                <span ng-if="lang==='EN'">Contract Date From</span>
+                                                            </label>
+                                                            <div dir="ltr" class="input-group">
+                                                                <input dir="rtl"
+                                                                       id="contractRegisterDateFrom"
+                                                                       type="text"
+                                                                       class="form-control is-calendarPicker"
+                                                                       ng-model="param.contractRegisterDateFrom"
+                                                                       calendarType="ummalqura"
+                                                                       language="en"
+                                                                       dateFormat="yyyy/mm/dd"
+                                                                       showOnFocus="false"
+                                                                       readonly="readonly"
+                                                                       kdatepicker>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='G'">
+                                                            <label for="G-contractRegisterDateFrom" class="control-label">
+                                                                <span ng-if="lang==='AR'">تاريخ العقد من</span>
+                                                                <span ng-if="lang==='EN'">Contract Date From</span>
+                                                            </label>
+                                                            <input id="G-contractRegisterDateFrom"
+                                                                   class="form-control "
+                                                                   type="date"
+                                                                   name="input"
+                                                                   ng-model="param.contractRegisterDateFrom"
+                                                                   placeholder="yyyy-MM-dd"
+                                                                   min="2017-01-01"
+                                                                   max="2030-12-31"/>
+                                                        </div>
+
+                                                        <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='H'">
+                                                            <label for="contractRegisterDateTo" class="control-label">
+                                                                <span ng-if="lang==='AR'">تاريخ العقد إلى</span>
+                                                                <span ng-if="lang==='EN'">Contract Date To</span>
+                                                            </label>
+                                                            <div dir="ltr" class="input-group">
+                                                                <input dir="rtl"
+                                                                       id="contractRegisterDateTo"
+                                                                       type="text"
+                                                                       class="form-control is-calendarPicker"
+                                                                       ng-model="param.contractRegisterDateTo"
+                                                                       calendarType="ummalqura"
+                                                                       language="en"
+                                                                       dateFormat="yyyy/mm/dd"
+                                                                       showOnFocus="false"
+                                                                       readonly="readonly"
+                                                                       kdatepicker>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='G'">
+                                                            <label for="G-contractRegisterDateTo" class="control-label">
+                                                                <span ng-if="lang==='AR'">تاريخ العقد إلى</span>
+                                                                <span ng-if="lang==='EN'">Contract Date To</span>
+                                                            </label>
+                                                            <input id="G-contractRegisterDateTo"
+                                                                   class="form-control "
+                                                                   type="date"
+                                                                   name="input"
+                                                                   ng-model="param.contractRegisterDateTo"
+                                                                   placeholder="yyyy-MM-dd"
+                                                                   min="2017-01-01"
+                                                                   max="2030-12-31"/>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group row">
+
+                                                        <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                            <label for="contractCustomerName" class="control-label">
+                                                                <span ng-if="lang==='AR'">اسم العميل</span>
+                                                                <span ng-if="lang==='EN'">Customer Name</span>
+                                                            </label>
+                                                            <input id="contractCustomerName"
+                                                                   type="text"
+                                                                   class="form-control"
+                                                                   ng-model="param.contractCustomerName">
+                                                        </div>
+
+                                                        <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                            <label for="contractCustomerMobile" class="control-label">
+                                                                <span ng-if="lang==='AR'">رقم جوال العميل</span>
+                                                                <span ng-if="lang==='EN'">Customer Mobile</span>
+                                                            </label>
+                                                            <input id="contractCustomerMobile"
+                                                                   type="text"
+                                                                   class="form-control"
+                                                                   ng-model="param.contractCustomerMobile">
+                                                        </div>
+
+                                                        <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                            <label for="contractCustomerIdentityNumber" class="control-label">
+                                                                <span ng-if="lang==='AR'">رقم بطاقة العميل</span>
+                                                                <span ng-if="lang==='EN'">Customer Identity Number</span>
+                                                            </label>
+                                                            <input id="contractCustomerIdentityNumber"
+                                                                   type="text"
+                                                                   class="form-control"
+                                                                   ng-model="param.contractCustomerIdentityNumber">
+                                                        </div>
+
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                                                        <button uib-tooltip="{{lang==='AR'? 'بحث' : 'Search'}}"
+                                                                tooltip-append-to-body="true"
+                                                                type="submit"
+                                                                class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                                            <i class="material-icons">search</i>
+                                                        </button>
+                                                        <button uib-tooltip="{{lang==='AR' ? 'مسح الحقول' : 'Clear'}}"
+                                                                tooltip-append-to-body="true"
+                                                                type="reset"
+                                                                ng-click="form.$setPristine();param={};"
+                                                                class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                                            <i class="material-icons">delete</i>
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+
+                                            </form>
+
+                                        </div>
+
+                                    </section>
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="table-responsive">
+                                <table st-table="collection" st-safe-src="contractReceipts"
+                                       class="table table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            <span>#</span>
+                                        </th>
+
+                                        <th st-sort="receipt.code">
+                                            <span ng-if="lang==='AR'">رقم السند</span>
+                                            <span ng-if="lang==='EN'">Receipt Code</span>
+                                        </th>
+
+                                        <th st-sort="receipt.date">
+                                            <span ng-if="lang==='AR'">تاريخ السند</span>
+                                            <span ng-if="lang==='EN'">Receipt Date</span>
+                                        </th>
+
+                                        <th st-sort="receipt.amount" class="danger">
+                                            <span ng-if="lang==='AR'">قيمة السند</span>
+                                            <span ng-if="lang==='EN'">Receipt Amount</span>
+                                        </th>
+
+                                        <th st-sort="receipt.paymentMethod">
+                                            <span ng-if="lang==='AR'">طريقة الدفع</span>
+                                            <span ng-if="lang==='EN'">Payment Method</span>
+                                        </th>
+
+                                        <th st-sort="contract.code">
+                                            <span ng-if="lang==='AR'">رقم العقد</span>
+                                            <span ng-if="lang==='EN'">Contract Code</span>
+                                        </th>
+
+                                        <th st-sort="contract.customer.name">
+                                            <span ng-if="lang==='AR'">العميل</span>
+                                            <span ng-if="lang==='EN'">Customer</span>
+                                        </th>
+
+                                        <th st-sort="contract.supplier.name">
+                                            <span ng-if="lang==='AR'">التاجر</span>
+                                            <span ng-if="lang==='EN'">Seller</span>
+                                        </th>
+
+                                    </tr>
+                                    <tr>
+                                        <th colspan="8">
+                                            <input st-search=""
+                                                   class="form-control"
+                                                   placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                                   type="text"/>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="contractReceipt in collection"
+                                        st-select-mode="single"
+                                        context-menu="rowMenu"
+                                        ng-click="setSelected(contractReceipt)"
+                                        ng-right-click="setSelected(contractReceipt)">
+                                        <td st-select-row-custom="contractReceipt">{{$index+1}}</td>
+                                        <td st-select-row-custom="contractReceipt">{{contractReceipt.receipt.code}}</td>
+                                        <td st-select-row-custom="contractReceipt">
+                                            <span ng-show="dateType==='H'">{{contractReceipt.receipt.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                            <span ng-show="dateType==='G'">{{contractReceipt.receipt.date | date: 'yyyy-MM-dd'}}</span>
+                                            <span class="label label-success">{{contractReceipt.receipt.date | date:'h:m a'}}</span>
+                                        </td>
+                                        <td st-select-row-custom="contractReceipt" class="danger">{{contractReceipt.receipt.amount}} SAR</td>
+                                        <td st-select-row-custom="contractReceipt">
+                                            {{contractReceipt.receipt.paymentMethodInArabic}}
+                                        </td>
+                                        <td st-select-row-custom="contractReceipt">{{contractReceipt.contract.code}}</td>
+                                        <td st-select-row-custom="contractReceipt">
+                                            {{contractReceipt.contract.customer.name}}
+                                        </td>
+                                        <td st-select-row-custom="contractReceipt">
+                                            {{contractReceipt.contract.supplier.name}}
+                                        </td>
+                                    </tr>
+                                    <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
+                                        ng-show="!collection || collection.length ==0">
+                                        <td colspan="8">
+                                            <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                            <span ng-if="lang==='EN'">No Data Found.</span>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
                     </div>
-                </div>
                 </div>
             </div>
 

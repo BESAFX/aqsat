@@ -200,11 +200,10 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: '/ui/partials/contractReceipt/contractReceiptCreateUpdate.html',
-            controller: 'contractReceiptCreateUpdateCtrl',
+            templateUrl: '/ui/partials/contractReceipt/contractReceiptCreate.html',
+            controller: 'contractReceiptCreateCtrl',
             backdrop: 'static',
-            keyboard: false,
-            size: 'lg'
+            keyboard: false
         });
     };
 

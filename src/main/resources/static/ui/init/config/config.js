@@ -200,17 +200,34 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$cssPr
 
         /**************************************************************
          *                                                            *
-         * ContractReceipt State                                      *
+         * Contract Receipt State                                     *
          *                                                            *
          *************************************************************/
         $stateProvider.state("contractReceipt", {
             url: "/contractReceipt",
             css: [
                 '/ui/css/mdl-style-red-deep_orange.css',
+                '/ui/css/mdl-ext.css',
                 '/ui/css/theme-black.css'
             ],
             templateUrl: "/ui/partials/contractReceipt/contractReceipt.html",
             controller: "contractReceiptCtrl"
+        });
+
+        /**************************************************************
+         *                                                            *
+         * Supplier Receipt State                                     *
+         *                                                            *
+         *************************************************************/
+        $stateProvider.state("supplierReceipt", {
+            url: "/supplierReceipt",
+            css: [
+                '/ui/css/mdl-style-red-deep_orange.css',
+                '/ui/css/mdl-ext.css',
+                '/ui/css/theme-black.css'
+            ],
+            templateUrl: "/ui/partials/supplierReceipt/supplierReceipt.html",
+            controller: "supplierReceiptCtrl"
         });
 
         /**************************************************************

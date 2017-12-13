@@ -5,6 +5,7 @@ import com.besafx.app.entity.ContractReceipt;
 import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Receipt;
 import com.besafx.app.entity.enums.ReceiptType;
+import com.besafx.app.search.ContractReceiptSearch;
 import com.besafx.app.service.ContractReceiptService;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.service.ReceiptService;
@@ -41,6 +42,9 @@ public class ContractReceiptRest {
     private ContractReceiptService contractReceiptService;
 
     @Autowired
+    private ContractReceiptSearch contractReceiptSearch;
+
+    @Autowired
     private ReceiptService receiptService;
 
     @Autowired
@@ -71,7 +75,7 @@ public class ContractReceiptRest {
         contractReceipt.setReceipt(receiptService.save(contractReceipt.getReceipt()));
         contractReceipt = contractReceiptService.save(contractReceipt);
         String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
-        notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم انشاء السند بنجاح" : "Create Receipt Successfully").type("success").build(), principal.getName());
+        notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم انشاء سند القبض بنجاح" : "Create Contract Receipt Successfully").type("success").build(), principal.getName());
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceipt);
     }
 
@@ -85,7 +89,7 @@ public class ContractReceiptRest {
             receiptService.delete(contractReceipt.getReceipt());
             Person caller = personService.findByEmail(principal.getName());
             String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
-            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم حذف السند وكل ما يتعلق به من حسابات بنجاح" : "Delete Receipt With All Related Successfully").type("error").build(), principal.getName());
+            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم حذف سند القبض وكل ما يتعلق به من حسابات بنجاح" : "Delete Contract Receipt With All Related Successfully").type("error").build(), principal.getName());
         }
     }
 
@@ -101,5 +105,80 @@ public class ContractReceiptRest {
     @ResponseBody
     public String findOne(@PathVariable Long id) {
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptService.findOne(id));
+    }
+
+    @RequestMapping(value = "filter", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String filter(
+            /**Receipt Filters*/
+            @RequestParam(value = "receiptCodeFrom", required = false) final Long receiptCodeFrom,
+            @RequestParam(value = "receiptCodeTo", required = false) final Long receiptCodeTo,
+            @RequestParam(value = "receiptDateFrom", required = false) final Long receiptDateFrom,
+            @RequestParam(value = "receiptDateTo", required = false) final Long receiptDateTo,
+            @RequestParam(value = "receiptAmountNumberFrom", required = false) final Double receiptAmountNumberFrom,
+            @RequestParam(value = "receiptAmountNumberTo", required = false) final Double receiptAmountNumberTo,
+            /**Contract Filters*/
+            @RequestParam(value = "contractCodeFrom", required = false) final Long contractCodeFrom,
+            @RequestParam(value = "contractCodeTo", required = false) final Long contractCodeTo,
+            @RequestParam(value = "contractRegisterDateFrom", required = false) final Long contractRegisterDateFrom,
+            @RequestParam(value = "contractRegisterDateTo", required = false) final Long contractRegisterDateTo,
+            @RequestParam(value = "contractAmountFrom", required = false) final Double contractAmountFrom,
+            @RequestParam(value = "contractAmountTo", required = false) final Double contractAmountTo,
+            @RequestParam(value = "contractCustomerName", required = false) final String contractCustomerName,
+            @RequestParam(value = "contractCustomerMobile", required = false) final String contractCustomerMobile,
+            @RequestParam(value = "contractCustomerIdentityNumber", required = false) final String contractCustomerIdentityNumber,
+            @RequestParam(value = "contractSupplierName", required = false) final String contractSupplierName,
+            @RequestParam(value = "contractSupplierMobile", required = false) final String contractSupplierMobile,
+            @RequestParam(value = "contractSupplierIdentityNumber", required = false) final String contractSupplierIdentityNumber
+    ) {
+        List<ContractReceipt> list = contractReceiptSearch.filter(
+          receiptCodeFrom,
+          receiptCodeTo,
+          receiptDateFrom,
+          receiptDateTo,
+          receiptAmountNumberFrom,
+          receiptAmountNumberTo,
+          contractCodeFrom,
+          contractCodeTo,
+          contractRegisterDateFrom,
+          contractRegisterDateTo,
+          contractAmountFrom,
+          contractAmountTo,
+          contractCustomerName,
+          contractCustomerMobile,
+          contractCustomerIdentityNumber,
+          contractSupplierName,
+          contractSupplierMobile,
+          contractSupplierIdentityNumber
+        );
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), list);
+    }
+
+    @RequestMapping(value = "findByToday", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String findByToday() {
+        log.info("إيرادات عقود اليوم");
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByToday());
+    }
+
+    @RequestMapping(value = "findByWeek", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String findByWeek() {
+        log.info("إيرادات عقود الاسبوع");
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByWeek());
+    }
+
+    @RequestMapping(value = "findByMonth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String findByMonth() {
+        log.info("إيرادات عقود الشهر");
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByMonth());
+    }
+
+    @RequestMapping(value = "findByYear", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String findByYear() {
+        log.info("إيرادات عقود العام");
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByYear());
     }
 }
