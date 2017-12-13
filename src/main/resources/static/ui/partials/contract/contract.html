@@ -731,23 +731,27 @@
                     </div>
                     <div class="panel-footer">
 
-                        <h3 class="box-warning" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-if="totalRemain>=0">
-                            <span ng-if="lang==='AR'">إجمالي الباقي</span>
-                            <span ng-if="lang==='EN'">Total Contract Remain: </span>
-                            <span>{{totalRemain}} SAR</span>
-                        </h3>
+                        <div class="row">
 
-                        <h3 class="box-info" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-if="totalPayments>=0">
-                            <span ng-if="lang==='AR'">إجمالي المدفوع</span>
-                            <span ng-if="lang==='EN'">Total Contract Payments: </span>
-                            <span>{{totalPayments}} SAR</span>
-                        </h3>
+                            <h3 class="text-center col-xs-4 col-sm-4 col-md-4 col-lg-4 box-danger" ng-if="totalAmount>=0">
+                                <span ng-if="lang==='AR'">إجمالي العقود</span>
+                                <span ng-if="lang==='EN'">Total Contract Prices: </span>
+                                <span>{{totalAmount}} SAR</span>
+                            </h3>
 
-                        <h3 class="box-danger" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-if="totalAmount>=0">
-                            <span ng-if="lang==='AR'">إجمالي العقود</span>
-                            <span ng-if="lang==='EN'">Total Contract Prices: </span>
-                            <span>{{totalAmount}} SAR</span>
-                        </h3>
+                            <h3 class="text-center col-xs-4 col-sm-4 col-md-4 col-lg-4 box-info" ng-if="totalPayments>=0">
+                                <span ng-if="lang==='AR'">إجمالي المدفوع</span>
+                                <span ng-if="lang==='EN'">Total Contract Payments: </span>
+                                <span>{{totalPayments}} SAR</span>
+                            </h3>
+
+                            <h3 class="text-center col-xs-4 col-sm-4 col-md-4 col-lg-4 box-warning" ng-if="totalRemain>=0">
+                                <span ng-if="lang==='AR'">إجمالي الباقي</span>
+                                <span ng-if="lang==='EN'">Total Contract Remain: </span>
+                                <span>{{totalRemain}} SAR</span>
+                            </h3>
+
+                        </div>
 
                     </div>
                 </div>
