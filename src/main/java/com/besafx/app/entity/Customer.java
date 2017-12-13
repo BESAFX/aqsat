@@ -9,7 +9,10 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -52,10 +55,44 @@ public class Customer implements Serializable {
     @Column(columnDefinition = "boolean default true")
     private Boolean enabled;
 
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
+    private List<Contract> contracts = new ArrayList<>();
+
     @JsonCreator
     public static Customer Create(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         Customer customer = mapper.readValue(jsonString, Customer.class);
         return customer;
+    }
+
+    public Double getContractsAmount() {
+        try {
+            return this.contracts.stream().mapToDouble(Contract::getAmount).sum();
+        } catch (Exception ex) {
+            return 0.0;
+        }
+    }
+
+    public Double getPaid() {
+        try {
+            return this.contracts.stream()
+                    .flatMap(contract -> contract.getContractReceipts().stream())
+                    .map(ContractReceipt::getReceipt)
+                    .collect(Collectors.toList())
+                    .stream()
+                    .mapToDouble(Receipt::getAmountNumber)
+                    .sum();
+
+        } catch (Exception ex) {
+            return 0.0;
+        }
+    }
+
+    public Double getRemain() {
+        try {
+            return this.getContractsAmount() - this.getPaid();
+        } catch (Exception ex) {
+            return 0.0;
+        }
     }
 }

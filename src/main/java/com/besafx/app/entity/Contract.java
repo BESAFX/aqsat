@@ -1,6 +1,7 @@
 package com.besafx.app.entity;
 
 import com.besafx.app.entity.enums.AqsatMethod;
+import com.besafx.app.entity.enums.GoodsType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -45,6 +46,11 @@ public class Contract implements Serializable {
     @Enumerated(EnumType.STRING)
     private AqsatMethod aqsatMethod;
 
+    @Enumerated(EnumType.STRING)
+    private GoodsType goodsType;
+
+    private Double goodsCount;
+
     private Double amount;
 
     private Integer maxDelayInDays;
@@ -85,6 +91,14 @@ public class Contract implements Serializable {
     public String getAqsatMethodInArabic() {
         try {
             return this.aqsatMethod.getName();
+        } catch (Exception ex) {
+            return "";
+        }
+    }
+
+    public String getgoodsTypeInArabic() {
+        try {
+            return this.goodsType.getName();
         } catch (Exception ex) {
             return "";
         }

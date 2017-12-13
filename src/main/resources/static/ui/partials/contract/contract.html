@@ -665,6 +665,16 @@
                                             <span ng-if="lang==='EN'">Payment Method</span>
                                         </th>
 
+                                        <th st-sort="goodsType">
+                                            <span ng-if="lang==='AR'">نوع البضاعة</span>
+                                            <span ng-if="lang==='EN'">Goods Type</span>
+                                        </th>
+
+                                        <th st-sort="goodsCount">
+                                            <span ng-if="lang==='AR'">كمية البضاعة</span>
+                                            <span ng-if="lang==='EN'">Goods Count</span>
+                                        </th>
+
                                         <th st-sort="customer.name">
                                             <span ng-if="lang==='AR'">العميل</span>
                                             <span ng-if="lang==='EN'">Customer</span>
@@ -687,7 +697,7 @@
 
                                     </tr>
                                     <tr>
-                                        <th colspan="9">
+                                        <th colspan="11">
                                             <input st-search=""
                                                    class="form-control"
                                                    placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
@@ -709,7 +719,15 @@
                                             <span class="label label-success">{{contract.registerDate | date:'h:m a'}}</span>
                                         </td>
                                         <td st-select-row-custom="contract" class="danger">{{contract.amount}} SAR</td>
-                                        <td st-select-row-custom="contract">{{contract.aqsatMethodInArabic}}</td>
+                                        <td st-select-row-custom="contract">
+                                            <span ng-if="lang==='AR'">{{contract.aqsatMethodInArabic}}</span>
+                                            <span ng-if="lang==='EN'">{{contract.aqsatMethod}}</span>
+                                        </td>
+                                        <td st-select-row-custom="contract">
+                                            <span ng-if="lang==='AR'">{{contract.goodsTypeInArabic}}</span>
+                                            <span ng-if="lang==='EN'">{{contract.goodsType}}</span>
+                                        </td>
+                                        <td st-select-row-custom="contract">{{contract.goodsCount}}</td>
                                         <td st-select-row-custom="contract">{{contract.customer.name}}</td>
                                         <td st-select-row-custom="contract">{{contract.supplier.name}}</td>
                                         <td st-select-row-custom="contract" class="info">{{contract.paid}} SAR</td>
@@ -717,7 +735,7 @@
                                     </tr>
                                     <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
                                         ng-show="!collection || collection.length ==0">
-                                        <td colspan="9">
+                                        <td colspan="11">
                                             <span ng-if="lang==='AR'">لا توجد بيانات</span>
                                             <span ng-if="lang==='EN'">No Data Found.</span>
                                         </td>

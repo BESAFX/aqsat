@@ -17,9 +17,6 @@ import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,8 +33,8 @@ public class CustomerRest {
 
     private final static Logger log = LoggerFactory.getLogger(CustomerRest.class);
 
-    public static final String FILTER_TABLE = "**";
-    public static final String FILTER_CUSTOMER_INFO = "id,code,name,registerDate,mobile,identityNumber,nationality,job,enabled";
+    public static final String FILTER_TABLE = "**,contracts[id]";
+    public static final String FILTER_CUSTOMER_INFO = "id,code,name,registerDate,mobile,identityNumber,nationality,job,enabled,contractsAmount,paid,remain,contracts[id]";
     public static final String FILTER_CUSTOMER_COMBO = "id,code,name,mobile,identityNumber";
 
     @Autowired
