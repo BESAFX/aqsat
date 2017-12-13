@@ -173,13 +173,13 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
         });
     };
 
-    this.openContractReceiptCreateInnerModel = function (contract) {
+    this.openReceiptCreateByContractModel = function (contract) {
         return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: '/ui/partials/contract/contractReceiptCreate.html',
-            controller: 'contractReceiptCreateCtrl',
+            templateUrl: '/ui/partials/contract/receiptCreateByContract.html',
+            controller: 'receiptCreateByContractCtrl',
             backdrop: 'static',
             keyboard: false,
             resolve: {

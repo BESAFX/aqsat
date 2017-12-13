@@ -145,7 +145,7 @@ gulp.task('scripts', function () {
 
         './partials/contract/contract.js',
         './partials/contract/contractCreateUpdate.js',
-        './partials/contract/contractReceiptCreate.js',
+        './partials/contract/receiptCreateByContract.js',
 
         './partials/employee/employee.js',
         './partials/employee/employeeCreateUpdate.js',

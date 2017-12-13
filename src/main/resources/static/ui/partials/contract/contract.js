@@ -267,7 +267,7 @@ app.controller("contractCtrl", ['ContractService', 'ModalProvider', '$scope', '$
         };
 
         $scope.newContractReceipt = function (contract) {
-            ModalProvider.openContractReceiptCreateInnerModel(contract).result.then(function (data) {
+            ModalProvider.openReceiptCreateByContractModel(contract).result.then(function (data) {
                 if (contract.contractReceipts) {
                     return contract.contractReceipts.splice(0, 0, data);
                 }

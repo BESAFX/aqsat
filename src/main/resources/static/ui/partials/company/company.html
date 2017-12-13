@@ -236,82 +236,82 @@
             <div ng-show="showMenuStates===true">
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="home" ui-sref-active="mdl-navigation__link-active mdl-color--primary">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">dashboard</i>
-                    <span ng-if="lang==='AR'">الرئيسية</span>
-                    <span ng-if="lang==='EN'">DASHBOARD</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">dashboard</i>
+                        <span ng-if="lang==='AR'">الرئيسية</span>
+                        <span ng-if="lang==='EN'">DASHBOARD</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="company" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_COMPANY_UPDATE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">business</i>
-                    <span ng-if="lang==='AR'">الشركة</span>
-                    <span ng-if="lang==='EN'">COMPANY</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">business</i>
+                        <span ng-if="lang==='AR'">الشركة</span>
+                        <span ng-if="lang==='EN'">COMPANY</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="customer.list" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_CUSTOMER_CREATE', 'ROLE_CUSTOMER_UPDATE', 'ROLE_CUSTOMER_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">account_circle</i>
-                    <span ng-if="lang==='AR'">العملاء</span>
-                    <span ng-if="lang==='EN'">CUSTOMERS</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">account_circle</i>
+                        <span ng-if="lang==='AR'">العملاء</span>
+                        <span ng-if="lang==='EN'">CUSTOMERS</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="employee.list" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_EMPLOYEE_CREATE', 'ROLE_EMPLOYEE_UPDATE', 'ROLE_EMPLOYEE_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">person_pin_circle</i>
-                    <span ng-if="lang==='AR'">الموظفون</span>
-                    <span ng-if="lang==='EN'">EMPLOYEES</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">person_pin_circle</i>
+                        <span ng-if="lang==='AR'">الموظفون</span>
+                        <span ng-if="lang==='EN'">EMPLOYEES</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="supplier" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_CREATE', 'ROLE_SUPPLIER_UPDATE', 'ROLE_SUPPLIER_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">store</i>
-                    <span ng-if="lang==='AR'">التجار</span>
-                    <span ng-if="lang==='EN'">SELLERS</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">store</i>
+                        <span ng-if="lang==='AR'">التجار</span>
+                        <span ng-if="lang==='EN'">SELLERS</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="contract" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_CREATE', 'ROLE_CONTRACT_UPDATE', 'ROLE_CONTRACT_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">store</i>
-                    <span ng-if="lang==='AR'">العقود</span>
-                    <span ng-if="lang==='EN'">CONTRACTS</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">store</i>
+                        <span ng-if="lang==='AR'">العقود</span>
+                        <span ng-if="lang==='EN'">CONTRACTS</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="contractReceipt" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_CREATE', 'ROLE_CONTRACT_RECEIPT_UPDATE', 'ROLE_CONTRACT_RECEIPT_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">attach_money</i>
-                    <span ng-if="lang==='AR'">السندات</span>
-                    <span ng-if="lang==='EN'">RECEIPTS</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">attach_money</i>
+                        <span ng-if="lang==='AR'">سندات القبض</span>
+                        <span ng-if="lang==='EN'">CONTRACT RECEIPTS</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="team" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE', 'ROLE_TEAM_UPDATE', 'ROLE_TEAM_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">security</i>
-                    <span ng-if="lang==='AR'">الصلاحيات</span>
-                    <span ng-if="lang==='EN'">PRIVILEGES</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">security</i>
+                        <span ng-if="lang==='AR'">الصلاحيات</span>
+                        <span ng-if="lang==='EN'">PRIVILEGES</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="report" ui-sref-active="mdl-navigation__link-active mdl-color--primary">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">assignment</i>
-                    <span ng-if="lang==='AR'">التقارير</span>
-                    <span ng-if="lang==='EN'">REPORTS</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">assignment</i>
+                        <span ng-if="lang==='AR'">التقارير</span>
+                        <span ng-if="lang==='EN'">REPORTS</span>
+                    </span>
                 </a>
             </div>
         </nav>

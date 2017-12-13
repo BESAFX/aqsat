@@ -16,80 +16,101 @@ app.controller("contractReceiptCtrl", ['ContractReceiptService', 'ModalProvider'
             var search = [];
 
             if ($scope.param.contractCodeFrom) {
-                search.push('code=');
+                search.push('contractCodeFrom=');
                 search.push($scope.param.contractCodeFrom);
                 search.push('&');
             }
             if ($scope.param.contractCodeTo) {
-                search.push('code=');
+                search.push('contractCodeTo=');
                 search.push($scope.param.contractCodeTo);
                 search.push('&');
             }
             //
             if ($scope.param.contractCustomerName) {
-                search.push('customerName=');
+                search.push('contractCustomerName=');
                 search.push($scope.param.contractCustomerName);
                 search.push('&');
             }
             if ($scope.param.contractCustomerMobile) {
-                search.push('customerMobile=');
+                search.push('contractCustomerMobile=');
                 search.push($scope.param.contractCustomerMobile);
                 search.push('&');
             }
             if ($scope.param.contractCustomerIdentityNumber) {
-                search.push('customerIdentityNumber=');
+                search.push('contractCustomerIdentityNumber=');
                 search.push($scope.param.contractCustomerIdentityNumber);
                 search.push('&');
             }
             //
             if ($scope.param.contractSupplierName) {
-                search.push('supplierName=');
+                search.push('contractSupplierName=');
                 search.push($scope.param.contractSupplierName);
                 search.push('&');
             }
             if ($scope.param.contractSupplierMobile) {
-                search.push('supplierMobile=');
+                search.push('contractSupplierMobile=');
                 search.push($scope.param.contractSupplierMobile);
                 search.push('&');
             }
             if ($scope.param.contractSupplierIdentityNumber) {
-                search.push('supplierIdentityNumber=');
+                search.push('contractSupplierIdentityNumber=');
                 search.push($scope.param.contractSupplierIdentityNumber);
                 search.push('&');
             }
             //
             if ($scope.param.contractAmountFrom) {
-                search.push('amountFrom=');
+                search.push('contractAmountFrom=');
                 search.push($scope.param.contractAmountFrom);
                 search.push('&');
             }
             if ($scope.param.contractAmountTo) {
-                search.push('amountTo=');
+                search.push('contractAmountTo=');
                 search.push($scope.param.contractAmountTo);
                 search.push('&');
             }
             //
             if ($scope.param.contractRegisterDateFrom) {
-                search.push('registerDateFrom=');
+                search.push('contractRegisterDateFrom=');
                 search.push($scope.param.contractRegisterDateFrom.getTime());
                 search.push('&');
             }
             if ($scope.param.contractRegisterDateTo) {
-                search.push('registerDateTo=');
+                search.push('contractRegisterDateTo=');
                 search.push($scope.param.contractRegisterDateTo.getTime());
                 search.push('&');
             }
             //
-            ContractService.filter(search.join("")).then(function (data) {
+
+            //
+            if ($scope.param.receiptCodeFrom) {
+                search.push('receiptCodeFrom=');
+                search.push($scope.param.receiptCodeFrom);
+                search.push('&');
+            }
+            if ($scope.param.receiptCodeTo) {
+                search.push('receiptCodeTo=');
+                search.push($scope.param.receiptCodeTo);
+                search.push('&');
+            }
+            //
+            if ($scope.param.receiptDateFrom) {
+                search.push('receiptDateFrom=');
+                search.push($scope.param.receiptDateFrom.getTime());
+                search.push('&');
+            }
+            if ($scope.param.receiptDateTo) {
+                search.push('receiptDateTo=');
+                search.push($scope.param.receiptDateTo.getTime());
+                search.push('&');
+            }
+            //
+
+            ContractReceiptService.filter(search.join("")).then(function (data) {
                 $scope.contractReceipts = data;
                 $scope.setSelected(data[0]);
                 $scope.totalAmount = 0;
-                $scope.totalPayments = 0;
-                $scope.totalRemain = 0;
-                angular.forEach(data, function (contract) {
-                    $scope.totalAmount+=contract.amount;
-                    $scope.totalPayments+=contract.paid;
-                    $scope.totalRemain+=contract.remain;
+                angular.forEach(data, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
                 });
                 $scope.items = [];
                 $scope.items.push(
@@ -117,12 +138,8 @@ app.controller("contractReceiptCtrl", ['ContractReceiptService', 'ModalProvider'
                 $scope.contractReceipts = data;
                 $scope.setSelected(data[0]);
                 $scope.totalAmount = 0;
-                $scope.totalPayments = 0;
-                $scope.totalRemain = 0;
-                angular.forEach(data, function (contract) {
-                    $scope.totalAmount+=contract.amount;
-                    $scope.totalPayments+=contract.paid;
-                    $scope.totalRemain+=contract.remain;
+                angular.forEach(data, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
                 });
                 $scope.items = [];
                 $scope.items.push(
@@ -179,12 +196,8 @@ app.controller("contractReceiptCtrl", ['ContractReceiptService', 'ModalProvider'
                 $scope.contractReceipts = data;
                 $scope.setSelected(data[0]);
                 $scope.totalAmount = 0;
-                $scope.totalPayments = 0;
-                $scope.totalRemain = 0;
-                angular.forEach(data, function (contract) {
-                    $scope.totalAmount+=contract.amount;
-                    $scope.totalPayments+=contract.paid;
-                    $scope.totalRemain+=contract.remain;
+                angular.forEach(data, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
                 });
                 $scope.items = [];
                 $scope.items.push(
@@ -212,12 +225,8 @@ app.controller("contractReceiptCtrl", ['ContractReceiptService', 'ModalProvider'
                 $scope.contractReceipts = data;
                 $scope.setSelected(data[0]);
                 $scope.totalAmount = 0;
-                $scope.totalPayments = 0;
-                $scope.totalRemain = 0;
-                angular.forEach(data, function (contract) {
-                    $scope.totalAmount+=contract.amount;
-                    $scope.totalPayments+=contract.paid;
-                    $scope.totalRemain+=contract.remain;
+                angular.forEach(data, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
                 });
                 $scope.items = [];
                 $scope.items.push(

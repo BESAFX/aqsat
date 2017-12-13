@@ -3,7 +3,6 @@ package com.besafx.app.rest;
 import com.besafx.app.config.CustomException;
 import com.besafx.app.entity.ContractReceipt;
 import com.besafx.app.entity.Person;
-import com.besafx.app.entity.Receipt;
 import com.besafx.app.entity.enums.ReceiptType;
 import com.besafx.app.search.ContractReceiptSearch;
 import com.besafx.app.service.ContractReceiptService;
@@ -36,7 +35,7 @@ public class ContractReceiptRest {
 
     private final static Logger log = LoggerFactory.getLogger(ContractReceiptRest.class);
 
-    public static final String FILTER_TABLE = "**,contract[id,code,registerDate],receipt[**,lastPerson[id,nickname,name]]";
+    public static final String FILTER_TABLE = "**,contract[id,code,customer[id,name],supplier[id,name]],receipt[**,lastPerson[id,nickname,name]]";
 
     @Autowired
     private ContractReceiptService contractReceiptService;
@@ -61,11 +60,8 @@ public class ContractReceiptRest {
             throw new CustomException("لا يمكن إنشاء سند بقيمة صفر");
         }
         Person caller = personService.findByEmail(principal.getName());
-        Receipt topReceipt = receiptService.findTopByOrderByCodeDesc();
-        if (topReceipt == null) {
-            contractReceipt.getReceipt().setCode(new Long(1));
-        } else {
-            contractReceipt.getReceipt().setCode(topReceipt.getCode() + 1);
+        if(receiptService.findByCode(contractReceipt.getReceipt().getCode()) != null){
+            throw new CustomException("رقم السند غير متاح، فضلاً ادخل رقم آخر");
         }
         contractReceipt.getReceipt().setAmountString(ArabicLiteralNumberParser.literalValueOf(contractReceipt.getReceipt().getAmountNumber()));
         contractReceipt.getReceipt().setReceiptType(ReceiptType.In);

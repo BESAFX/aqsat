@@ -75,9 +75,41 @@
                                     </ui-select>
                                 </div>
 
-                                <div class="row">
+                                <div class="form-group row">
 
-                                    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="code" class="control-label">
+                                            <span ng-if="lang==='AR'">رقم السند</span>
+                                            <span ng-if="lang==='EN'">Payment Code</span>
+                                        </label>
+                                        <input id="code"
+                                               type="number"
+                                               required=""
+                                               disable-validation-message=""
+                                               class="form-control"
+                                               ng-model="contractReceipt.receipt.code">
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="amountNumber" class="control-label">
+                                            <span ng-if="lang==='AR'">المبلغ المدفوع</span>
+                                            <span ng-if="lang==='EN'">Payment</span>
+                                        </label>
+                                        <input id="amountNumber"
+                                               type="number"
+                                               ng-min="0"
+                                               ng-max="contractReceipt.contract.remain"
+                                               required=""
+                                               disable-validation-message=""
+                                               class="form-control"
+                                               ng-model="contractReceipt.receipt.amountNumber">
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group row">
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                         <label for="paymentMethod" class="control-label">
                                             <span ng-if="lang==='AR'">طريقة الدفع</span>
                                             <span ng-if="lang==='EN'">Payment Method</span>
@@ -94,22 +126,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                        <label for="amountNumber" class="control-label">
-                                            <span ng-if="lang==='AR'">المبلغ المدفوع</span>
-                                            <span ng-if="lang==='EN'">Payment</span>
-                                        </label>
-                                        <input id="amountNumber"
-                                               type="number"
-                                               ng-min="0"
-                                               ng-max="contractReceipt.contract.remain"
-                                               required=""
-                                               disable-validation-message=""
-                                               class="form-control"
-                                               ng-model="contractReceipt.receipt.amountNumber">
-                                    </div>
-
-                                    <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                         <label for="checkCode" class="control-label">
                                             <span ng-if="lang==='AR'">رقم الشيك</span>
                                             <span ng-if="lang==='EN'">Check Code</span>

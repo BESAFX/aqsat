@@ -1,4 +1,4 @@
-app.controller('contractReceiptCreateCtrl', ['ContractReceiptService', 'ModalProvider', '$uibModal', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'contract',
+app.controller('receiptCreateByContractCtrl', ['ContractReceiptService', 'ModalProvider', '$uibModal', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'contract',
     function (ContractReceiptService, ModalProvider, $uibModal, $scope, $rootScope, $timeout, $log, $uibModalInstance, contract) {
 
         $scope.contractReceipt = {};
