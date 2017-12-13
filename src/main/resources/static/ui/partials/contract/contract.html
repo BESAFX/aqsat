@@ -655,7 +655,7 @@
                                             <span ng-if="lang==='EN'">Date</span>
                                         </th>
 
-                                        <th st-sort="amount">
+                                        <th st-sort="amount" class="danger">
                                             <span ng-if="lang==='AR'">قيمة العقد</span>
                                             <span ng-if="lang==='EN'">Value</span>
                                         </th>
@@ -675,12 +675,12 @@
                                             <span ng-if="lang==='EN'">Seller</span>
                                         </th>
 
-                                        <th st-sort="paid">
+                                        <th st-sort="paid" class="info">
                                             <span ng-if="lang==='AR'">المدفوع</span>
                                             <span ng-if="lang==='EN'">Paid</span>
                                         </th>
 
-                                        <th st-sort="remain">
+                                        <th st-sort="remain" class="warning">
                                             <span ng-if="lang==='AR'">الباقي</span>
                                             <span ng-if="lang==='EN'">Remain</span>
                                         </th>
@@ -708,12 +708,12 @@
                                             <span ng-show="dateType==='G'">{{contract.registerDate | date: 'yyyy-MM-dd'}}</span>
                                             <span class="label label-success">{{contract.registerDate | date:'h:m a'}}</span>
                                         </td>
-                                        <td st-select-row-custom="contract">{{contract.amount}} SAR</td>
+                                        <td st-select-row-custom="contract" class="danger">{{contract.amount}} SAR</td>
                                         <td st-select-row-custom="contract">{{contract.aqsatMethodInArabic}}</td>
                                         <td st-select-row-custom="contract">{{contract.customer.name}}</td>
                                         <td st-select-row-custom="contract">{{contract.supplier.name}}</td>
-                                        <td st-select-row-custom="contract">{{contract.paid}} SAR</td>
-                                        <td st-select-row-custom="contract">{{contract.remain}} SAR</td>
+                                        <td st-select-row-custom="contract" class="info">{{contract.paid}} SAR</td>
+                                        <td st-select-row-custom="contract" class="warning">{{contract.remain}} SAR</td>
                                     </tr>
                                     <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
                                         ng-show="!collection || collection.length ==0">
@@ -731,19 +731,19 @@
                     </div>
                     <div class="panel-footer">
 
-                        <h3 class="label-danger" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-if="totalRemain>=0">
+                        <h3 class="box-warning" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-if="totalRemain>=0">
                             <span ng-if="lang==='AR'">إجمالي الباقي</span>
                             <span ng-if="lang==='EN'">Total Contract Remain: </span>
                             <span>{{totalRemain}} SAR</span>
                         </h3>
 
-                        <h3 class="label-danger" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-if="totalPayments>=0">
+                        <h3 class="box-info" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-if="totalPayments>=0">
                             <span ng-if="lang==='AR'">إجمالي المدفوع</span>
                             <span ng-if="lang==='EN'">Total Contract Payments: </span>
                             <span>{{totalPayments}} SAR</span>
                         </h3>
 
-                        <h3 class="label-danger" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-if="totalAmount>=0">
+                        <h3 class="box-danger" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-if="totalAmount>=0">
                             <span ng-if="lang==='AR'">إجمالي العقود</span>
                             <span ng-if="lang==='EN'">Total Contract Prices: </span>
                             <span>{{totalAmount}} SAR</span>
