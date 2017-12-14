@@ -205,30 +205,45 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$cssPr
          *************************************************************/
         $stateProvider.state("contractReceipt", {
             url: "/contractReceipt",
-            css: [
-                '/ui/css/mdl-style-red-deep_orange.css',
-                '/ui/css/mdl-ext.css',
-                '/ui/css/theme-black.css'
-            ],
             templateUrl: "/ui/partials/contractReceipt/contractReceipt.html",
-            controller: "contractReceiptCtrl"
+            controller: "contractReceiptCtrl",
+            controllerAs: "contractReceiptCtrl"
         });
 
-        /**************************************************************
-         *                                                            *
-         * Supplier Receipt State                                     *
-         *                                                            *
-         *************************************************************/
-        $stateProvider.state("supplierReceipt", {
-            url: "/supplierReceipt",
+        $stateProvider.state("contractReceipt.in", {
+            url: "/in",
             css: [
-                '/ui/css/mdl-style-red-deep_orange.css',
+                '/ui/css/mdl-style-indigo-pink.css',
                 '/ui/css/mdl-ext.css',
                 '/ui/css/theme-black.css'
             ],
-            templateUrl: "/ui/partials/supplierReceipt/supplierReceipt.html",
-            controller: "supplierReceiptCtrl"
+            views:{
+                'body@contractReceipt':{
+                    templateUrl: "/ui/partials/contractReceipt/in/body.html"
+                },
+                'options@contractReceipt':{
+                    templateUrl: "/ui/partials/contractReceipt/in/Options.html"
+                }
+            }
         });
+
+        $stateProvider.state("contractReceipt.out", {
+            url: "/out",
+            css: [
+                '/ui/css/mdl-style-light_green-lime.css',
+                '/ui/css/mdl-ext.css',
+                '/ui/css/theme-black.css'
+            ],
+            views:{
+                'body@contractReceipt':{
+                    templateUrl: "/ui/partials/contractReceipt/out/body.html"
+                },
+                'options@contractReceipt':{
+                    templateUrl: "/ui/partials/contractReceipt/out/Options.html"
+                }
+            }
+        });
+
 
         /**************************************************************
          *                                                            *

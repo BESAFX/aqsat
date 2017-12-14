@@ -81,6 +81,9 @@ public class Contract implements Serializable {
     @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY)
     private List<ContractReceipt> contractReceipts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "contract", fetch = FetchType.LAZY)
+    private List<ContractAttach> contractAttaches = new ArrayList<>();
+
     @JsonCreator
     public static Contract Create(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();

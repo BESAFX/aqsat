@@ -52,19 +52,19 @@ public class ContractReceiptRest {
     @Autowired
     private NotificationService notificationService;
 
-    @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "create/{receiptType}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    @PreAuthorize("hasRole('ROLE_CONTRACT_RECEIPT_CREATE')")
-    public String create(@RequestBody ContractReceipt contractReceipt, Principal principal) {
+    @PreAuthorize("hasRole('ROLE_CONTRACT_RECEIPT_IN_CREATE')")
+    public String create(@PathVariable(value = "receiptType") ReceiptType receiptType, @RequestBody ContractReceipt contractReceipt, Principal principal) {
         if (contractReceipt.getReceipt().getAmountNumber() == 0) {
             throw new CustomException("لا يمكن إنشاء سند بقيمة صفر");
         }
         Person caller = personService.findByEmail(principal.getName());
-        if(receiptService.findByCode(contractReceipt.getReceipt().getCode()) != null){
+        if (receiptService.findByCode(contractReceipt.getReceipt().getCode()) != null) {
             throw new CustomException("رقم السند غير متاح، فضلاً ادخل رقم آخر");
         }
         contractReceipt.getReceipt().setAmountString(ArabicLiteralNumberParser.literalValueOf(contractReceipt.getReceipt().getAmountNumber()));
-        contractReceipt.getReceipt().setReceiptType(ReceiptType.In);
+        contractReceipt.getReceipt().setReceiptType(receiptType);
         contractReceipt.getReceipt().setDate(new DateTime().toDate());
         contractReceipt.getReceipt().setLastUpdate(new DateTime().toDate());
         contractReceipt.getReceipt().setLastPerson(caller);
@@ -77,7 +77,7 @@ public class ContractReceiptRest {
 
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    @PreAuthorize("hasRole('ROLE_CONTRACT_RECEIPT_DELETE')")
+    @PreAuthorize("hasRole('ROLE_CONTRACT_RECEIPT_IN_DELETE')")
     public void delete(@PathVariable Long id, Principal principal) {
         ContractReceipt contractReceipt = contractReceiptService.findOne(id);
         if (contractReceipt != null) {
@@ -107,6 +107,7 @@ public class ContractReceiptRest {
     @ResponseBody
     public String filter(
             /**Receipt Filters*/
+            @RequestParam(value = "receiptType", required = false) final ReceiptType receiptType,
             @RequestParam(value = "receiptCodeFrom", required = false) final Long receiptCodeFrom,
             @RequestParam(value = "receiptCodeTo", required = false) final Long receiptCodeTo,
             @RequestParam(value = "receiptDateFrom", required = false) final Long receiptDateFrom,
@@ -128,53 +129,50 @@ public class ContractReceiptRest {
             @RequestParam(value = "contractSupplierIdentityNumber", required = false) final String contractSupplierIdentityNumber
     ) {
         List<ContractReceipt> list = contractReceiptSearch.filter(
-          receiptCodeFrom,
-          receiptCodeTo,
-          receiptDateFrom,
-          receiptDateTo,
-          receiptAmountNumberFrom,
-          receiptAmountNumberTo,
-          contractCodeFrom,
-          contractCodeTo,
-          contractRegisterDateFrom,
-          contractRegisterDateTo,
-          contractAmountFrom,
-          contractAmountTo,
-          contractCustomerName,
-          contractCustomerMobile,
-          contractCustomerIdentityNumber,
-          contractSupplierName,
-          contractSupplierMobile,
-          contractSupplierIdentityNumber
+                receiptType,
+                receiptCodeFrom,
+                receiptCodeTo,
+                receiptDateFrom,
+                receiptDateTo,
+                receiptAmountNumberFrom,
+                receiptAmountNumberTo,
+                contractCodeFrom,
+                contractCodeTo,
+                contractRegisterDateFrom,
+                contractRegisterDateTo,
+                contractAmountFrom,
+                contractAmountTo,
+                contractCustomerName,
+                contractCustomerMobile,
+                contractCustomerIdentityNumber,
+                contractSupplierName,
+                contractSupplierMobile,
+                contractSupplierIdentityNumber
         );
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), list);
     }
 
-    @RequestMapping(value = "findByToday", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "findByToday/{receiptType}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String findByToday() {
-        log.info("إيرادات عقود اليوم");
-        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByToday());
+    public String findByToday(@PathVariable(value = "receiptType") ReceiptType receiptType) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByToday(receiptType));
     }
 
-    @RequestMapping(value = "findByWeek", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "findByWeek/{receiptType}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String findByWeek() {
-        log.info("إيرادات عقود الاسبوع");
-        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByWeek());
+    public String findByWeek(@PathVariable(value = "receiptType") ReceiptType receiptType) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByWeek(receiptType));
     }
 
-    @RequestMapping(value = "findByMonth", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "findByMonth/{receiptType}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String findByMonth() {
-        log.info("إيرادات عقود الشهر");
-        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByMonth());
+    public String findByMonth(@PathVariable(value = "receiptType") ReceiptType receiptType) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByMonth(receiptType));
     }
 
-    @RequestMapping(value = "findByYear", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "findByYear/{receiptType}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String findByYear() {
-        log.info("إيرادات عقود العام");
-        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByYear());
+    public String findByYear(@PathVariable(value = "receiptType") ReceiptType receiptType) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), contractReceiptSearch.findByYear(receiptType));
     }
 }

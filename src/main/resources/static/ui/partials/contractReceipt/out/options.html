@@ -1,0 +1,112 @@
+<div class="row">
+    <ul class="breadcrumb">
+        <li ng-repeat="item in contractReceiptCtrl.itemsOut | orderBy:'id' track by item.id">
+            <a ng-if="item.type==='link'" href="" ui-sref="{{item.link}}">{{item.name}}</a>
+            <span ng-if="item.type==='title'">{{item.name}}</span>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+
+    <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
+         class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+
+        <button id="view-menu-lower-right" style="width: 100%;"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+            <span ng-if="lang==='AR'">عرض البيانات</span>
+            <span ng-if="lang==='EN'">View</span>
+        </button>
+
+        <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
+            class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
+            for="view-menu-lower-right">
+            <li class="mdl-menu__item mdl-list__item"
+                ng-click="contractReceiptCtrl.findContractsReceiptsOutByToday()">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                    <span ng-if="lang==='AR'">دفعات سداد اليوم</span>
+                    <span ng-if="lang==='EN'">Contracts For Today</span>
+                </span>
+            </li>
+            <li class="mdl-menu__item mdl-list__item"
+                ng-click="contractReceiptCtrl.findContractsReceiptsOutByWeek()">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                    <span ng-if="lang==='AR'">دفعات سداد الاسبوع</span>
+                    <span ng-if="lang==='EN'">Contracts For Week</span>
+                </span>
+            </li>
+            <li class="mdl-menu__item mdl-list__item"
+                ng-click="contractReceiptCtrl.findContractsReceiptsOutByMonth()">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                    <span ng-if="lang==='AR'">دفعات سداد الشهر</span>
+                    <span ng-if="lang==='EN'">Contracts For Month</span>
+                </span>
+            </li>
+            <li class="mdl-menu__item mdl-list__item"
+                ng-click="contractReceiptCtrl.findContractsReceiptsOutByYear()">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                    <span ng-if="lang==='AR'">دفعات سداد العام</span>
+                    <span ng-if="lang==='EN'">Contracts For Year</span>
+                </span>
+            </li>
+        </ul>
+
+    </div>
+
+    <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
+         class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+
+        <button id="options-menu-lower-right" style="width: 100%;"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+            <span ng-if="lang==='AR'">العمليات</span>
+            <span ng-if="lang==='EN'">Actions</span>
+        </button>
+
+        <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
+            class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
+            for="options-menu-lower-right">
+            <li class="mdl-menu__item mdl-list__item" ng-click="contractReceiptCtrl.newContractReceiptOut();"
+                ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_OUT_CREATE'])">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-icon">add</i>
+                    <span ng-if="lang==='AR'">انشاء سند جديد</span>
+                    <span ng-if="lang==='EN'">New...</span>
+                </span>
+            </li>
+            <li class="mdl-menu__item mdl-list__item" ng-click="contractReceiptCtrl.deleteOut()"
+                ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_OUT_DELETE']) && contractReceiptCtrl.toggleList===1"
+                ng-hide="!contractReceiptCtrl.contractReceiptsOut || contractReceiptCtrl.contractReceiptsOut.length==0">
+                <span class="mdl-list__item-primary-content">
+                    <i class="material-icons mdl-list__item-icon">delete</i>
+                    <span ng-if="lang==='AR'">حذف السند</span>
+                    <span ng-if="lang==='EN'">Delete</span>
+                </span>
+            </li>
+        </ul>
+
+    </div>
+
+    <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="contractReceiptCtrl.toggleList=1">
+        <div class="btn-toolbar">
+            <div class="btn-group" data-toggle="buttons">
+                <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
+                        type="button" ng-click="contractReceiptCtrl.toggleList=1"
+                        ng-class="{'active':contractReceiptCtrl.toggleList===1}">
+                    <input type="radio" name="options"/>
+                    <i class="material-icons">reorder</i>
+                </button>
+                <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
+                        type="button" ng-click="contractReceiptCtrl.toggleList=2"
+                        ng-class="{'active':contractReceiptCtrl.toggleList===2}">
+                    <input type="radio" name="options"/>
+                    <i class="material-icons">view_column</i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,5 +1,5 @@
-app.controller("contractCtrl", ['ContractService', 'ModalProvider', '$scope', '$rootScope', '$state', '$timeout', '$uibModal',
-    function (ContractService, ModalProvider, $scope, $rootScope, $state, $timeout, $uibModal) {
+app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'ModalProvider', '$scope', '$rootScope', '$state', '$timeout', '$uibModal',
+    function (ContractService, ContractAttachService, ModalProvider, $scope, $rootScope, $state, $timeout, $uibModal) {
 
         $scope.selected = {};
 
@@ -312,8 +312,135 @@ app.controller("contractCtrl", ['ContractService', 'ModalProvider', '$scope', '$
                 click: function ($itemScope, $event, value) {
                     $scope.newContractReceipt($itemScope.contract);
                 }
+            },
+            {
+                html: '<div class="drop-menu">فحص ملف<span class="fa fa-money fa-lg"></span></div>',
+                enabled: function ($itemScope) {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_CONTRACT_CREATE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    $scope.scanToJpg($itemScope.contract);
+                }
+            },
+            {
+                html: '<div class="drop-menu">مرفق جديد<span class="fa fa-link fa-lg"></span></div>',
+                enabled: function ($itemScope) {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_CONTRACT_CREATE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    $scope.uploadFiles($itemScope.contract);
+                }
             }
         ];
+
+        /***********************************
+         *                                 *
+         * START FILE UPLOADER             *
+         *                                 *
+         **********************************/
+        $scope.contractForUpload = {};
+
+        $scope.uploadFiles = function (contract) {
+            $scope.contractForUpload = contract;
+            document.getElementById('uploader').click();
+        };
+
+        $scope.initFiles = function (files) {
+
+            $scope.wrappers = [];
+
+            angular.forEach(files, function (file) {
+                var wrapper = {};
+                wrapper.src = file;
+                wrapper.name = file.name.substr(0, file.name.lastIndexOf('.')) || file.name;
+                wrapper.mimeType = file.name.split('.').pop();
+                wrapper.size = file.size;
+                $scope.wrappers.push(wrapper);
+            });
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                ariaLabelledBy: 'modal-title',
+                ariaDescribedBy: 'modal-body',
+                templateUrl: '/ui/partials/contract/contractAttachUpload.html',
+                controller: 'contractAttachUploadCtrl',
+                scope: $scope,
+                backdrop: 'static',
+                keyboard: false
+            });
+
+            modalInstance.result.then(function () {
+                angular.forEach($scope.wrappers, function (wrapper) {
+                    ContractAttachService.upload($scope.contractForUpload, wrapper.name, wrapper.mimeType, wrapper.description, wrapper.src).then(function (data) {
+                        if ($scope.contractForUpload.contractAttaches) {
+                            return $scope.contractForUpload.contractAttaches.splice(0, 0, data);
+                        }
+                    });
+                });
+            }, function () {
+            });
+
+        };
+        /***********************************
+         *                                 *
+         * END FILE UPLOADER               *
+         *                                 *
+         **********************************/
+
+        /***********************************
+         *                                 *
+         * START SCAN MANAGER              *
+         *                                 *
+         **********************************/
+        $scope.scanToJpg = function (contract) {
+            $scope.contractForUpload = contract;
+            scanner.scan(displayImagesOnPage,
+                {
+                    "output_settings": [
+                        {
+                            "type": "return-base64",
+                            "format": "jpg"
+                        }
+                    ]
+                }
+            );
+        };
+
+        function dataURItoBlob(dataURI) {
+            // convert base64/URLEncoded data component to raw binary data held in a string
+            var byteString;
+            if (dataURI.split(',')[0].indexOf('base64') >= 0)
+                byteString = atob(dataURI.split(',')[1]);
+            else
+                byteString = unescape(dataURI.split(',')[1]);
+
+            // separate out the mime component
+            var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+            // write the bytes of the string to a typed array
+            var ia = new Uint8Array(byteString.length);
+            for (var i = 0; i < byteString.length; i++) {
+                ia[i] = byteString.charCodeAt(i);
+            }
+
+            return new Blob([ia], {type: mimeString});
+        }
+
+        function displayImagesOnPage(successful, mesg, response) {
+            var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
+            var files = [];
+            for (var i = 0; (scannedImages instanceof Array) && i < scannedImages.length; i++) {
+                var blob = dataURItoBlob(scannedImages[i].src);
+                var file = new File([blob], wrapper.name + '.jpg');
+                files.push(file);
+            }
+            $scope.initFiles(files);
+        }
+        /***********************************
+         *                                 *
+         * END SCAN MANAGER                *
+         *                                 *
+         **********************************/
 
         $timeout(function () {
             $scope.findContractsByWeek();

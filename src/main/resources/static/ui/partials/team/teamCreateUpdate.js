@@ -118,40 +118,46 @@ app.controller('teamCreateUpdateCtrl', ['TeamService', '$scope', '$rootScope', '
             },
             {
                 id: 20,
-                name: $rootScope.lang === 'AR' ? 'إنشاء سندات القبض' : 'Create Receipt',
-                value: 'ROLE_CONTRACT_RECEIPT_CREATE',
-                selected: false
-            },
-            {
-                id: 21,
-                name: $rootScope.lang === 'AR' ? 'تعديل بيانات سندات القبض' : 'Update Receipt Information',
-                value: 'ROLE_CONTRACT_RECEIPT_UPDATE',
-                selected: false
-            },
-            {
-                id: 22,
-                name: $rootScope.lang === 'AR' ? 'حذف سندات القبض' : 'Delete Receipt',
-                value: 'ROLE_CONTRACT_RECEIPT_DELETE',
-                selected: false
-            },
-            {
-                id: 23,
                 name: $rootScope.lang === 'AR' ? 'إنشاء العقود' : 'Create Contracts',
                 value: 'ROLE_CONTRACT_CREATE',
                 selected: false
             },
             {
-                id: 24,
+                id: 21,
                 name: $rootScope.lang === 'AR' ? 'تعديل بيانات العقود' : 'Update Contracts Information',
                 value: 'ROLE_CONTRACT_UPDATE',
                 selected: false
             },
             {
-                id: 25,
+                id: 23,
                 name: $rootScope.lang === 'AR' ? 'حذف العقود' : 'Delete Contracts',
                 value: 'ROLE_CONTRACT_DELETE',
                 selected: false
-            }
+            },
+            {
+                id: 24,
+                name: $rootScope.lang === 'AR' ? 'إنشاء سندات القبض' : 'Create Receipt',
+                value: 'ROLE_CONTRACT_RECEIPT_IN_CREATE',
+                selected: false
+            },
+            {
+                id: 25,
+                name: $rootScope.lang === 'AR' ? 'حذف سندات القبض' : 'Delete Receipt',
+                value: 'ROLE_CONTRACT_RECEIPT_IN_DELETE',
+                selected: false
+            },
+            {
+                id: 26,
+                name: $rootScope.lang === 'AR' ? 'إنشاء سندات الصرف' : 'Create Receipt',
+                value: 'ROLE_CONTRACT_RECEIPT_OUT_CREATE',
+                selected: false
+            },
+            {
+                id: 27,
+                name: $rootScope.lang === 'AR' ? 'حذف سندات الصرف' : 'Delete Receipt',
+                value: 'ROLE_CONTRACT_RECEIPT_OUT_DELETE',
+                selected: false
+            },
 
         ];
 

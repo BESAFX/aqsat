@@ -1,5 +1,8 @@
-app.controller('contractReceiptCreateCtrl', ['ContractReceiptService', 'ContractService', 'ModalProvider', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance',
-    function (ContractReceiptService, ContractService, ModalProvider, $scope, $rootScope, $timeout, $log, $uibModalInstance) {
+app.controller('contractReceiptCreateCtrl', ['ContractReceiptService', 'ContractService', 'ModalProvider', '$scope', '$rootScope', '$timeout', '$log', '$uibModalInstance', 'receiptType',
+    function (ContractReceiptService, ContractService, ModalProvider, $scope, $rootScope, $timeout, $log, $uibModalInstance, receiptType) {
+
+
+        $scope.receiptType = receiptType;
 
         $scope.contractReceipt = {};
 
@@ -20,9 +23,18 @@ app.controller('contractReceiptCreateCtrl', ['ContractReceiptService', 'Contract
         };
 
         $scope.submit = function () {
-            ContractReceiptService.create($scope.contractReceipt).then(function (data) {
-                $uibModalInstance.close(data);
-            });
+            switch (receiptType){
+                case 'In':
+                    ContractReceiptService.createIn($scope.contractReceipt).then(function (data) {
+                        $uibModalInstance.close(data);
+                    });
+                    break;
+                case 'Out':
+                    ContractReceiptService.createOut($scope.contractReceipt).then(function (data) {
+                        $uibModalInstance.close(data);
+                    });
+                    break;
+            }
         };
 
         $scope.cancel = function () {

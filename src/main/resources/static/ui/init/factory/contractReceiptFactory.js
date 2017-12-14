@@ -11,8 +11,13 @@ app.factory("ContractReceiptService",
                     return response.data;
                 });
             },
-            create: function (contract) {
-                return $http.post("/api/contractReceipt/create", contract).then(function (response) {
+            createIn: function (contractReceipt) {
+                return $http.post("/api/contractReceipt/create/In", contractReceipt).then(function (response) {
+                    return response.data;
+                });
+            },
+            createOut: function (contractReceipt) {
+                return $http.post("/api/contractReceipt/create/Out", contractReceipt).then(function (response) {
                     return response.data;
                 });
             },
@@ -24,23 +29,43 @@ app.factory("ContractReceiptService",
                     return response.data;
                 });
             },
-            findByToday: function () {
-                return $http.get("/api/contractReceipt/findByToday").then(function (response) {
+            findByTodayIn: function () {
+                return $http.get("/api/contractReceipt/findByToday/In").then(function (response) {
                     return response.data;
                 });
             },
-            findByWeek: function () {
-                return $http.get("/api/contractReceipt/findByWeek").then(function (response) {
+            findByWeekIn: function () {
+                return $http.get("/api/contractReceipt/findByWeek/In").then(function (response) {
                     return response.data;
                 });
             },
-            findByMonth: function () {
-                return $http.get("/api/contractReceipt/findByMonth").then(function (response) {
+            findByMonthIn: function () {
+                return $http.get("/api/contractReceipt/findByMonth/In").then(function (response) {
                     return response.data;
                 });
             },
-            findByYear: function () {
-                return $http.get("/api/contractReceipt/findByYear").then(function (response) {
+            findByYearIn: function () {
+                return $http.get("/api/contractReceipt/findByYear/In").then(function (response) {
+                    return response.data;
+                });
+            },
+            findByTodayOut: function () {
+                return $http.get("/api/contractReceipt/findByToday/Out").then(function (response) {
+                    return response.data;
+                });
+            },
+            findByWeekOut: function () {
+                return $http.get("/api/contractReceipt/findByWeek/Out").then(function (response) {
+                    return response.data;
+                });
+            },
+            findByMonthOut: function () {
+                return $http.get("/api/contractReceipt/findByMonth/Out").then(function (response) {
+                    return response.data;
+                });
+            },
+            findByYearOut: function () {
+                return $http.get("/api/contractReceipt/findByYear/Out").then(function (response) {
                     return response.data;
                 });
             }

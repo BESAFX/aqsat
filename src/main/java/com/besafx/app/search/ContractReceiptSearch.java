@@ -1,6 +1,7 @@
 package com.besafx.app.search;
 
 import com.besafx.app.entity.ContractReceipt;
+import com.besafx.app.entity.enums.ReceiptType;
 import com.besafx.app.service.ContractReceiptService;
 import com.besafx.app.util.DateConverter;
 import org.joda.time.DateTime;
@@ -23,6 +24,7 @@ public class ContractReceiptSearch {
 
     public List<ContractReceipt> filter(
             /**Receipt Filters*/
+            final ReceiptType receiptType,
             final Long receiptCodeFrom,
             final Long receiptCodeTo,
             final Long receiptDateFrom,
@@ -46,6 +48,10 @@ public class ContractReceiptSearch {
         List<Specification> predicates = new ArrayList<>();
 
         /**Receipt Filters*/
+        Optional.ofNullable(receiptType)
+                .ifPresent(value -> predicates.add((root, cq, cb) ->
+                        cb.equal(root.get("receipt").get("receiptType"), value)));
+
         Optional.ofNullable(receiptCodeFrom)
                 .ifPresent(value ->
                         predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("receipt").get("code"),  value)));
@@ -132,10 +138,11 @@ public class ContractReceiptSearch {
         }
     }
 
-    public List<ContractReceipt> findByToday() {
+    public List<ContractReceipt> findByToday(final ReceiptType receiptType) {
         List<Specification> predicates = new ArrayList<>();
         DateTime today = new DateTime().withTimeAtStartOfDay();
         DateTime tomorrow = new DateTime().plusDays(1).withTimeAtStartOfDay();
+        predicates.add((root, cq, cb) -> cb.equal(root.get("receipt").get("receiptType"), receiptType));
         predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("receipt").get("date"), today.toDate()));
         predicates.add((root, cq, cb) -> cb.lessThanOrEqualTo(root.get("receipt").get("date"), tomorrow.toDate()));
         Specification result = predicates.get(0);
@@ -147,10 +154,11 @@ public class ContractReceiptSearch {
         return list;
     }
 
-    public List<ContractReceipt> findByWeek() {
+    public List<ContractReceipt> findByWeek(final ReceiptType receiptType) {
         List<Specification> predicates = new ArrayList<>();
         Date weekStart = DateConverter.getCurrentWeekStart();
         Date weekEnd = DateConverter.getCurrentWeekEnd();
+        predicates.add((root, cq, cb) -> cb.equal(root.get("receipt").get("receiptType"), receiptType));
         predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("receipt").get("date"), weekStart));
         predicates.add((root, cq, cb) -> cb.lessThanOrEqualTo(root.get("receipt").get("date"), weekEnd));
         Specification result = predicates.get(0);
@@ -162,10 +170,11 @@ public class ContractReceiptSearch {
         return list;
     }
 
-    public List<ContractReceipt> findByMonth() {
+    public List<ContractReceipt> findByMonth(final ReceiptType receiptType) {
         List<Specification> predicates = new ArrayList<>();
         DateTime monthStart = new DateTime().withTimeAtStartOfDay().withDayOfMonth(1);
         DateTime monthEnd = monthStart.plusMonths(1).minusDays(1);
+        predicates.add((root, cq, cb) -> cb.equal(root.get("receipt").get("receiptType"), receiptType));
         predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("receipt").get("date"), monthStart.toDate()));
         predicates.add((root, cq, cb) -> cb.lessThanOrEqualTo(root.get("receipt").get("date"), monthEnd.toDate()));
         Specification result = predicates.get(0);
@@ -177,10 +186,11 @@ public class ContractReceiptSearch {
         return list;
     }
 
-    public List<ContractReceipt> findByYear() {
+    public List<ContractReceipt> findByYear(final ReceiptType receiptType) {
         List<Specification> predicates = new ArrayList<>();
         DateTime yearStart = new DateTime().withTimeAtStartOfDay().withDayOfYear(1);
         DateTime yearEnd = yearStart.plusYears(1).minusDays(1);
+        predicates.add((root, cq, cb) -> cb.equal(root.get("receipt").get("receiptType"), receiptType));
         predicates.add((root, cq, cb) -> cb.greaterThanOrEqualTo(root.get("receipt").get("date"), yearStart.toDate()));
         predicates.add((root, cq, cb) -> cb.lessThanOrEqualTo(root.get("receipt").get("date"), yearEnd.toDate()));
         Specification result = predicates.get(0);

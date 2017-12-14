@@ -636,6 +636,8 @@
 
                         <div class="form-group row">
 
+                            <input id="uploader" style="display: none" type="file" onchange="angular.element(this).scope().initFiles(this.files);" multiple/>
+
                             <div class="table-responsive">
                                 <table st-table="collection" st-safe-src="contracts"
                                        class="table table-bordered table-hover">

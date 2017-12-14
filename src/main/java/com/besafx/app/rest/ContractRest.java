@@ -32,7 +32,7 @@ public class ContractRest {
 
     private final static Logger log = LoggerFactory.getLogger(ContractRest.class);
 
-    public static final String FILTER_TABLE = "**,-contractReceipts,customer[id,code,name],supplier[id,code,name],lastPerson[id,name]";
+    public static final String FILTER_TABLE = "**,-contractAttaches,-contractReceipts,customer[id,code,name],supplier[id,code,name],lastPerson[id,name]";
     public static final String FILTER_CONTRACT_COMBO = "id,code,remain,customer[id,name],supplier[id,name]";
 
     @Autowired

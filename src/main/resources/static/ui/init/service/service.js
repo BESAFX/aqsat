@@ -195,7 +195,7 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
      * ContractReceipt Model                                      *
      *                                                            *
      *************************************************************/
-    this.openContractReceiptCreateModel = function () {
+    this.openContractReceiptInCreateModel = function () {
         return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
@@ -203,7 +203,29 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
             templateUrl: '/ui/partials/contractReceipt/contractReceiptCreate.html',
             controller: 'contractReceiptCreateCtrl',
             backdrop: 'static',
-            keyboard: false
+            keyboard: false,
+            resolve: {
+                receiptType: function () {
+                    return 'In';
+                }
+            }
+        });
+    };
+
+    this.openContractReceiptOutCreateModel = function () {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: '/ui/partials/contractReceipt/contractReceiptCreate.html',
+            controller: 'contractReceiptCreateCtrl',
+            backdrop: 'static',
+            keyboard: false,
+            resolve: {
+                receiptType: function () {
+                    return 'Out';
+                }
+            }
         });
     };
 
