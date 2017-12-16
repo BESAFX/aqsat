@@ -272,6 +272,24 @@
                 </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
+                   href="" ui-sref="contractReceipt.in" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
+                   ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_IN_CREATE', 'ROLE_CONTRACT_RECEIPT_IN_UPDATE', 'ROLE_CONTRACT_RECEIPT_IN_DELETE'])">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">attach_money</i>
+                        <span ng-if="lang==='AR'">سندات القبض</span>
+                        <span ng-if="lang==='EN'">Customer Payments</span>
+                    </span>
+                </a>
+                <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
+                   href="" ui-sref="contractReceipt.out" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
+                   ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_OUT_CREATE', 'ROLE_CONTRACT_RECEIPT_OUT_UPDATE', 'ROLE_CONTRACT_RECEIPT_OUT_DELETE'])">
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">attach_money</i>
+                        <span ng-if="lang==='AR'">سندات الصرف</span>
+                        <span ng-if="lang==='EN'">Sellers Payments</span>
+                    </span>
+                </a>
+                <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="team" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE', 'ROLE_TEAM_UPDATE', 'ROLE_TEAM_DELETE'])">
                 <span class="mdl-list__item-primary-content">

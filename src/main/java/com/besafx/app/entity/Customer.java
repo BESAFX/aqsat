@@ -1,5 +1,6 @@
 package com.besafx.app.entity;
 
+import com.besafx.app.entity.enums.ReceiptType;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;
@@ -77,6 +78,7 @@ public class Customer implements Serializable {
         try {
             return this.contracts.stream()
                     .flatMap(contract -> contract.getContractReceipts().stream())
+                    .filter(contractReceipt -> contractReceipt.getReceipt().getReceiptType().equals(ReceiptType.In))
                     .map(ContractReceipt::getReceipt)
                     .collect(Collectors.toList())
                     .stream()
