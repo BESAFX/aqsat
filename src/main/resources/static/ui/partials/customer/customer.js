@@ -18,6 +18,10 @@ app.controller("customerCtrl", ['CustomerService', 'ModalProvider', '$scope', '$
 
         vm.customers = [];
 
+        vm.print = function (customer) {
+            window.open('/report/customer/' + customer.id + '/PDF');
+        };
+
         /**************************************************************
          *                                                            *
          * SEARCH                                                     *
@@ -181,6 +185,15 @@ app.controller("customerCtrl", ['CustomerService', 'ModalProvider', '$scope', '$
                 },
                 click: function ($itemScope, $event, value) {
                     ModalProvider.openCustomerDetailsModel($itemScope.customer);
+                }
+            },
+            {
+                html: '<div class="drop-menu">كشف حساب<span class="fa fa-print fa-lg"></span></div>',
+                enabled: function () {
+                    return true;
+                },
+                click: function ($itemScope, $event, value) {
+                    vm.print($itemScope.customer);
                 }
             }
         ];

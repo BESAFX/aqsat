@@ -63,6 +63,11 @@
                                 <span ng-if="lang==='EN'">Qualification</span>
                             </th>
 
+                            <th st-sort="person.team.name">
+                                <span ng-if="lang==='AR'">مجموعة الصلاحيات</span>
+                                <span ng-if="lang==='EN'">Privileges</span>
+                            </th>
+
                             <th st-sort="person.lastLoginDate">
                                 <span ng-if="lang==='AR'">تاريخ آخر دخول</span>
                                 <span ng-if="lang==='EN'">Last Login Date</span>
@@ -97,6 +102,7 @@
                             <td st-select-row-custom="employee">{{employee.person.email}}</td>
                             <td st-select-row-custom="employee">{{employee.person.mobile}}</td>
                             <td st-select-row-custom="employee">{{employee.person.qualification}}</td>
+                            <td st-select-row-custom="employee">{{employee.person.team.name}}</td>
                             <td st-select-row-custom="employee">
                                 <span ng-show="dateType==='H'">{{employee.person.lastLoginDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
                                 <span ng-show="dateType==='G'">{{employee.person.lastLoginDate | date: 'yyyy-MM-dd'}}</span>
@@ -107,7 +113,7 @@
                         </tr>
                         <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
                             ng-show="!collection1 || collection1.length ==0">
-                            <td colspan="9">
+                            <td colspan="10">
                                 <span ng-if="lang==='AR'">لا توجد بيانات</span>
                                 <span ng-if="lang==='EN'">No Data Found.</span>
                             </td>
