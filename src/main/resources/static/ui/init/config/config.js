@@ -222,7 +222,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$cssPr
                     templateUrl: "/ui/partials/contractReceipt/in/body.html"
                 },
                 'options@contractReceipt':{
-                    templateUrl: "/ui/partials/contractReceipt/in/Options.html"
+                    templateUrl: "/ui/partials/contractReceipt/in/options.html"
                 }
             }
         });
@@ -239,7 +239,7 @@ app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$cssPr
                     templateUrl: "/ui/partials/contractReceipt/out/body.html"
                 },
                 'options@contractReceipt':{
-                    templateUrl: "/ui/partials/contractReceipt/out/Options.html"
+                    templateUrl: "/ui/partials/contractReceipt/out/options.html"
                 }
             }
         });
