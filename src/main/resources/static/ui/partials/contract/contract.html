@@ -14,6 +14,25 @@
 
             <span class="mdl-layout__title">{{pageTitle}}</span>
 
+            <!-- Navigation -->
+            <nav class="mdl-navigation" ng-init="toggleState=1">
+                <a class="mdl-navigation__link"
+                   href=""
+                   ng-class="{'mdl-color-text--black mdl-color--blue-grey-50' : toggleState===1}"
+                   ng-click="">
+                    <span ng-if="lang==='AR'">سجل العقود</span>
+                    <span ng-if="lang==='EN'">Contracts List</span>
+                </a>
+                <a class="mdl-navigation__link"
+                   href=""
+                   ng-class="{'mdl-color-text--black mdl-color--blue-grey-50' : toggleState===2}"
+                   ui-sref-active="mdl-color-text--black mdl-color--blue-grey-50"
+                   ng-click="">
+                    <span ng-if="lang==='AR'">المبالغ المدفوعة</span>
+                    <span ng-if="lang==='EN'">Paid Payments</span>
+                </a>
+            </nav>
+
             <div class="mdl-layout-spacer"></div>
 
             <button ng-show="stickSideMenu===false" class="mdl-button mdl-js-button mdl-button--icon mdl-icon-margin"
@@ -112,128 +131,6 @@
                 </li>
             </ul>
 
-        </div>
-        <div class="mdl-layout__header-row" style="height: auto!important;padding: 0px !important;">
-            <div class="panel panel-body" style="width: 100%; margin-bottom: 0px !important;">
-
-                <div class="row">
-                    <ul class="breadcrumb">
-                        <li ng-repeat="item in items | orderBy:'id' track by item.id">
-                            <a ng-if="item.type==='link'" href="" ui-sref="{{item.link}}">{{item.name}}</a>
-                            <span ng-if="item.type==='title'">{{item.name}}</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="row">
-
-                    <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
-                         class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
-                        <button id="contract-view-menu-lower-right" style="width: 100%;"
-                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                            <span ng-if="lang==='AR'">عرض البيانات</span>
-                            <span ng-if="lang==='EN'">View Data</span>
-                        </button>
-                        <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
-                            class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
-                            for="contract-view-menu-lower-right">
-                            <li class="mdl-menu__item mdl-list__item"
-                                ng-click="findContractsByToday()">
-                                <span class="mdl-list__item-primary-content">
-                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
-                                    <span ng-if="lang==='AR'">عقود اليوم</span>
-                                    <span ng-if="lang==='EN'">Contracts For Today</span>
-                                </span>
-                            </li>
-                            <li class="mdl-menu__item mdl-list__item"
-                                ng-click="findContractsByWeek()">
-                                <span class="mdl-list__item-primary-content">
-                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
-                                    <span ng-if="lang==='AR'">عقود الاسبوع</span>
-                                    <span ng-if="lang==='EN'">Contracts For Week</span>
-                                </span>
-                            </li>
-                            <li class="mdl-menu__item mdl-list__item"
-                                ng-click="findContractsByMonth()">
-                                <span class="mdl-list__item-primary-content">
-                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
-                                    <span ng-if="lang==='AR'">عقود الشهر</span>
-                                    <span ng-if="lang==='EN'">Contracts For Month</span>
-                                </span>
-                            </li>
-                            <li class="mdl-menu__item mdl-list__item"
-                                ng-click="findContractsByYear()">
-                                <span class="mdl-list__item-primary-content">
-                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
-                                    <span ng-if="lang==='AR'">عقود العام</span>
-                                    <span ng-if="lang==='EN'">Contracts For Year</span>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
-                         class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
-                        <button id="contract-menu-lower-right" style="width: 100%;"
-                                class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                            <span ng-if="lang==='AR'">العمليات</span>
-                            <span ng-if="lang==='EN'">Actions</span>
-                        </button>
-                        <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
-                            class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
-                            for="contract-menu-lower-right">
-                            <li class="mdl-menu__item mdl-list__item" ng-click="newContract();"
-                                ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_CREATE'])">
-                                <span class="mdl-list__item-primary-content">
-                                    <i class="material-icons mdl-list__item-icon">add</i>
-                                    <span ng-if="lang==='AR'">انشاء عقد جديد</span>
-                                    <span ng-if="lang==='EN'">New...</span>
-                                </span>
-                            </li>
-                            <li class="mdl-menu__item mdl-list__item"
-                                ng-click="ModalProvider.openContractUpdateModel(selected);"
-                                ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_UPDATE']) && toggleList===1"
-                                ng-hide="!contracts || contracts.length==0">
-                                <span class="mdl-list__item-primary-content">
-                                    <i class="material-icons mdl-list__item-icon">edit</i>
-                                    <span ng-if="lang==='AR'">تعديل بيانات العقد</span>
-                                    <span ng-if="lang==='EN'">Edit...</span>
-                                </span>
-                            </li>
-                            <li class="mdl-menu__item mdl-list__item" ng-click="delete()"
-                                ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_DELETE']) && toggleList===1"
-                                ng-hide="!contracts || contracts.length==0">
-                                <span class="mdl-list__item-primary-content">
-                                    <i class="material-icons mdl-list__item-icon">delete</i>
-                                    <span ng-if="lang==='AR'">حذف العقد</span>
-                                    <span ng-if="lang==='EN'">Delete</span>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=1">
-                        <div class="btn-toolbar">
-                            <div class="btn-group" data-toggle="buttons">
-                                <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
-                                        type="button" ng-click="toggleList=1"
-                                        ng-class="{'active':toggleList===1}">
-                                    <input type="radio" name="options"/>
-                                    <i class="material-icons">reorder</i>
-                                </button>
-                                <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
-                                        type="button" ng-click="toggleList=2"
-                                        ng-class="{'active':toggleList===2}">
-                                    <input type="radio" name="options"/>
-                                    <i class="material-icons">view_column</i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
         </div>
     </header>
 
@@ -398,24 +295,8 @@
                     <span ng-if="lang==='EN'">CONTRACTS</span>
                 </span>
                 </a>
-                <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-                   href="" ui-sref="contractReceipt.in" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
-                   ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_IN_CREATE', 'ROLE_CONTRACT_RECEIPT_IN_UPDATE', 'ROLE_CONTRACT_RECEIPT_IN_DELETE'])">
-                    <span class="mdl-list__item-primary-content">
-                        <i class="material-icons mdl-list__item-icon">attach_money</i>
-                        <span ng-if="lang==='AR'">سندات القبض</span>
-                        <span ng-if="lang==='EN'">Customer Payments</span>
-                    </span>
-                </a>
-                <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-                   href="" ui-sref="contractReceipt.out" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
-                   ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_OUT_CREATE', 'ROLE_CONTRACT_RECEIPT_OUT_UPDATE', 'ROLE_CONTRACT_RECEIPT_OUT_DELETE'])">
-                    <span class="mdl-list__item-primary-content">
-                        <i class="material-icons mdl-list__item-icon">attach_money</i>
-                        <span ng-if="lang==='AR'">سندات الصرف</span>
-                        <span ng-if="lang==='EN'">Sellers Payments</span>
-                    </span>
-                </a>
+
+
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="team" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE', 'ROLE_TEAM_UPDATE', 'ROLE_TEAM_DELETE'])">
@@ -441,7 +322,130 @@
 
         <div class="row" style="margin-top: 10px">
 
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===1">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="panel panel-body" style="width: 100%; margin-bottom: 0px !important;">
+
+                    <div class="row">
+                        <ul class="breadcrumb">
+                            <li ng-repeat="item in items | orderBy:'id' track by item.id">
+                                <a ng-if="item.type==='link'" href="" ui-sref="{{item.link}}">{{item.name}}</a>
+                                <span ng-if="item.type==='title'">{{item.name}}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="row">
+
+                        <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
+                             class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                            <button id="contract-view-menu-lower-right" style="width: 100%;"
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                                <span ng-if="lang==='AR'">عرض البيانات</span>
+                                <span ng-if="lang==='EN'">View Data</span>
+                            </button>
+                            <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
+                                class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
+                                for="contract-view-menu-lower-right">
+                                <li class="mdl-menu__item mdl-list__item"
+                                    ng-click="findContractsByToday()">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                                    <span ng-if="lang==='AR'">عقود اليوم</span>
+                                    <span ng-if="lang==='EN'">Contracts For Today</span>
+                                </span>
+                                </li>
+                                <li class="mdl-menu__item mdl-list__item"
+                                    ng-click="findContractsByWeek()">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                                    <span ng-if="lang==='AR'">عقود الاسبوع</span>
+                                    <span ng-if="lang==='EN'">Contracts For Week</span>
+                                </span>
+                                </li>
+                                <li class="mdl-menu__item mdl-list__item"
+                                    ng-click="findContractsByMonth()">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                                    <span ng-if="lang==='AR'">عقود الشهر</span>
+                                    <span ng-if="lang==='EN'">Contracts For Month</span>
+                                </span>
+                                </li>
+                                <li class="mdl-menu__item mdl-list__item"
+                                    ng-click="findContractsByYear()">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">filter_list</i>
+                                    <span ng-if="lang==='AR'">عقود العام</span>
+                                    <span ng-if="lang==='EN'">Contracts For Year</span>
+                                </span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
+                             class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
+                            <button id="contract-menu-lower-right" style="width: 100%;"
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                                <span ng-if="lang==='AR'">العمليات</span>
+                                <span ng-if="lang==='EN'">Actions</span>
+                            </button>
+                            <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
+                                class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
+                                for="contract-menu-lower-right">
+                                <li class="mdl-menu__item mdl-list__item" ng-click="newContract();"
+                                    ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_CREATE'])">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">add</i>
+                                    <span ng-if="lang==='AR'">انشاء عقد جديد</span>
+                                    <span ng-if="lang==='EN'">New...</span>
+                                </span>
+                                </li>
+                                <li class="mdl-menu__item mdl-list__item"
+                                    ng-click="ModalProvider.openContractUpdateModel(selected);"
+                                    ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_UPDATE']) && toggleList===1"
+                                    ng-hide="!contracts || contracts.length==0">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">edit</i>
+                                    <span ng-if="lang==='AR'">تعديل بيانات العقد</span>
+                                    <span ng-if="lang==='EN'">Edit...</span>
+                                </span>
+                                </li>
+                                <li class="mdl-menu__item mdl-list__item" ng-click="delete()"
+                                    ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_DELETE']) && toggleList===1"
+                                    ng-hide="!contracts || contracts.length==0">
+                                <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons mdl-list__item-icon">delete</i>
+                                    <span ng-if="lang==='AR'">حذف العقد</span>
+                                    <span ng-if="lang==='EN'">Delete</span>
+                                </span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=1">
+                            <div class="btn-toolbar">
+                                <div class="btn-group" data-toggle="buttons">
+                                    <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
+                                            type="button" ng-click="toggleList=1"
+                                            ng-class="{'active':toggleList===1}">
+                                        <input type="radio" name="options"/>
+                                        <i class="material-icons">reorder</i>
+                                    </button>
+                                    <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
+                                            type="button" ng-click="toggleList=2"
+                                            ng-class="{'active':toggleList===2}">
+                                        <input type="radio" name="options"/>
+                                        <i class="material-icons">view_column</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===1">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
@@ -786,7 +790,7 @@
                 </div>
             </div>
 
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===2">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===2">
                 <div st-table="collection" st-safe-src="contracts">
                     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="contract in collection">
                         <!-- CONTACT ITEM -->

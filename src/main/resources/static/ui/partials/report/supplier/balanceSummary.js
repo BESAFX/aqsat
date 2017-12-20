@@ -1,4 +1,4 @@
-app.controller('paymentsSummaryCtrl', ['$scope', '$rootScope', '$timeout', '$uibModalInstance',
+app.controller('balanceSummaryCtrl', ['$scope', '$rootScope', '$timeout', '$uibModalInstance',
     function ($scope, $rootScope, $timeout, $uibModalInstance) {
 
         $scope.buffer = {};

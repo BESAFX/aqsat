@@ -23,18 +23,9 @@ app.controller('contractReceiptCreateCtrl', ['ContractReceiptService', 'Contract
         };
 
         $scope.submit = function () {
-            switch (receiptType){
-                case 'In':
-                    ContractReceiptService.createIn($scope.contractReceipt).then(function (data) {
-                        $uibModalInstance.close(data);
-                    });
-                    break;
-                case 'Out':
-                    ContractReceiptService.createOut($scope.contractReceipt).then(function (data) {
-                        $uibModalInstance.close(data);
-                    });
-                    break;
-            }
+            ContractReceiptService.createIn($scope.contractReceipt).then(function (data) {
+                $uibModalInstance.close(data);
+            });
         };
 
         $scope.cancel = function () {

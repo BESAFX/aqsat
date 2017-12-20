@@ -224,23 +224,6 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
         });
     };
 
-    this.openContractReceiptOutCreateModel = function () {
-        return $uibModal.open({
-            animation: true,
-            ariaLabelledBy: 'modal-title',
-            ariaDescribedBy: 'modal-body',
-            templateUrl: '/ui/partials/contractReceipt/contractReceiptCreate.html',
-            controller: 'contractReceiptCreateCtrl',
-            backdrop: 'static',
-            keyboard: false,
-            resolve: {
-                receiptType: function () {
-                    return 'Out';
-                }
-            }
-        });
-    };
-
     /**************************************************************
      *                                                            *
      * Employee Model                                             *

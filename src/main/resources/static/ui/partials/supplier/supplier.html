@@ -14,6 +14,31 @@
 
             <span class="mdl-layout__title">{{pageTitle}}</span>
 
+            <!-- Navigation -->
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link"
+                   href=""
+                   ui-sref-active="mdl-color-text--black mdl-color--blue-grey-50"
+                   ui-sref="supplier.list">
+                    <span ng-if="lang==='AR'">سجل التجار</span>
+                    <span ng-if="lang==='EN'">Sellers List</span>
+                </a>
+                <a class="mdl-navigation__link"
+                   href=""
+                   ui-sref-active="mdl-color-text--black mdl-color--blue-grey-50"
+                   ui-sref="supplier.receiptIn">
+                    <span ng-if="lang==='AR'">المبالغ المحصلة</span>
+                    <span ng-if="lang==='EN'">Cash In</span>
+                </a>
+                <a class="mdl-navigation__link"
+                   href=""
+                   ui-sref-active="mdl-color-text--black mdl-color--blue-grey-50"
+                   ui-sref="supplier.receiptOut">
+                    <span ng-if="lang==='AR'">المبالغ المصروفة</span>
+                    <span ng-if="lang==='EN'">Cash Out</span>
+                </a>
+            </nav>
+
             <div class="mdl-layout-spacer"></div>
 
             <button ng-show="stickSideMenu===false" class="mdl-button mdl-js-button mdl-button--icon mdl-icon-margin"
@@ -115,92 +140,9 @@
         </div>
         <div class="mdl-layout__header-row" style="height: auto!important;padding: 0px !important;">
             <div class="panel panel-body" style="width: 100%; margin-bottom: 0px !important;">
-                <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}"
-                     class="col-xs-6 col-sm-2 col-md-2 col-lg-2">
-                    <button id="supplier-menu-lower-right" style="width: 100%;"
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
-                        <span ng-if="lang==='AR'">العمليات</span>
-                        <span ng-if="lang==='EN'">Actions</span>
-                    </button>
-                    <ul ng-class="{'mdl-menu--bottom-right' : lang==='AR', 'mdl-menu--bottom-left' : lang==='EN'}"
-                        class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
-                        for="supplier-menu-lower-right">
-                        <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
-                            ng-click="fetchTableData()">
-                            <span class="mdl-list__item-primary-content">
-                                <i class="material-icons mdl-list__item-icon">visibility</i>
-                                <span ng-if="lang==='AR'">عرض البيانات</span>
-                                <span ng-if="lang==='EN'">View</span>
-                            </span>
-                        </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="newSupplier();"
-                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_CREATE'])">
-                            <span class="mdl-list__item-primary-content">
-                                <i class="material-icons mdl-list__item-icon">add</i>
-                                <span ng-if="lang==='AR'">انشاء تاجر جديد</span>
-                                <span ng-if="lang==='EN'">New...</span>
-                            </span>
-                        </li>
-                        <li class="mdl-menu__item mdl-list__item"
-                            ng-click="ModalProvider.openSupplierUpdateModel(selected);"
-                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_UPDATE']) && toggleList===1"
-                            ng-hide="!suppliers || suppliers.length==0">
-                            <span class="mdl-list__item-primary-content">
-                                <i class="material-icons mdl-list__item-icon">edit</i>
-                                <span ng-if="lang==='AR'">تعديل بيانات التاجر</span>
-                                <span ng-if="lang==='EN'">Edit...</span>
-                            </span>
-                        </li>
-                        <li class="mdl-menu__item mdl-list__item" ng-click="delete()"
-                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_DELETE']) && toggleList===1"
-                            ng-hide="!suppliers || suppliers.length==0">
-                            <span class="mdl-list__item-primary-content">
-                                <i class="material-icons mdl-list__item-icon">delete</i>
-                                <span ng-if="lang==='AR'">حذف التاجر</span>
-                                <span ng-if="lang==='EN'">Delete</span>
-                            </span>
-                        </li>
-                        <li class="mdl-menu__item mdl-list__item"
-                            ng-click="enable(selected)"
-                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_ENABLE']) && toggleList===1"
-                            ng-hide="!suppliers || suppliers.length==0">
-                            <span class="mdl-list__item-primary-content">
-                                <i class="material-icons mdl-list__item-icon">flight_takeoff</i>
-                                <span ng-if="lang==='AR'">تفعيل التاجر</span>
-                                <span ng-if="lang==='EN'">Enable</span>
-                            </span>
-                        </li>
-                        <li class="mdl-menu__item mdl-list__item mdl-menu__item--full-bleed-divider"
-                            ng-click="disable(selected)"
-                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_DISABLE']) && toggleList===1"
-                            ng-hide="!suppliers || suppliers.length==0">
-                            <span class="mdl-list__item-primary-content">
-                                <i class="material-icons mdl-list__item-icon">flight_land</i>
-                                <span ng-if="lang==='AR'">تعطيل التاجر</span>
-                                <span ng-if="lang==='EN'">Disable</span>
-                            </span>
-                        </li>
-                    </ul>
-                </div>
 
-                <div ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}" ng-init="toggleList=1">
-                    <div class="btn-toolbar">
-                        <div class="btn-group" data-toggle="buttons">
-                            <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
-                                    type="button" ng-click="toggleList=1"
-                                    ng-class="{'active':toggleList===1}">
-                                <input type="radio" name="options"/>
-                                <i class="material-icons">reorder</i>
-                            </button>
-                            <button class="btn btn-default mdl-button mdl-js-button mdl-js-ripple-effect"
-                                    type="button" ng-click="toggleList=2"
-                                    ng-class="{'active':toggleList===2}">
-                                <input type="radio" name="options"/>
-                                <i class="material-icons">view_column</i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <div ui-view="options"></div>
+
             </div>
         </div>
     </header>
@@ -324,91 +266,73 @@
             <div ng-show="showMenuStates===true">
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="home" ui-sref-active="mdl-navigation__link-active mdl-color--primary">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">dashboard</i>
-                    <span ng-if="lang==='AR'">الرئيسية</span>
-                    <span ng-if="lang==='EN'">DASHBOARD</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">dashboard</i>
+                        <span ng-if="lang==='AR'">الرئيسية</span>
+                        <span ng-if="lang==='EN'">DASHBOARD</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="company" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_COMPANY_UPDATE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">business</i>
-                    <span ng-if="lang==='AR'">الشركة</span>
-                    <span ng-if="lang==='EN'">COMPANY</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">business</i>
+                        <span ng-if="lang==='AR'">الشركة</span>
+                        <span ng-if="lang==='EN'">COMPANY</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="customer.list" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_CUSTOMER_CREATE', 'ROLE_CUSTOMER_UPDATE', 'ROLE_CUSTOMER_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">account_circle</i>
-                    <span ng-if="lang==='AR'">العملاء</span>
-                    <span ng-if="lang==='EN'">CUSTOMERS</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">account_circle</i>
+                        <span ng-if="lang==='AR'">العملاء</span>
+                        <span ng-if="lang==='EN'">CUSTOMERS</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="employee.list" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_EMPLOYEE_CREATE', 'ROLE_EMPLOYEE_UPDATE', 'ROLE_EMPLOYEE_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">person_pin_circle</i>
-                    <span ng-if="lang==='AR'">الموظفون</span>
-                    <span ng-if="lang==='EN'">EMPLOYEES</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">person_pin_circle</i>
+                        <span ng-if="lang==='AR'">الموظفون</span>
+                        <span ng-if="lang==='EN'">EMPLOYEES</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-                   href="" ui-sref="supplier" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
+                   href="" ui-sref="supplier.list" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_CREATE', 'ROLE_SUPPLIER_UPDATE', 'ROLE_SUPPLIER_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">store</i>
-                    <span ng-if="lang==='AR'">التجار</span>
-                    <span ng-if="lang==='EN'">SELLERS</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">store</i>
+                        <span ng-if="lang==='AR'">التجار</span>
+                        <span ng-if="lang==='EN'">SELLERS</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="contract" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_CREATE', 'ROLE_CONTRACT_UPDATE', 'ROLE_CONTRACT_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">store</i>
-                    <span ng-if="lang==='AR'">العقود</span>
-                    <span ng-if="lang==='EN'">CONTRACTS</span>
-                </span>
-                </a>
-                <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-                   href="" ui-sref="contractReceipt.in" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
-                   ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_IN_CREATE', 'ROLE_CONTRACT_RECEIPT_IN_UPDATE', 'ROLE_CONTRACT_RECEIPT_IN_DELETE'])">
                     <span class="mdl-list__item-primary-content">
-                        <i class="material-icons mdl-list__item-icon">attach_money</i>
-                        <span ng-if="lang==='AR'">سندات القبض</span>
-                        <span ng-if="lang==='EN'">Customer Payments</span>
-                    </span>
-                </a>
-                <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-                   href="" ui-sref="contractReceipt.out" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
-                   ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_OUT_CREATE', 'ROLE_CONTRACT_RECEIPT_OUT_UPDATE', 'ROLE_CONTRACT_RECEIPT_OUT_DELETE'])">
-                    <span class="mdl-list__item-primary-content">
-                        <i class="material-icons mdl-list__item-icon">attach_money</i>
-                        <span ng-if="lang==='AR'">سندات الصرف</span>
-                        <span ng-if="lang==='EN'">Sellers Payments</span>
+                        <i class="material-icons mdl-list__item-icon">store</i>
+                        <span ng-if="lang==='AR'">العقود</span>
+                        <span ng-if="lang==='EN'">CONTRACTS</span>
                     </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="team" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_TEAM_CREATE', 'ROLE_TEAM_UPDATE', 'ROLE_TEAM_DELETE'])">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">security</i>
-                    <span ng-if="lang==='AR'">الصلاحيات</span>
-                    <span ng-if="lang==='EN'">PRIVILEGES</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">security</i>
+                        <span ng-if="lang==='AR'">الصلاحيات</span>
+                        <span ng-if="lang==='EN'">PRIVILEGES</span>
+                    </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
                    href="" ui-sref="report" ui-sref-active="mdl-navigation__link-active mdl-color--primary">
-                <span class="mdl-list__item-primary-content">
-                    <i class="material-icons mdl-list__item-icon">assignment</i>
-                    <span ng-if="lang==='AR'">التقارير</span>
-                    <span ng-if="lang==='EN'">REPORTS</span>
-                </span>
+                    <span class="mdl-list__item-primary-content">
+                        <i class="material-icons mdl-list__item-icon">assignment</i>
+                        <span ng-if="lang==='AR'">التقارير</span>
+                        <span ng-if="lang==='EN'">REPORTS</span>
+                    </span>
                 </a>
             </div>
         </nav>
@@ -416,206 +340,7 @@
 
     <main class="mdl-layout__content">
 
-        <div class="row" style="margin-top: 10px">
-
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===1">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
-                            style="margin-top: 2px;">
-                            <li>
-                                <a href=""
-                                   ng-click="fetchTableData()"
-                                   tooltip-append-to-body="true"
-                                   uib-tooltip="{{lang==='AR' ? 'تصفية البيانات' : 'Filter'}}">
-                                    <span class="fa fa-filter"></span>
-                                </a>
-                                <a href=""
-                                   ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_CREATE'])"
-                                   ng-click="newSupplier()"
-                                   tooltip-append-to-body="true"
-                                   uib-tooltip="{{lang==='AR' ? 'انشاء حساب تاجر جديد' : 'New Supplier...'}}">
-                                    <span class="fa fa-plus-square"></span>
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
-                            <h3 ng-if="lang==='AR'">قائمة التجار</h3>
-                            <h3 ng-if="lang==='EN'">Sellers List</h3>
-                        </div>
-                    </div>
-                    <div class="panel-body panel-body-table">
-                    <div class="table-responsive">
-                        <table st-table="collection" st-safe-src="suppliers"
-                               class="table table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>
-                                    <span ng-if="lang==='AR'">م</span>
-                                    <span ng-if="lang==='EN'">#</span>
-                                </th>
-
-                                <th st-sort="code">
-                                    <span ng-if="lang==='AR'">رقم التاجر</span>
-                                    <span ng-if="lang==='EN'">Code</span>
-                                </th>
-
-                                <th st-sort="name">
-                                    <span ng-if="lang==='AR'">اسم التاجر</span>
-                                    <span ng-if="lang==='EN'">Name</span>
-                                </th>
-
-                                <th st-sort="registerDate">
-                                    <span ng-if="lang==='AR'">تاريخ التسجيل</span>
-                                    <span ng-if="lang==='EN'">Register Date</span>
-                                </th>
-
-                                <th st-sort="mobile">
-                                    <span ng-if="lang==='AR'">الجوال</span>
-                                    <span ng-if="lang==='EN'">Mobile</span>
-                                </th>
-
-                                <th st-sort="email">
-                                    <span ng-if="lang==='AR'">البريد الإلكتروني</span>
-                                    <span ng-if="lang==='EN'">Email</span>
-                                </th>
-
-                                <th st-sort="balance">
-                                    <span ng-if="lang==='AR'">رصيد التاجر</span>
-                                    <span ng-if="lang==='EN'">Balance</span>
-                                </th>
-
-                                <th st-sort="paid">
-                                    <span ng-if="lang==='AR'">المسدد</span>
-                                    <span ng-if="lang==='EN'">Paid</span>
-                                </th>
-
-                                <th st-sort="remain">
-                                    <span ng-if="lang==='AR'">الباقي</span>
-                                    <span ng-if="lang==='EN'">Debt</span>
-                                </th>
-
-                            </tr>
-                            <tr>
-                                <th colspan="9">
-                                    <input st-search=""
-                                           class="form-control"
-                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
-                                           type="text"/>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr ng-repeat="supplier in collection"
-                                st-select-mode="single"
-                                context-menu="rowMenu"
-                                ng-click="setSelected(supplier)"
-                                ng-right-click="setSelected(supplier)"
-                                ng-class="{'mdl-color--blue-grey-100':supplier.isSelected}">
-                                <td st-select-row-custom="supplier">{{$index+1}}</td>
-                                <td st-select-row-custom="supplier">{{supplier.code}}</td>
-                                <td st-select-row-custom="supplier">
-                                    <span ng-show="supplier.enabled" class="label label-success">مفعل</span>
-                                    <span ng-show="!supplier.enabled" class="label label-danger">معطل</span>
-                                    {{supplier.name}}
-                                </td>
-                                <td st-select-row-custom="supplier">
-                                    <span ng-show="dateType==='H'">{{supplier.registerDate | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
-                                    <span ng-show="dateType==='G'">{{supplier.registerDate | date: 'yyyy-MM-dd'}}</span>
-                                    <span class="label label-success">{{supplier.registerDate | date:'h:m a'}}</span>
-                                </td>
-                                <td st-select-row-custom="supplier">{{supplier.mobile}}</td>
-                                <td st-select-row-custom="supplier">{{supplier.email}}</td>
-                                <td st-select-row-custom="supplier">{{supplier.balance}} SAR</td>
-                                <td st-select-row-custom="supplier">{{supplier.paid}} SAR</td>
-                                <td st-select-row-custom="supplier">{{supplier.remain}} SAR</td>
-                            </tr>
-                            <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
-                                ng-show="!collection || collection.length ==0">
-                                <td colspan="9">
-                                    <span ng-if="lang==='AR'">لا توجد بيانات</span>
-                                    <span ng-if="lang==='EN'">No Data Found.</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-show="toggleList===2">
-                <div st-table="collection" st-safe-src="suppliers">
-                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="supplier in collection">
-                        <!-- CONTACT ITEM -->
-                        <div class="panel panel-default">
-                            <div class="panel-body profile">
-                                <div class="profile-image">
-                                    <img width="100" height="100"
-                                         src="/ui/img/no-image.jpg"
-                                         alt="{{supplier.code}}"/>
-                                </div>
-                                <div class="profile-data">
-                                    <div class="profile-data-name">
-                                        {{supplier.name}}
-                                    </div>
-                                </div>
-                                <div class="profile-controls">
-                                    <!--<a href="" class="profile-control-left"><span class="fa fa-info-circle"></span></a>-->
-                                    <!--<a href="" class="profile-control-right"><span class="fa fa-phone"></span></a>-->
-                                </div>
-                            </div>
-                            <div class="panel-body">
-                                <div class="contact-info">
-                                    <p>
-                                        <strong ng-if="lang==='AR'">رقم الجوال</strong>
-                                        <strong ng-if="lang==='EN'">Phone</strong>
-                                        {{supplier.mobile}}
-                                    </p>
-                                    <hr>
-                                    <p>
-                                        <strong ng-if="lang==='AR'">الحالة</strong>
-                                        <strong ng-if="lang==='EN'">Condition</strong>
-                                        <span ng-show="supplier.enabled" class="label label-success">مفعل</span>
-                                        <span ng-show="!supplier.enabled" class="label label-danger">معطل</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                <div class="row">
-                                    <button uib-tooltip="{{lang==='AR' ? 'انشاء تاجر جديد' : 'New...'}}"
-                                            tooltip-append-to-body="true"
-                                            type="button"
-                                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_CREATE'])"
-                                            ng-click="newSupplier();"
-                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                        <i class="material-icons">add</i>
-                                    </button>
-                                    <button uib-tooltip="{{lang==='AR' ? 'تعديل' : 'Edit...'}}"
-                                            tooltip-append-to-body="true"
-                                            type="button"
-                                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_UPDATE'])"
-                                            ng-click="ModalProvider.openSupplierUpdateModel(supplier)"
-                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                        <i class="material-icons">edit</i>
-                                    </button>
-                                    <button uib-tooltip="{{lang==='AR' ? 'حذف' : 'Delete'}}"
-                                            tooltip-append-to-body="true"
-                                            type="button"
-                                            ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_DELETE'])"
-                                            ng-click="delete(supplier)"
-                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                                        <i class="material-icons">delete</i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END CONTACT ITEM -->
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        <div ui-view="body" class="template-body"></div>
 
     </main>
 

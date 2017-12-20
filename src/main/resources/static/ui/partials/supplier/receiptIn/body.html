@@ -1,0 +1,532 @@
+<div class="row" style="margin-top: 10px">
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <ul class="panel-controls" ng-class="{'pull-left' : lang==='AR', 'pull-right' : lang==='EN'}"
+                    style="margin-top: 2px;">
+                    <li>
+                        <a href=""
+                           ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_CREATE'])"
+                           ng-click="supplierCtrl.newReceiptIn()"
+                           tooltip-append-to-body="true"
+                           uib-tooltip="{{lang==='AR' ? 'انشاء سند جديد' : 'New Receipt...'}}">
+                            <span class="fa fa-plus-square"></span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="panel-title-box" ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                    <h3 ng-if="lang==='AR'">قائمة سندات القبض</h3>
+                    <h3 ng-if="lang==='EN'">Seller Receipts List</h3>
+                    <span ng-if="lang==='AR'">المبالغ المحصلة من التجار</span>
+                    <span ng-if="lang==='EN'">Seller Incomes From Customers</span>
+                </div>
+            </div>
+            <div class="panel-body">
+
+                <div class="form-group row">
+
+                    <ul id="my-accordion"
+                        class="mdlext-accordion mdlext-js-accordion mdlext-accordion--vertical mdlext-js-ripple-effect"
+                        role="tablist" aria-multiselectable="true">
+
+                        <li class="mdlext-accordion__panel" role="presentation">
+                            <header class="mdlext-accordion__tab" role="tab" aria-expanded="false">
+                                <i class="material-icons">search</i>
+                                <span class="mdlext-accordion__tab__caption">
+                                            <span ng-if="lang==='AR'">بحث من خلال بيانات العقد</span>
+                                            <span ng-if="lang==='EN'">Search By Contract Information</span>
+                                        </span>
+                            </header>
+                            <section class="mdlext-accordion__tabpanel" role="tabpanel" aria-hidden="true">
+
+                                <div class="form-group row">
+
+                                    <form name="form" ng-submit="supplierCtrl.filterIn()" novalidate="novalidate" focus-group="" focus-stack="" focus-group-head="loop" focus-group-tail="loop">
+
+                                        <div class="row">
+
+                                            <div class="form-group row">
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <label for="contractCodeFrom" class="control-label">
+                                                        <span ng-if="lang==='AR'">رقم العقد من</span>
+                                                        <span ng-if="lang==='EN'">Contract Code From</span>
+                                                    </label>
+                                                    <input id="contractCodeFrom"
+                                                           type="number"
+                                                           class="form-control"
+                                                           ng-model="supplierCtrl.paramIn.contractCodeFrom">
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <label for="contractCodeTo" class="control-label">
+                                                        <span ng-if="lang==='AR'">رقم العقد إلى</span>
+                                                        <span ng-if="lang==='EN'">Contract Code From</span>
+                                                    </label>
+                                                    <input id="contractCodeTo"
+                                                           type="number"
+                                                           class="form-control"
+                                                           ng-model="supplierCtrl.paramIn.contractCodeTo">
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='H'">
+                                                    <label for="contractRegisterDateFrom" class="control-label">
+                                                        <span ng-if="lang==='AR'">تاريخ العقد من</span>
+                                                        <span ng-if="lang==='EN'">Contract Date From</span>
+                                                    </label>
+                                                    <div dir="ltr" class="input-group">
+                                                        <input dir="rtl"
+                                                               id="contractRegisterDateFrom"
+                                                               type="text"
+                                                               class="form-control is-calendarPicker"
+                                                               ng-model="supplierCtrl.paramIn.contractRegisterDateFrom"
+                                                               calendarType="ummalqura"
+                                                               language="en"
+                                                               dateFormat="yyyy/mm/dd"
+                                                               showOnFocus="false"
+                                                               readonly="readonly"
+                                                               kdatepicker>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='G'">
+                                                    <label for="G-contractRegisterDateFrom" class="control-label">
+                                                        <span ng-if="lang==='AR'">تاريخ العقد من</span>
+                                                        <span ng-if="lang==='EN'">Contract Date From</span>
+                                                    </label>
+                                                    <input id="G-contractRegisterDateFrom"
+                                                           class="form-control "
+                                                           type="date"
+                                                           name="input"
+                                                           ng-model="supplierCtrl.paramIn.contractRegisterDateFrom"
+                                                           placeholder="yyyy-MM-dd"
+                                                           min="2017-01-01"
+                                                           max="2030-12-31"/>
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='H'">
+                                                    <label for="contractRegisterDateTo" class="control-label">
+                                                        <span ng-if="lang==='AR'">تاريخ العقد إلى</span>
+                                                        <span ng-if="lang==='EN'">Contract Date To</span>
+                                                    </label>
+                                                    <div dir="ltr" class="input-group">
+                                                        <input dir="rtl"
+                                                               id="contractRegisterDateTo"
+                                                               type="text"
+                                                               class="form-control is-calendarPicker"
+                                                               ng-model="supplierCtrl.paramIn.contractRegisterDateTo"
+                                                               calendarType="ummalqura"
+                                                               language="en"
+                                                               dateFormat="yyyy/mm/dd"
+                                                               showOnFocus="false"
+                                                               readonly="readonly"
+                                                               kdatepicker>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='G'">
+                                                    <label for="G-contractRegisterDateTo" class="control-label">
+                                                        <span ng-if="lang==='AR'">تاريخ العقد إلى</span>
+                                                        <span ng-if="lang==='EN'">Contract Date To</span>
+                                                    </label>
+                                                    <input id="G-contractRegisterDateTo"
+                                                           class="form-control "
+                                                           type="date"
+                                                           name="input"
+                                                           ng-model="supplierCtrl.paramIn.contractRegisterDateTo"
+                                                           placeholder="yyyy-MM-dd"
+                                                           min="2017-01-01"
+                                                           max="2030-12-31"/>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="form-group row">
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <label for="contractCustomerName" class="control-label">
+                                                        <span ng-if="lang==='AR'">اسم العميل</span>
+                                                        <span ng-if="lang==='EN'">Customer Name</span>
+                                                    </label>
+                                                    <input id="contractCustomerName"
+                                                           type="text"
+                                                           class="form-control"
+                                                           ng-model="supplierCtrl.paramIn.contractCustomerName">
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <label for="contractCustomerMobile" class="control-label">
+                                                        <span ng-if="lang==='AR'">رقم جوال العميل</span>
+                                                        <span ng-if="lang==='EN'">Customer Mobile</span>
+                                                    </label>
+                                                    <input id="contractCustomerMobile"
+                                                           type="text"
+                                                           class="form-control"
+                                                           ng-model="supplierCtrl.paramIn.contractCustomerMobile">
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <label for="contractCustomerIdentityNumber" class="control-label">
+                                                        <span ng-if="lang==='AR'">رقم بطاقة العميل</span>
+                                                        <span ng-if="lang==='EN'">Customer Identity Number</span>
+                                                    </label>
+                                                    <input id="contractCustomerIdentityNumber"
+                                                           type="text"
+                                                           class="form-control"
+                                                           ng-model="supplierCtrl.paramIn.contractCustomerIdentityNumber">
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                                                <button uib-tooltip="{{lang==='AR'? 'بحث' : 'Search'}}"
+                                                        tooltip-append-to-body="true"
+                                                        type="submit"
+                                                        class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                                    <i class="material-icons">search</i>
+                                                </button>
+                                                <button uib-tooltip="{{lang==='AR' ? 'مسح الحقول' : 'Clear'}}"
+                                                        tooltip-append-to-body="true"
+                                                        type="reset"
+                                                        ng-click="form.$setPristine();supplierCtrl.paramIn={};"
+                                                        class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                                    <i class="material-icons">delete</i>
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </section>
+                        </li>
+
+                        <li class="mdlext-accordion__panel" role="presentation">
+                            <header class="mdlext-accordion__tab" role="tab" aria-expanded="false">
+                                <i class="material-icons">search</i>
+                                <span class="mdlext-accordion__tab__caption">
+                                    <span ng-if="lang==='AR'">بحث من خلال بيانات السند</span>
+                                    <span ng-if="lang==='EN'">Search By Receipt Information</span>
+                                </span>
+                            </header>
+                            <section class="mdlext-accordion__tabpanel" role="tabpanel" aria-hidden="true">
+
+                                <div class="form-group row">
+
+                                    <form name="form" ng-submit="supplierCtrl.filterIn()" novalidate="novalidate" focus-group="" focus-stack="" focus-group-head="loop" focus-group-tail="loop">
+
+                                        <div class="row">
+
+                                            <div class="form-group row">
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <label for="receiptCodeFrom" class="control-label">
+                                                        <span ng-if="lang==='AR'">رقم السند من</span>
+                                                        <span ng-if="lang==='EN'">Contract Code From</span>
+                                                    </label>
+                                                    <input id="receiptCodeFrom"
+                                                           type="number"
+                                                           class="form-control"
+                                                           ng-model="supplierCtrl.paramIn.receiptCodeFrom">
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                                    <label for="receiptCodeTo" class="control-label">
+                                                        <span ng-if="lang==='AR'">رقم السند إلى</span>
+                                                        <span ng-if="lang==='EN'">Contract Code From</span>
+                                                    </label>
+                                                    <input id="receiptCodeTo"
+                                                           type="number"
+                                                           class="form-control"
+                                                           ng-model="supplierCtrl.paramIn.receiptCodeTo">
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='H'">
+                                                    <label for="contractRegisterDateFrom" class="control-label">
+                                                        <span ng-if="lang==='AR'">تاريخ السند من</span>
+                                                        <span ng-if="lang==='EN'">Contract Date From</span>
+                                                    </label>
+                                                    <div dir="ltr" class="input-group">
+                                                        <input dir="rtl"
+                                                               id="receiptDateFrom"
+                                                               type="text"
+                                                               class="form-control is-calendarPicker"
+                                                               ng-model="supplierCtrl.paramIn.receiptDateFrom"
+                                                               calendarType="ummalqura"
+                                                               language="en"
+                                                               dateFormat="yyyy/mm/dd"
+                                                               showOnFocus="false"
+                                                               readonly="readonly"
+                                                               kdatepicker>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='G'">
+                                                    <label for="G-receiptDateFrom" class="control-label">
+                                                        <span ng-if="lang==='AR'">تاريخ السند من</span>
+                                                        <span ng-if="lang==='EN'">Contract Date From</span>
+                                                    </label>
+                                                    <input id="G-receiptDateFrom"
+                                                           class="form-control "
+                                                           type="date"
+                                                           name="input"
+                                                           ng-model="supplierCtrl.paramIn.receiptDateFrom"
+                                                           placeholder="yyyy-MM-dd"
+                                                           min="2017-01-01"
+                                                           max="2030-12-31"/>
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='H'">
+                                                    <label for="receiptDateTo" class="control-label">
+                                                        <span ng-if="lang==='AR'">تاريخ السند إلى</span>
+                                                        <span ng-if="lang==='EN'">Contract Date To</span>
+                                                    </label>
+                                                    <div dir="ltr" class="input-group">
+                                                        <input dir="rtl"
+                                                               id="receiptDateTo"
+                                                               type="text"
+                                                               class="form-control is-calendarPicker"
+                                                               ng-model="supplierCtrl.paramIn.receiptDateTo"
+                                                               calendarType="ummalqura"
+                                                               language="en"
+                                                               dateFormat="yyyy/mm/dd"
+                                                               showOnFocus="false"
+                                                               readonly="readonly"
+                                                               kdatepicker>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3" ng-if="dateType==='G'">
+                                                    <label for="G-receiptDateTo" class="control-label">
+                                                        <span ng-if="lang==='AR'">تاريخ السند إلى</span>
+                                                        <span ng-if="lang==='EN'">Contract Date To</span>
+                                                    </label>
+                                                    <input id="G-receiptDateTo"
+                                                           class="form-control "
+                                                           type="date"
+                                                           name="input"
+                                                           ng-model="supplierCtrl.paramIn.receiptDateTo"
+                                                           placeholder="yyyy-MM-dd"
+                                                           min="2017-01-01"
+                                                           max="2030-12-31"/>
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row">
+
+                                            <div ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}">
+                                                <button uib-tooltip="{{lang==='AR'? 'بحث' : 'Search'}}"
+                                                        tooltip-append-to-body="true"
+                                                        type="submit"
+                                                        class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                                    <i class="material-icons">search</i>
+                                                </button>
+                                                <button uib-tooltip="{{lang==='AR' ? 'مسح الحقول' : 'Clear'}}"
+                                                        tooltip-append-to-body="true"
+                                                        type="reset"
+                                                        ng-click="form.$setPristine();supplierCtrl.paramIn={};"
+                                                        class="mdl-button mdl-js-button mdl-js-ripple-effect">
+                                                    <i class="material-icons">delete</i>
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                    </form>
+
+                                </div>
+
+                            </section>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div ng-show="supplierCtrl.toggleList===1" class="form-group row">
+
+                    <div class="table-responsive">
+                        <table st-table="collection" st-safe-src="supplierCtrl.contractReceiptsIn"
+                               class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>
+                                    <span>#</span>
+                                </th>
+
+                                <th st-sort="receipt.code">
+                                    <span ng-if="lang==='AR'">رقم السند</span>
+                                    <span ng-if="lang==='EN'">Receipt Code</span>
+                                </th>
+
+                                <th st-sort="receipt.date">
+                                    <span ng-if="lang==='AR'">تاريخ السند</span>
+                                    <span ng-if="lang==='EN'">Receipt Date</span>
+                                </th>
+
+                                <th st-sort="receipt.amount" class="danger">
+                                    <span ng-if="lang==='AR'">قيمة السند</span>
+                                    <span ng-if="lang==='EN'">Receipt Amount</span>
+                                </th>
+
+                                <th st-sort="receipt.paymentMethod">
+                                    <span ng-if="lang==='AR'">طريقة الدفع</span>
+                                    <span ng-if="lang==='EN'">Payment Method</span>
+                                </th>
+
+                                <th st-sort="contract.code">
+                                    <span ng-if="lang==='AR'">رقم العقد</span>
+                                    <span ng-if="lang==='EN'">Contract Code</span>
+                                </th>
+
+                                <th st-sort="contract.customer.name">
+                                    <span ng-if="lang==='AR'">العميل</span>
+                                    <span ng-if="lang==='EN'">Customer</span>
+                                </th>
+
+                                <th st-sort="contract.supplier.name">
+                                    <span ng-if="lang==='AR'">التاجر</span>
+                                    <span ng-if="lang==='EN'">Seller</span>
+                                </th>
+
+                            </tr>
+                            <tr>
+                                <th colspan="8">
+                                    <input st-search=""
+                                           class="form-control"
+                                           placeholder="{{lang==='AR' ? 'بحث شامل وسريع...' : 'Search...'}}"
+                                           type="text"/>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="contractReceipt in collection"
+                                st-select-mode="single"
+                                context-menu="supplierCtrl.rowMenuIn"
+                                ng-click="supplierCtrl.setSelectedIn(contractReceipt)"
+                                ng-right-click="supplierCtrl.setSelectedIn(contractReceipt)">
+                                <td st-select-row-custom="contractReceipt">{{$index+1}}</td>
+                                <td st-select-row-custom="contractReceipt">{{contractReceipt.receipt.code}}</td>
+                                <td st-select-row-custom="contractReceipt">
+                                    <span ng-show="dateType==='H'">{{contractReceipt.receipt.date | kdate: 'yyyy-mm-dd' : 'ar' : 'ummalqura'}}</span>
+                                    <span ng-show="dateType==='G'">{{contractReceipt.receipt.date | date: 'yyyy-MM-dd'}}</span>
+                                    <span class="label label-success">{{contractReceipt.receipt.date | date:'h:m a'}}</span>
+                                </td>
+                                <td st-select-row-custom="contractReceipt" class="danger">{{contractReceipt.receipt.amountNumber}} SAR</td>
+                                <td st-select-row-custom="contractReceipt">
+                                    {{contractReceipt.receipt.paymentMethodInArabic}}
+                                </td>
+                                <td st-select-row-custom="contractReceipt">{{contractReceipt.contract.code}}</td>
+                                <td st-select-row-custom="contractReceipt">
+                                    {{contractReceipt.contract.customer.name}}
+                                </td>
+                                <td st-select-row-custom="contractReceipt">
+                                    {{contractReceipt.contract.supplier.name}}
+                                </td>
+                            </tr>
+                            <tr class="blank_row" style="height: 10px !important; background-color: #FFFFFF;"
+                                ng-show="!collection || collection.length ==0">
+                                <td colspan="8">
+                                    <span ng-if="lang==='AR'">لا توجد بيانات</span>
+                                    <span ng-if="lang==='EN'">No Data Found.</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <div ng-show="supplierCtrl.toggleList===2" st-table="collection" st-safe-src="supplierCtrl.contractReceiptsIn">
+                    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="contractReceipt in collection">
+                        <!-- CONTACT ITEM -->
+                        <div class="panel panel-default">
+                            <div class="panel-body profile">
+                                <div class="profile-image">
+                                    <img width="100" height="100"
+                                         src="/ui/img/no-image.jpg"
+                                         alt="{{contractReceipt.receipt.code}}"/>
+                                </div>
+                                <div class="profile-data">
+                                    <div class="profile-data-name">
+                                        <span>العميل / </span>
+                                        {{contractReceipt.contract.customer.name}}
+                                    </div>
+                                </div>
+                                <div class="profile-controls">
+                                    <!--<a href="" class="profile-control-left"><span class="fa fa-info-circle"></span></a>-->
+                                    <!--<a href="" class="profile-control-right"><span class="fa fa-phone"></span></a>-->
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="contact-info">
+                                    <p>
+                                        <strong ng-if="lang==='AR'">التاجر / </strong>
+                                        <strong ng-if="lang==='EN'">Seller / </strong>
+                                        {{contractReceipt.contract.supplier.name}}
+                                    </p>
+                                    <hr/>
+                                    <p>
+                                        <strong ng-if="lang==='AR'">قيمة السند</strong>
+                                        <strong ng-if="lang==='EN'">Receipt Amount</strong>
+                                        {{contractReceipt.receipt.amountNumber}} SAR
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <button uib-tooltip="{{lang==='AR' ? 'انشاء سند جديد' : 'New...'}}"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_IN_CREATE'])"
+                                            ng-click="supplierCtrl.newReceiptIn();"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">add</i>
+                                    </button>
+                                    <button uib-tooltip="{{lang==='AR' ? 'حذف' : 'Delete'}}"
+                                            tooltip-append-to-body="true"
+                                            type="button"
+                                            ng-if="contains(me.team.authorities, ['ROLE_CONTRACT_RECEIPT_IN_DELETE'])"
+                                            ng-click="supplierCtrl.deleteIn(contractReceipt)"
+                                            class="mdl-button mdl-js-button mdl-js-ripple-effect col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                        <i class="material-icons">delete</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END CONTACT ITEM -->
+                    </div>
+                </div>
+
+            </div>
+            <div class="panel-footer">
+                <div class="panel-footer">
+
+                    <div class="row">
+
+                        <h3 class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12 box-danger" ng-if="supplierCtrl.totalAmount>=0">
+                            <span ng-if="lang==='AR'">إجمالي الايرادات</span>
+                            <span ng-if="lang==='EN'">Total Incomes: </span>
+                            <span>{{supplierCtrl.totalAmount}} SAR</span>
+                        </h3>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

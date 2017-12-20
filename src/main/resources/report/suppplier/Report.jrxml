@@ -52,7 +52,7 @@
 			<![CDATA[]]>
 		</queryString>
 	</subDataset>
-	<parameter name="customer" class="com.besafx.app.entity.Customer"/>
+	<parameter name="supplier" class="com.besafx.app.entity.Supplier"/>
 	<parameter name="logo" class="java.io.InputStream" isForPrompting="false">
 		<parameterDescription><![CDATA[]]></parameterDescription>
 	</parameter>
@@ -82,7 +82,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="11" isBold="true" isUnderline="true"/>
 					</textElement>
-					<text><![CDATA[كشف حساب عميل]]></text>
+					<text><![CDATA[كشف حساب تاجر]]></text>
 				</staticText>
 				<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle" isUsingCache="false" isLazy="true" onErrorType="Icon">
 					<reportElement x="72" y="0" width="50" height="50" uuid="3365758c-fd5a-49f8-a2be-4217ce7693e1"/>
@@ -133,7 +133,7 @@
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="Arial" size="10" isBold="true"/>
 						</textElement>
-						<text><![CDATA[Total:]]></text>
+						<text><![CDATA[Balance:]]></text>
 					</staticText>
 					<staticText>
 						<reportElement x="0" y="78" width="60" height="19" uuid="263d05a8-a720-4e0a-a0f1-8887235dd412"/>
@@ -168,7 +168,7 @@
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getCode()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getCode()]]></textFieldExpression>
 					</textField>
 					<textField>
 						<reportElement x="0" y="21" width="210" height="19" uuid="10b5eeab-3882-4bf1-96b6-0e6b73b5ea80"/>
@@ -178,7 +178,7 @@
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getName()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getName()]]></textFieldExpression>
 					</textField>
 					<textField pattern="">
 						<reportElement x="0" y="40" width="210" height="19" uuid="1cbd3441-697f-4fbd-99c4-79ffab5f4528"/>
@@ -188,7 +188,7 @@
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getMobile()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getMobile()]]></textFieldExpression>
 					</textField>
 					<textField pattern="#,##0.## SAR;#,##0.##-  SAR">
 						<reportElement x="0" y="59" width="210" height="19" uuid="406b9192-52c9-4b26-9e77-73d84cb38d9f"/>
@@ -198,7 +198,7 @@
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getContractsAmount()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getBalance()]]></textFieldExpression>
 					</textField>
 					<textField pattern="#,##0.## SAR;#,##0.##-  SAR">
 						<reportElement x="0" y="78" width="210" height="19" uuid="31caabed-68d5-44b9-aa6a-b575c8071908"/>
@@ -208,7 +208,7 @@
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getPaid()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getPaid()]]></textFieldExpression>
 					</textField>
 					<textField pattern="#,##0.## SAR;#,##0.##-  SAR">
 						<reportElement x="0" y="97" width="210" height="19" uuid="ea8a151e-a443-4ce1-af18-1c18e6149d7f"/>
@@ -218,7 +218,7 @@
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getRemain()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getRemain()]]></textFieldExpression>
 					</textField>
 				</frame>
 				<frame>
@@ -233,7 +233,7 @@
 						<textElement textAlignment="Right" verticalAlignment="Middle">
 							<font fontName="Arial" size="10" isBold="true"/>
 						</textElement>
-						<text><![CDATA[رقم العميل:]]></text>
+						<text><![CDATA[رقم التاجر:]]></text>
 					</staticText>
 					<staticText>
 						<reportElement x="0" y="21" width="75" height="19" uuid="dafdcc5d-1c76-4993-8871-0070f42ef196"/>
@@ -243,7 +243,7 @@
 						<textElement textAlignment="Right" verticalAlignment="Middle">
 							<font fontName="Arial" size="10" isBold="true"/>
 						</textElement>
-						<text><![CDATA[اسم العميل]]></text>
+						<text><![CDATA[اسم التاجر:]]></text>
 					</staticText>
 					<staticText>
 						<reportElement x="0" y="40" width="75" height="19" uuid="b06e1fd5-7ad4-42de-afe9-184974d1dace"/>
@@ -263,7 +263,7 @@
 						<textElement textAlignment="Right" verticalAlignment="Middle">
 							<font fontName="Arial" size="10" isBold="true"/>
 						</textElement>
-						<text><![CDATA[إجمالي المطلوب:]]></text>
+						<text><![CDATA[الرصيد:]]></text>
 					</staticText>
 					<staticText>
 						<reportElement x="0" y="78" width="75" height="19" uuid="0bf8910a-79f3-4864-8993-92bd21978ed8"/>
@@ -298,7 +298,7 @@
 						<textElement textAlignment="Right" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getCode()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getCode()]]></textFieldExpression>
 					</textField>
 					<textField>
 						<reportElement x="0" y="21" width="190" height="19" uuid="7a20fe44-45eb-4e7b-a829-463f65540986"/>
@@ -308,7 +308,7 @@
 						<textElement textAlignment="Right" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getName()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getName()]]></textFieldExpression>
 					</textField>
 					<textField pattern="">
 						<reportElement x="0" y="40" width="190" height="19" uuid="24616376-edc6-452d-a0a1-35d101aa82f2"/>
@@ -318,7 +318,7 @@
 						<textElement textAlignment="Right" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getMobile()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getMobile()]]></textFieldExpression>
 					</textField>
 					<textField pattern="#,##0.## SAR;#,##0.##-  SAR">
 						<reportElement x="0" y="59" width="190" height="19" uuid="da24a903-e4de-48a7-93fd-f11faea428db"/>
@@ -328,7 +328,7 @@
 						<textElement textAlignment="Right" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getContractsAmount()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getBalance()]]></textFieldExpression>
 					</textField>
 					<textField pattern="#,##0.## SAR;#,##0.##-  SAR">
 						<reportElement x="0" y="78" width="190" height="19" uuid="f427293b-7eac-4d0a-a4b8-72500cecde26"/>
@@ -338,7 +338,7 @@
 						<textElement textAlignment="Right" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getPaid()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getPaid()]]></textFieldExpression>
 					</textField>
 					<textField pattern="#,##0.## SAR;#,##0.##-  SAR">
 						<reportElement x="0" y="97" width="190" height="19" uuid="d0481d4c-033f-41bf-9fd9-8c644015955a"/>
@@ -348,7 +348,7 @@
 						<textElement textAlignment="Right" verticalAlignment="Middle">
 							<font fontName="Arial"/>
 						</textElement>
-						<textFieldExpression><![CDATA[$P{customer}.getRemain()]]></textFieldExpression>
+						<textFieldExpression><![CDATA[$P{supplier}.getRemain()]]></textFieldExpression>
 					</textField>
 				</frame>
 				<frame>
@@ -358,14 +358,14 @@
 						<textElement textAlignment="Left" verticalAlignment="Middle">
 							<font fontName="Arial" size="11" isBold="true" isUnderline="true"/>
 						</textElement>
-						<text><![CDATA[Customer Account Info. :]]></text>
+						<text><![CDATA[Seller Account Info. :]]></text>
 					</staticText>
 					<staticText>
 						<reportElement x="270" y="0" width="264" height="20" uuid="f7029fcf-97c9-4311-8253-88bb500b43eb"/>
 						<textElement textAlignment="Right" verticalAlignment="Middle">
 							<font fontName="Arial" size="11" isBold="true" isUnderline="true"/>
 						</textElement>
-						<text><![CDATA[بيانات حساب العميل:]]></text>
+						<text><![CDATA[بيانات حساب التاجر:]]></text>
 					</staticText>
 				</frame>
 			</frame>
@@ -403,7 +403,7 @@
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Dataset" uuid="d2fa30aa-e3e9-435e-8bb7-4b70490eca97">
-						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{customer}.getContracts())]]></dataSourceExpression>
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{supplier}.getContracts())]]></dataSourceExpression>
 					</datasetRun>
 					<jr:columnGroup width="535" uuid="c13ad0c2-405b-4ec3-b41c-f15a192d656b">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Columns [5]"/>

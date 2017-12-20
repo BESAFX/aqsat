@@ -117,11 +117,12 @@ gulp.task('scripts', function () {
         './init/factory/companyFactory.js',
         './init/factory/customerFactory.js',
         './init/factory/supplierFactory.js',
+        './init/factory/supplierReceiptFactory.js',
         './init/factory/contractFactory.js',
         './init/factory/contractAttachFactory.js',
+        './init/factory/contractReceiptFactory.js',
         './init/factory/employeeFactory.js',
         './init/factory/personFactory.js',
-        './init/factory/contractReceiptFactory.js',
         './init/factory/teamFactory.js',
 
         './init/service/service.js',

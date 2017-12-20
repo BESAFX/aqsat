@@ -39,7 +39,10 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                     $rootScope.applyCssLang();
                     break;
                 }
-                case 'supplier': {
+                case 'supplier':
+                case 'supplier.list':
+                case 'supplier.receiptIn':
+                case 'supplier.receiptOut':{
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'store';
                     $rootScope.applyCssLang();
@@ -59,8 +62,7 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                     break;
                 }
                 case 'contractReceipt':
-                case 'contractReceipt.in':
-                case 'contractReceipt.out': {
+                case 'contractReceipt.in': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'attach_money';
                     $rootScope.applyCssLang();
@@ -183,6 +185,9 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                         }
                         break;
                     case 'supplier':
+                    case 'supplier.list':
+                    case 'supplier.receiptIn':
+                    case 'supplier.receiptOut':
                         if ($rootScope.lang === 'AR') {
                             $rootScope.pageTitle = 'التجار';
                         } else {
@@ -206,7 +211,6 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                         break;
                     case 'contractReceipt':
                     case 'contractReceipt.in':
-                    case 'contractReceipt.out':
                         if ($rootScope.lang === 'AR') {
                             $rootScope.pageTitle = 'السندات';
                         } else {

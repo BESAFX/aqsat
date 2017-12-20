@@ -74,6 +74,17 @@ public class Customer implements Serializable {
         }
     }
 
+    public List<Receipt> getReceipts() {
+        try {
+            return this.contracts.stream()
+                    .flatMap(contract -> contract.getContractReceipts().stream())
+                    .map(contractReceipt -> contractReceipt.getReceipt())
+                    .collect(Collectors.toList());
+        } catch (Exception ex) {
+            return new ArrayList<>();
+        }
+    }
+
     public Double getPaid() {
         try {
             return this.contracts.stream()
