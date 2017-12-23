@@ -39,7 +39,7 @@ public class SupplierReceipt implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "supplier")
-    private Contract supplier;
+    private Supplier supplier;
 
     @JsonCreator
     public static SupplierReceipt Create(String jsonString) throws IOException {

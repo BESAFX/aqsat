@@ -132,6 +132,40 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
         });
     };
 
+    this.openSupplierReceiptInCreateModel = function () {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: '/ui/partials/supplier/supplierReceiptCreate.html',
+            controller: 'supplierReceiptCreateCtrl',
+            backdrop: 'static',
+            keyboard: false,
+            resolve: {
+                receiptType: function () {
+                    return 'In';
+                }
+            }
+        });
+    };
+
+    this.openSupplierReceiptOutCreateModel = function () {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: '/ui/partials/supplier/supplierReceiptCreate.html',
+            controller: 'supplierReceiptCreateCtrl',
+            backdrop: 'static',
+            keyboard: false,
+            resolve: {
+                receiptType: function () {
+                    return 'Out';
+                }
+            }
+        });
+    };
+
     /**************************************************************
      *                                                            *
      * Contract Model                                             *
@@ -202,17 +236,12 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
         });
     };
 
-    /**************************************************************
-     *                                                            *
-     * ContractReceipt Model                                      *
-     *                                                            *
-     *************************************************************/
     this.openContractReceiptInCreateModel = function () {
         return $uibModal.open({
             animation: true,
             ariaLabelledBy: 'modal-title',
             ariaDescribedBy: 'modal-body',
-            templateUrl: '/ui/partials/contractReceipt/contractReceiptCreate.html',
+            templateUrl: '/ui/partials/contract/contractReceiptCreate.html',
             controller: 'contractReceiptCreateCtrl',
             backdrop: 'static',
             keyboard: false,

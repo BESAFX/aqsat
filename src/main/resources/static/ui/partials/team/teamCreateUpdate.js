@@ -145,6 +145,30 @@ app.controller('teamCreateUpdateCtrl', ['TeamService', '$scope', '$rootScope', '
                 name: $rootScope.lang === 'AR' ? 'حذف سندات العقود' : 'Delete Receipt',
                 value: 'ROLE_CONTRACT_RECEIPT_IN_DELETE',
                 selected: false
+            },
+            {
+                id: 26,
+                name: $rootScope.lang === 'AR' ? 'انشاء سندات قبض التجار' : 'Create Seller Receipt In',
+                value: 'ROLE_SUPPLIER_RECEIPT_IN_CREATE',
+                selected: false
+            },
+            {
+                id: 27,
+                name: $rootScope.lang === 'AR' ? 'حذف سندات قبض التجار' : 'Delete Seller Receipt In',
+                value: 'ROLE_SUPPLIER_RECEIPT_IN_DELETE',
+                selected: false
+            },
+            {
+                id: 28,
+                name: $rootScope.lang === 'AR' ? 'انشاء سندات صرف التجار' : 'Create Seller Receipt Out',
+                value: 'ROLE_SUPPLIER_RECEIPT_OUT_CREATE',
+                selected: false
+            },
+            {
+                id: 29,
+                name: $rootScope.lang === 'AR' ? 'حذف سندات صرف التجار' : 'Delete Seller Receipt Out',
+                value: 'ROLE_SUPPLIER_RECEIPT_OUT_DELETE',
+                selected: false
             }
 
         ];

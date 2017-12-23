@@ -12,12 +12,12 @@ app.factory("SupplierReceiptService",
                 });
             },
             createIn: function (supplierReceipt) {
-                return $http.post("/api/supplierReceipt/create/In", supplierReceipt).then(function (response) {
+                return $http.post("/api/supplierReceipt/createIn", supplierReceipt).then(function (response) {
                     return response.data;
                 });
             },
             createOut: function (supplierReceipt) {
-                return $http.post("/api/supplierReceipt/create/Out", supplierReceipt).then(function (response) {
+                return $http.post("/api/supplierReceipt/createOut", supplierReceipt).then(function (response) {
                     return response.data;
                 });
             },

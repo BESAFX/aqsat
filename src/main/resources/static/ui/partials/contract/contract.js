@@ -1,10 +1,14 @@
-app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'ModalProvider', '$scope', '$rootScope', '$state', '$timeout', '$uibModal',
-    function (ContractService, ContractAttachService, ModalProvider, $scope, $rootScope, $state, $timeout, $uibModal) {
+app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'ContractReceiptService', 'ModalProvider', '$scope', '$rootScope', '$state', '$timeout', '$uibModal',
+    function (ContractService, ContractAttachService, ContractReceiptService, ModalProvider, $scope, $rootScope, $state, $timeout, $uibModal) {
 
+        /**************************************************************
+         *                                                            *
+         * Contract                                                   *
+         *                                                            *
+         *************************************************************/
         $scope.selected = {};
-
         $scope.contracts = [];
-
+        
         $scope.items = [];
         $scope.items.push(
             {'id': 1, 'type': 'link', 'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application', 'link': 'menu'},
@@ -339,12 +343,10 @@ app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'Mod
          *                                 *
          **********************************/
         $scope.contractForUpload = {};
-
         $scope.uploadFiles = function (contract) {
             $scope.contractForUpload = contract;
             document.getElementById('uploader').click();
         };
-
         $scope.initFiles = function (files) {
 
             $scope.wrappers = [];
@@ -405,7 +407,6 @@ app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'Mod
                 }
             );
         };
-
         function dataURItoBlob(dataURI) {
             // convert base64/URLEncoded data component to raw binary data held in a string
             var byteString;
@@ -425,7 +426,6 @@ app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'Mod
 
             return new Blob([ia], {type: mimeString});
         }
-
         function displayImagesOnPage(successful, mesg, response) {
             var scannedImages = scanner.getScannedImages(response, true, false); // returns an array of ScannedImage
             var files = [];
@@ -442,8 +442,338 @@ app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'Mod
          *                                 *
          **********************************/
 
+        /**************************************************************
+         *                                                            *
+         * Contract Receipt In                                        *
+         *                                                            *
+         *************************************************************/
+        $scope.selectedIn = {};
+        $scope.contractReceiptsIn = [];
+        $scope.itemsIn = [];
+        $scope.itemsIn.push(
+            {'id': 1, 'type': 'link', 'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application', 'link': 'menu'},
+            {'id': 2, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'}
+        );
+
+        $scope.setSelectedIn = function (object) {
+            if (object) {
+                angular.forEach($scope.contractReceiptsIn, function (contractReceipt) {
+                    if (object.id == contractReceipt.id) {
+                        $scope.selectedIn = contractReceipt;
+                        return contractReceipt.isSelected = true;
+                    } else {
+                        return contractReceipt.isSelected = false;
+                    }
+                });
+            }
+        };
+
+        $scope.filterIn = function () {
+
+            var search = [];
+
+            if ($scope.paramIn.contractCodeFrom) {
+                search.push('contractCodeFrom=');
+                search.push($scope.paramIn.contractCodeFrom);
+                search.push('&');
+            }
+            if ($scope.paramIn.contractCodeTo) {
+                search.push('contractCodeTo=');
+                search.push($scope.paramIn.contractCodeTo);
+                search.push('&');
+            }
+            //
+            if ($scope.paramIn.contractCustomerName) {
+                search.push('contractCustomerName=');
+                search.push($scope.paramIn.contractCustomerName);
+                search.push('&');
+            }
+            if ($scope.paramIn.contractCustomerMobile) {
+                search.push('contractCustomerMobile=');
+                search.push($scope.paramIn.contractCustomerMobile);
+                search.push('&');
+            }
+            if ($scope.paramIn.contractCustomerIdentityNumber) {
+                search.push('contractCustomerIdentityNumber=');
+                search.push($scope.paramIn.contractCustomerIdentityNumber);
+                search.push('&');
+            }
+            //
+            if ($scope.paramIn.contractSupplierName) {
+                search.push('contractSupplierName=');
+                search.push($scope.paramIn.contractSupplierName);
+                search.push('&');
+            }
+            if ($scope.paramIn.contractSupplierMobile) {
+                search.push('contractSupplierMobile=');
+                search.push($scope.paramIn.contractSupplierMobile);
+                search.push('&');
+            }
+            if ($scope.paramIn.contractSupplierIdentityNumber) {
+                search.push('contractSupplierIdentityNumber=');
+                search.push($scope.paramIn.contractSupplierIdentityNumber);
+                search.push('&');
+            }
+            //
+            if ($scope.paramIn.contractAmountFrom) {
+                search.push('contractAmountFrom=');
+                search.push($scope.paramIn.contractAmountFrom);
+                search.push('&');
+            }
+            if ($scope.paramIn.contractAmountTo) {
+                search.push('contractAmountTo=');
+                search.push($scope.paramIn.contractAmountTo);
+                search.push('&');
+            }
+            //
+            if ($scope.paramIn.contractRegisterDateFrom) {
+                search.push('contractRegisterDateFrom=');
+                search.push($scope.paramIn.contractRegisterDateFrom.getTime());
+                search.push('&');
+            }
+            if ($scope.paramIn.contractRegisterDateTo) {
+                search.push('contractRegisterDateTo=');
+                search.push($scope.paramIn.contractRegisterDateTo.getTime());
+                search.push('&');
+            }
+            //
+
+            //
+            if ($scope.paramIn.receiptCodeFrom) {
+                search.push('receiptCodeFrom=');
+                search.push($scope.paramIn.receiptCodeFrom);
+                search.push('&');
+            }
+            if ($scope.paramIn.receiptCodeTo) {
+                search.push('receiptCodeTo=');
+                search.push($scope.paramIn.receiptCodeTo);
+                search.push('&');
+            }
+            //
+            if ($scope.paramIn.receiptDateFrom) {
+                search.push('receiptDateFrom=');
+                search.push($scope.paramIn.receiptDateFrom.getTime());
+                search.push('&');
+            }
+            if ($scope.paramIn.receiptDateTo) {
+                search.push('receiptDateTo=');
+                search.push($scope.paramIn.receiptDateTo.getTime());
+                search.push('&');
+            }
+            //
+            search.push('receiptType=In');
+            search.push('&');
+            //
+
+            ContractReceiptService.filter(search.join("")).then(function (data) {
+                $scope.contractReceiptsIn = data;
+                $scope.setSelectedIn(data[0]);
+                $scope.totalAmount = 0;
+                angular.forEach(data, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
+                });
+                $scope.itemsIn = [];
+                $scope.itemsIn.push(
+                    {
+                        'id': 1,
+                        'type': 'link',
+                        'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application',
+                        'link': 'menu'
+                    },
+                    {
+                        'id': 2,
+                        'type': 'title',
+                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                    },
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'بحث مخصص' : 'Custom Filters'}
+                );
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
+            });
+        };
+
+        $scope.findContractsReceiptsInByToday = function () {
+            ContractReceiptService.findByTodayIn().then(function (data) {
+                $scope.contractReceiptsIn = data;
+                $scope.setSelectedIn(data[0]);
+                $scope.totalAmount = 0;
+                angular.forEach(data, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
+                });
+                $scope.itemsIn = [];
+                $scope.itemsIn.push(
+                    {
+                        'id': 1,
+                        'type': 'link',
+                        'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application',
+                        'link': 'menu'
+                    },
+                    {
+                        'id': 2,
+                        'type': 'title',
+                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                    },
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات اليوم' : 'Contract Incomes For Today'}
+                );
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
+            });
+        };
+
+        $scope.findContractsReceiptsInByWeek = function () {
+            ContractReceiptService.findByWeekIn().then(function (data) {
+                $scope.contractReceiptsIn = data;
+                $scope.setSelectedIn(data[0]);
+                $scope.totalAmount = 0;
+                angular.forEach(data, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
+                });
+                $scope.itemsIn = [];
+                $scope.itemsIn.push(
+                    {
+                        'id': 1,
+                        'type': 'link',
+                        'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application',
+                        'link': 'menu'
+                    },
+                    {
+                        'id': 2,
+                        'type': 'title',
+                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                    },
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات الاسبوع' : 'Contract Incomes For Week'}
+                );
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
+            });
+        };
+
+        $scope.findContractsReceiptsInByMonth = function () {
+            ContractReceiptService.findByMonthIn().then(function (data) {
+                $scope.contractReceiptsIn = data;
+                $scope.setSelectedIn(data[0]);
+                $scope.totalAmount = 0;
+                angular.forEach(data, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
+                });
+                $scope.itemsIn = [];
+                $scope.itemsIn.push(
+                    {
+                        'id': 1,
+                        'type': 'link',
+                        'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application',
+                        'link': 'menu'
+                    },
+                    {
+                        'id': 2,
+                        'type': 'title',
+                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                    },
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات الشهر' : 'Contract Incomes For Month'}
+                );
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
+            });
+        };
+
+        $scope.findContractsReceiptsInByYear = function () {
+            ContractReceiptService.findByYearIn().then(function (data) {
+                $scope.contractReceiptsIn = data;
+                $scope.setSelectedIn(data[0]);
+                $scope.totalAmount = 0;
+                angular.forEach(data, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
+                });
+                $scope.itemsIn = [];
+                $scope.itemsIn.push(
+                    {
+                        'id': 1,
+                        'type': 'link',
+                        'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application',
+                        'link': 'menu'
+                    },
+                    {
+                        'id': 2,
+                        'type': 'title',
+                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                    },
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات العام' : 'Contract Incomes For Year'}
+                );
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
+            });
+        };
+
+        $scope.deleteIn = function (contractReceipt) {
+            if (contractReceipt) {
+                $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف السند وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
+                    ContractReceiptService.remove(contractReceipt.id).then(function () {
+                        var index = $scope.contractReceiptsIn.indexOf(contractReceipt);
+                        $scope.contractReceiptsIn.splice(index, 1);
+                        $scope.setSelectedIn($scope.contractReceiptsIn[0]);
+                        $scope.totalAmount = 0;
+                        angular.forEach($scope.contractReceiptsIn, function (contractReceipt) {
+                            $scope.totalAmount+=contractReceipt.receipt.amountNumber;
+                        });
+                    });
+                });
+                return;
+            }
+
+            $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف السند وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
+                ContractReceiptService.remove($scope.selectedIn.id).then(function () {
+                    var index = $scope.contractReceiptsIn.indexOf($scope.selectedIn);
+                    $scope.contractReceiptsIn.splice(index, 1);
+                    $scope.setSelectedIn($scope.contractReceiptsIn[0]);
+                    $scope.totalAmount = 0;
+                    angular.forEach($scope.contractReceiptsIn, function (contractReceipt) {
+                        $scope.totalAmount+=contractReceipt.receipt.amountNumber;
+                    });
+                });
+            });
+        };
+
+        $scope.newContractReceiptIn = function () {
+            ModalProvider.openContractReceiptInCreateModel().result.then(function (data) {
+                $scope.contractReceiptsIn.splice(0, 0, data);
+                $scope.totalAmount = 0;
+                angular.forEach($scope.contractReceiptsIn, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
+                });
+            }, function () {
+                console.info('ContractReceiptCreateModel Closed.');
+            });
+        };
+
+        $scope.rowMenuIn = [
+            {
+                html: '<div class="drop-menu">انشاء سند جديد<span class="fa fa-pencil fa-lg"></span></div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_CONTRACT_RECEIPT_IN_CREATE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    $scope.newContractReceiptIn();
+                }
+            },
+            {
+                html: '<div class="drop-menu">حذف السند<span class="fa fa-trash fa-lg"></span></div>',
+                enabled: function () {
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_CONTRACT_RECEIPT_IN_DELETE']);
+                },
+                click: function ($itemScope, $event, value) {
+                    $scope.deleteIn($itemScope.contractReceipt);
+                }
+            }
+        ];
+
         $timeout(function () {
             $scope.findContractsByWeek();
+            $scope.findContractsReceiptsInByWeek();
             window.componentHandler.upgradeAllRegistered();
         }, 1500);
 

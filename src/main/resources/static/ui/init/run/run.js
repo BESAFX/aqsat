@@ -39,10 +39,7 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                     $rootScope.applyCssLang();
                     break;
                 }
-                case 'supplier':
-                case 'supplier.list':
-                case 'supplier.receiptIn':
-                case 'supplier.receiptOut':{
+                case 'supplier': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'store';
                     $rootScope.applyCssLang();
@@ -58,13 +55,6 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                 case 'employee.list': {
                     $rootScope.applyTitleLang();
                     $rootScope.MDLIcon = 'person_pin_circle';
-                    $rootScope.applyCssLang();
-                    break;
-                }
-                case 'contractReceipt':
-                case 'contractReceipt.in': {
-                    $rootScope.applyTitleLang();
-                    $rootScope.MDLIcon = 'attach_money';
                     $rootScope.applyCssLang();
                     break;
                 }
@@ -185,9 +175,6 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                         }
                         break;
                     case 'supplier':
-                    case 'supplier.list':
-                    case 'supplier.receiptIn':
-                    case 'supplier.receiptOut':
                         if ($rootScope.lang === 'AR') {
                             $rootScope.pageTitle = 'التجار';
                         } else {
@@ -207,14 +194,6 @@ app.run(['$http', '$location', '$state', '$timeout', '$window', 'PersonService',
                             $rootScope.pageTitle = 'الموظفون';
                         } else {
                             $rootScope.pageTitle = 'Employees';
-                        }
-                        break;
-                    case 'contractReceipt':
-                    case 'contractReceipt.in':
-                        if ($rootScope.lang === 'AR') {
-                            $rootScope.pageTitle = 'السندات';
-                        } else {
-                            $rootScope.pageTitle = 'Receipts';
                         }
                         break;
                     case 'profile':

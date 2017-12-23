@@ -73,12 +73,9 @@ public class PartialController {
 
             "/employee/list",
 
-            "/supplier/list",
-            "/supplier/receiptIn",
-            "/supplier/receiptOut",
+            "/supplier",
 
             "/contract",
-            "/contractReceipt/in",
 
             "/help",
             "/profile",

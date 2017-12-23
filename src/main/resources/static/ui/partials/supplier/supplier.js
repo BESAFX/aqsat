@@ -1,5 +1,5 @@
-app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope', '$state', '$timeout', '$uibModal',
-    function (SupplierService, ModalProvider, $rootScope, $state, $timeout, $uibModal) {
+app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'ModalProvider', '$rootScope', '$state', '$timeout', '$uibModal',
+    function (SupplierService, SupplierReceiptService, ModalProvider, $rootScope, $state, $timeout, $uibModal) {
 
         var vm = this;
         
@@ -113,17 +113,17 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
         vm.itemsIn = [];
         vm.itemsIn.push(
             {'id': 1, 'type': 'link', 'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application', 'link': 'menu'},
-            {'id': 2, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'}
+            {'id': 2, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'المبالغ المحصلة' : 'Cash From Sellers'}
         );
 
         vm.setSelectedReceiptIn = function (object) {
             if (object) {
-                angular.forEach(vm.receiptsIn, function (contractReceipt) {
-                    if (object.id == contractReceipt.id) {
-                        vm.selectedReceiptIn = contractReceipt;
-                        return contractReceipt.isSelected = true;
+                angular.forEach(vm.receiptsIn, function (supplierReceipt) {
+                    if (object.id == supplierReceipt.id) {
+                        vm.selectedReceiptIn = supplierReceipt;
+                        return supplierReceipt.isSelected = true;
                     } else {
-                        return contractReceipt.isSelected = false;
+                        return supplierReceipt.isSelected = false;
                     }
                 });
             }
@@ -133,71 +133,32 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
 
             var search = [];
 
-            if (vm.paramIn.contractCodeFrom) {
-                search.push('contractCodeFrom=');
-                search.push(vm.paramIn.contractCodeFrom);
+            if (vm.paramIn.supplierCodeFrom) {
+                search.push('supplierCodeFrom=');
+                search.push(vm.paramIn.supplierCodeFrom);
                 search.push('&');
             }
-            if (vm.paramIn.contractCodeTo) {
-                search.push('contractCodeTo=');
-                search.push(vm.paramIn.contractCodeTo);
-                search.push('&');
-            }
-            //
-            if (vm.paramIn.contractCustomerName) {
-                search.push('contractCustomerName=');
-                search.push(vm.paramIn.contractCustomerName);
-                search.push('&');
-            }
-            if (vm.paramIn.contractCustomerMobile) {
-                search.push('contractCustomerMobile=');
-                search.push(vm.paramIn.contractCustomerMobile);
-                search.push('&');
-            }
-            if (vm.paramIn.contractCustomerIdentityNumber) {
-                search.push('contractCustomerIdentityNumber=');
-                search.push(vm.paramIn.contractCustomerIdentityNumber);
+            if (vm.paramIn.supplierCodeTo) {
+                search.push('supplierCodeTo=');
+                search.push(vm.paramIn.supplierCodeTo);
                 search.push('&');
             }
             //
-            if (vm.paramIn.contractSupplierName) {
-                search.push('contractSupplierName=');
-                search.push(vm.paramIn.contractSupplierName);
+            if (vm.paramIn.supplierName) {
+                search.push('supplierName=');
+                search.push(vm.paramIn.supplierName);
                 search.push('&');
             }
-            if (vm.paramIn.contractSupplierMobile) {
-                search.push('contractSupplierMobile=');
-                search.push(vm.paramIn.contractSupplierMobile);
+            if (vm.paramIn.supplierMobile) {
+                search.push('supplierMobile=');
+                search.push(vm.paramIn.supplierMobile);
                 search.push('&');
             }
-            if (vm.paramIn.contractSupplierIdentityNumber) {
-                search.push('contractSupplierIdentityNumber=');
-                search.push(vm.paramIn.contractSupplierIdentityNumber);
+            if (vm.paramIn.supplierIdentityNumber) {
+                search.push('supplierIdentityNumber=');
+                search.push(vm.paramIn.supplierIdentityNumber);
                 search.push('&');
             }
-            //
-            if (vm.paramIn.contractAmountFrom) {
-                search.push('contractAmountFrom=');
-                search.push(vm.paramIn.contractAmountFrom);
-                search.push('&');
-            }
-            if (vm.paramIn.contractAmountTo) {
-                search.push('contractAmountTo=');
-                search.push(vm.paramIn.contractAmountTo);
-                search.push('&');
-            }
-            //
-            if (vm.paramIn.contractRegisterDateFrom) {
-                search.push('contractRegisterDateFrom=');
-                search.push(vm.paramIn.contractRegisterDateFrom.getTime());
-                search.push('&');
-            }
-            if (vm.paramIn.contractRegisterDateTo) {
-                search.push('contractRegisterDateTo=');
-                search.push(vm.paramIn.contractRegisterDateTo.getTime());
-                search.push('&');
-            }
-            //
 
             //
             if (vm.paramIn.receiptCodeFrom) {
@@ -226,12 +187,12 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             search.push('&');
             //
 
-            ContractReceiptService.filter(search.join("")).then(function (data) {
+            SupplierReceiptService.filter(search.join("")).then(function (data) {
                 vm.receiptsIn = data;
                 vm.setSelectedReceiptIn(data[0]);
-                vm.totalAmount = 0;
-                angular.forEach(data, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountIn = 0;
+                angular.forEach(data, function (supplierReceipt) {
+                    vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
                 });
                 vm.itemsIn = [];
                 vm.itemsIn.push(
@@ -244,7 +205,7 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
                     {
                         'id': 2,
                         'type': 'title',
-                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                        'name': $rootScope.lang === 'AR' ? 'المبالغ المحصلة' : 'Cash From Sellers'
                     },
                     {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'بحث مخصص' : 'Custom Filters'}
                 );
@@ -254,13 +215,13 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             });
         };
 
-        vm.findContractsReceiptsInByToday = function () {
-            ContractReceiptService.findByTodayIn().then(function (data) {
+        vm.findSuppliersReceiptsInByToday = function () {
+            SupplierReceiptService.findByTodayIn().then(function (data) {
                 vm.receiptsIn = data;
                 vm.setSelectedReceiptIn(data[0]);
-                vm.totalAmount = 0;
-                angular.forEach(data, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountIn = 0;
+                angular.forEach(data, function (supplierReceipt) {
+                    vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
                 });
                 vm.itemsIn = [];
                 vm.itemsIn.push(
@@ -273,9 +234,9 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
                     {
                         'id': 2,
                         'type': 'title',
-                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                        'name': $rootScope.lang === 'AR' ? 'المبالغ المحصلة' : 'Supplier Cash In'
                     },
-                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات اليوم' : 'Contract Incomes For Today'}
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'تحصيل اليوم' : 'For Today'}
                 );
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
@@ -283,13 +244,13 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             });
         };
 
-        vm.findContractsReceiptsInByWeek = function () {
-            ContractReceiptService.findByWeekIn().then(function (data) {
+        vm.findSuppliersReceiptsInByWeek = function () {
+            SupplierReceiptService.findByWeekIn().then(function (data) {
                 vm.receiptsIn = data;
                 vm.setSelectedReceiptIn(data[0]);
-                vm.totalAmount = 0;
-                angular.forEach(data, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountIn = 0;
+                angular.forEach(data, function (supplierReceipt) {
+                    vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
                 });
                 vm.itemsIn = [];
                 vm.itemsIn.push(
@@ -302,9 +263,9 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
                     {
                         'id': 2,
                         'type': 'title',
-                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                        'name': $rootScope.lang === 'AR' ? 'المبالغ المحصلة' : 'Supplier Cash In'
                     },
-                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات الاسبوع' : 'Contract Incomes For Week'}
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'تحصيل الاسبوع' : 'For Week'}
                 );
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
@@ -312,13 +273,13 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             });
         };
 
-        vm.findContractsReceiptsInByMonth = function () {
-            ContractReceiptService.findByMonthIn().then(function (data) {
+        vm.findSuppliersReceiptsInByMonth = function () {
+            SupplierReceiptService.findByMonthIn().then(function (data) {
                 vm.receiptsIn = data;
                 vm.setSelectedReceiptIn(data[0]);
-                vm.totalAmount = 0;
-                angular.forEach(data, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountIn = 0;
+                angular.forEach(data, function (supplierReceipt) {
+                    vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
                 });
                 vm.itemsIn = [];
                 vm.itemsIn.push(
@@ -331,9 +292,9 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
                     {
                         'id': 2,
                         'type': 'title',
-                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                        'name': $rootScope.lang === 'AR' ? 'المبالغ المحصلة' : 'Supplier Cash In'
                     },
-                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات الشهر' : 'Contract Incomes For Month'}
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'تحصيل الشهر' : 'For Month'}
                 );
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
@@ -341,13 +302,13 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             });
         };
 
-        vm.findContractsReceiptsInByYear = function () {
-            ContractReceiptService.findByYearIn().then(function (data) {
+        vm.findSuppliersReceiptsInByYear = function () {
+            SupplierReceiptService.findByYearIn().then(function (data) {
                 vm.receiptsIn = data;
                 vm.setSelectedReceiptIn(data[0]);
-                vm.totalAmount = 0;
-                angular.forEach(data, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountIn = 0;
+                angular.forEach(data, function (supplierReceipt) {
+                    vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
                 });
                 vm.itemsIn = [];
                 vm.itemsIn.push(
@@ -360,9 +321,9 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
                     {
                         'id': 2,
                         'type': 'title',
-                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                        'name': $rootScope.lang === 'AR' ? 'المبالغ المحصلة' : 'Supplier Cash In'
                     },
-                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات العام' : 'Contract Incomes For Year'}
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'تحصيل العام' : 'For Year'}
                 );
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
@@ -370,16 +331,16 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             });
         };
 
-        vm.deleteIn = function (contractReceipt) {
-            if (contractReceipt) {
+        vm.deleteIn = function (supplierReceipt) {
+            if (supplierReceipt) {
                 $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف السند وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
-                    ContractReceiptService.remove(contractReceipt.id).then(function () {
-                        var index = vm.receiptsIn.indexOf(contractReceipt);
+                    SupplierReceiptService.remove(supplierReceipt.id).then(function () {
+                        var index = vm.receiptsIn.indexOf(supplierReceipt);
                         vm.receiptsIn.splice(index, 1);
                         vm.setSelectedReceiptIn(vm.receiptsIn[0]);
-                        vm.totalAmount = 0;
-                        angular.forEach(vm.receiptsIn, function (contractReceipt) {
-                            vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                        vm.totalAmountIn = 0;
+                        angular.forEach(vm.receiptsIn, function (supplierReceipt) {
+                            vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
                         });
                     });
                 });
@@ -387,13 +348,13 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             }
 
             $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف السند وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
-                ContractReceiptService.remove(vm.selectedReceiptIn.id).then(function () {
+                SupplierReceiptService.remove(vm.selectedReceiptIn.id).then(function () {
                     var index = vm.receiptsIn.indexOf(vm.selectedReceiptIn);
                     vm.receiptsIn.splice(index, 1);
                     vm.setSelectedReceiptIn(vm.receiptsIn[0]);
-                    vm.totalAmount = 0;
-                    angular.forEach(vm.receiptsIn, function (contractReceipt) {
-                        vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                    vm.totalAmountIn = 0;
+                    angular.forEach(vm.receiptsIn, function (supplierReceipt) {
+                        vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
                     });
                 });
             });
@@ -402,12 +363,12 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
         vm.newSupplierReceiptIn = function () {
             ModalProvider.openSupplierReceiptInCreateModel().result.then(function (data) {
                 vm.receiptsIn.splice(0, 0, data);
-                vm.totalAmount = 0;
-                angular.forEach(vm.receiptsIn, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountIn = 0;
+                angular.forEach(vm.receiptsIn, function (supplierReceipt) {
+                    vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
                 });
             }, function () {
-                console.info('ContractReceiptCreateModel Closed.');
+                console.info('SupplierReceiptCreateModel Closed.');
             });
         };
 
@@ -415,7 +376,7 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             {
                 html: '<div class="drop-menu">انشاء سند جديد<span class="fa fa-pencil fa-lg"></span></div>',
                 enabled: function () {
-                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_CONTRACT_RECEIPT_IN_CREATE']);
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_SUPPLIER_RECEIPT_IN_CREATE']);
                 },
                 click: function ($itemScope, $event, value) {
                     vm.newSupplierReceiptIn();
@@ -424,10 +385,10 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             {
                 html: '<div class="drop-menu">حذف السند<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
-                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_CONTRACT_RECEIPT_IN_DELETE']);
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_SUPPLIER_RECEIPT_IN_DELETE']);
                 },
                 click: function ($itemScope, $event, value) {
-                    vm.deleteIn($itemScope.contractReceipt);
+                    vm.deleteIn($itemScope.supplierReceipt);
                 }
             }
         ];
@@ -442,17 +403,17 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
         vm.itemsOut = [];
         vm.itemsOut.push(
             {'id': 1, 'type': 'link', 'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application', 'link': 'menu'},
-            {'id': 2, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'سداد العقود' : 'Seller Receipts'}
+            {'id': 2, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'المبالغ المصروفة' : 'Paid Payments To Sellers'}
         );
 
         vm.setSelectedOut = function (object) {
             if (object) {
-                angular.forEach(vm.receiptsOut, function (contractReceipt) {
-                    if (object.id == contractReceipt.id) {
-                        vm.selectedOut = contractReceipt;
-                        return contractReceipt.isSelected = true;
+                angular.forEach(vm.receiptsOut, function (supplierReceipt) {
+                    if (object.id == supplierReceipt.id) {
+                        vm.selectedOut = supplierReceipt;
+                        return supplierReceipt.isSelected = true;
                     } else {
-                        return contractReceipt.isSelected = false;
+                        return supplierReceipt.isSelected = false;
                     }
                 });
             }
@@ -462,71 +423,32 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
 
             var search = [];
 
-            if (vm.paramOut.contractCodeFrom) {
-                search.push('contractCodeFrom=');
-                search.push(vm.paramOut.contractCodeFrom);
+            if (vm.paramIn.supplierCodeFrom) {
+                search.push('supplierCodeFrom=');
+                search.push(vm.paramIn.supplierCodeFrom);
                 search.push('&');
             }
-            if (vm.paramOut.contractCodeTo) {
-                search.push('contractCodeTo=');
-                search.push(vm.paramOut.contractCodeTo);
-                search.push('&');
-            }
-            //
-            if (vm.paramOut.contractCustomerName) {
-                search.push('contractCustomerName=');
-                search.push(vm.paramOut.contractCustomerName);
-                search.push('&');
-            }
-            if (vm.paramOut.contractCustomerMobile) {
-                search.push('contractCustomerMobile=');
-                search.push(vm.paramOut.contractCustomerMobile);
-                search.push('&');
-            }
-            if (vm.paramOut.contractCustomerIdentityNumber) {
-                search.push('contractCustomerIdentityNumber=');
-                search.push(vm.paramOut.contractCustomerIdentityNumber);
+            if (vm.paramIn.supplierCodeTo) {
+                search.push('supplierCodeTo=');
+                search.push(vm.paramIn.supplierCodeTo);
                 search.push('&');
             }
             //
-            if (vm.paramOut.contractSupplierName) {
-                search.push('contractSupplierName=');
-                search.push(vm.paramOut.contractSupplierName);
+            if (vm.paramIn.supplierName) {
+                search.push('supplierName=');
+                search.push(vm.paramIn.supplierName);
                 search.push('&');
             }
-            if (vm.paramOut.contractSupplierMobile) {
-                search.push('contractSupplierMobile=');
-                search.push(vm.paramOut.contractSupplierMobile);
+            if (vm.paramIn.supplierMobile) {
+                search.push('supplierMobile=');
+                search.push(vm.paramIn.supplierMobile);
                 search.push('&');
             }
-            if (vm.paramOut.contractSupplierIdentityNumber) {
-                search.push('contractSupplierIdentityNumber=');
-                search.push(vm.paramOut.contractSupplierIdentityNumber);
+            if (vm.paramIn.supplierIdentityNumber) {
+                search.push('supplierIdentityNumber=');
+                search.push(vm.paramIn.supplierIdentityNumber);
                 search.push('&');
             }
-            //
-            if (vm.paramOut.contractAmountFrom) {
-                search.push('contractAmountFrom=');
-                search.push(vm.paramOut.contractAmountFrom);
-                search.push('&');
-            }
-            if (vm.paramOut.contractAmountTo) {
-                search.push('contractAmountTo=');
-                search.push(vm.paramOut.contractAmountTo);
-                search.push('&');
-            }
-            //
-            if (vm.paramOut.contractRegisterDateFrom) {
-                search.push('contractRegisterDateFrom=');
-                search.push(vm.paramOut.contractRegisterDateFrom.getTime());
-                search.push('&');
-            }
-            if (vm.paramOut.contractRegisterDateTo) {
-                search.push('contractRegisterDateTo=');
-                search.push(vm.paramOut.contractRegisterDateTo.getTime());
-                search.push('&');
-            }
-            //
 
             //
             if (vm.paramOut.receiptCodeFrom) {
@@ -555,12 +477,12 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             search.push('&');
             //
 
-            ContractReceiptService.filter(search.join("")).then(function (data) {
+            SupplierReceiptService.filter(search.join("")).then(function (data) {
                 vm.receiptsOut = data;
                 vm.setSelectedOut(data[0]);
-                vm.totalAmount = 0;
-                angular.forEach(data, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountOut = 0;
+                angular.forEach(data, function (supplierReceipt) {
+                    vm.totalAmountOut+=supplierReceipt.receipt.amountNumber;
                 });
                 vm.itemsOut = [];
                 vm.itemsOut.push(
@@ -573,7 +495,7 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
                     {
                         'id': 2,
                         'type': 'title',
-                        'name': $rootScope.lang === 'AR' ? 'سداد العقود' : 'Seller Receipts'
+                        'name': $rootScope.lang === 'AR' ? 'المبالغ المصروفة' : 'Paid Payments To Sellers'
                     },
                     {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'بحث مخصص' : 'Custom Filters'}
                 );
@@ -583,13 +505,13 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             });
         };
 
-        vm.findContractsReceiptsOutByToday = function () {
-            ContractReceiptService.findByTodayOut().then(function (data) {
+        vm.findSuppliersReceiptsOutByToday = function () {
+            SupplierReceiptService.findByTodayOut().then(function (data) {
                 vm.receiptsOut = data;
                 vm.setSelectedOut(data[0]);
-                vm.totalAmount = 0;
-                angular.forEach(data, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountOut = 0;
+                angular.forEach(data, function (supplierReceipt) {
+                    vm.totalAmountOut+=supplierReceipt.receipt.amountNumber;
                 });
                 vm.itemsOut = [];
                 vm.itemsOut.push(
@@ -602,9 +524,9 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
                     {
                         'id': 2,
                         'type': 'title',
-                        'name': $rootScope.lang === 'AR' ? 'سداد العقود' : 'Seller Receipts'
+                        'name': $rootScope.lang === 'AR' ? 'المبالغ المصروفة' : 'Paid Payments To Sellers'
                     },
-                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'دفعات اليوم' : 'Contract Outcomes For Today'}
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'دفعات اليوم' : 'For Today'}
                 );
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
@@ -612,13 +534,13 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             });
         };
 
-        vm.findContractsReceiptsOutByWeek = function () {
-            ContractReceiptService.findByWeekOut().then(function (data) {
+        vm.findSuppliersReceiptsOutByWeek = function () {
+            SupplierReceiptService.findByWeekOut().then(function (data) {
                 vm.receiptsOut = data;
                 vm.setSelectedOut(data[0]);
-                vm.totalAmount = 0;
-                angular.forEach(data, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountOut = 0;
+                angular.forEach(data, function (supplierReceipt) {
+                    vm.totalAmountOut+=supplierReceipt.receipt.amountNumber;
                 });
                 vm.itemsOut = [];
                 vm.itemsOut.push(
@@ -631,9 +553,9 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
                     {
                         'id': 2,
                         'type': 'title',
-                        'name': $rootScope.lang === 'AR' ? 'سداد العقود' : 'Seller Receipts'
+                        'name': $rootScope.lang === 'AR' ? 'المبالغ المصروفة' : 'Paid Payments To Sellers'
                     },
-                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'دفعات الاسبوع' : 'Contract Outcomes For Week'}
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'دفعات الاسبوع' : 'For Week'}
                 );
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
@@ -641,13 +563,13 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             });
         };
 
-        vm.findContractsReceiptsOutByMonth = function () {
-            ContractReceiptService.findByMonthOut().then(function (data) {
+        vm.findSuppliersReceiptsOutByMonth = function () {
+            SupplierReceiptService.findByMonthOut().then(function (data) {
                 vm.receiptsOut = data;
                 vm.setSelectedOut(data[0]);
-                vm.totalAmount = 0;
-                angular.forEach(data, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountOut = 0;
+                angular.forEach(data, function (supplierReceipt) {
+                    vm.totalAmountOut+=supplierReceipt.receipt.amountNumber;
                 });
                 vm.itemsOut = [];
                 vm.itemsOut.push(
@@ -660,9 +582,9 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
                     {
                         'id': 2,
                         'type': 'title',
-                        'name': $rootScope.lang === 'AR' ? 'سداد العقود' : 'Seller Receipts'
+                        'name': $rootScope.lang === 'AR' ? 'المبالغ المصروفة' : 'Paid Payments To Sellers'
                     },
-                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'دفعات الشهر' : 'Contract Outcomes For Month'}
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'دفعات الشهر' : 'For Month'}
                 );
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
@@ -670,13 +592,13 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             });
         };
 
-        vm.findContractsReceiptsOutByYear = function () {
-            ContractReceiptService.findByYearOut().then(function (data) {
+        vm.findSuppliersReceiptsOutByYear = function () {
+            SupplierReceiptService.findByYearOut().then(function (data) {
                 vm.receiptsOut = data;
                 vm.setSelectedOut(data[0]);
-                vm.totalAmount = 0;
-                angular.forEach(data, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountOut = 0;
+                angular.forEach(data, function (supplierReceipt) {
+                    vm.totalAmountOut+=supplierReceipt.receipt.amountNumber;
                 });
                 vm.itemsOut = [];
                 vm.itemsOut.push(
@@ -689,9 +611,9 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
                     {
                         'id': 2,
                         'type': 'title',
-                        'name': $rootScope.lang === 'AR' ? 'سداد العقود' : 'Seller Receipts'
+                        'name': $rootScope.lang === 'AR' ? 'المبالغ المصروفة' : 'Paid Payments To Sellers'
                     },
-                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'دفعات العام' : 'Contract Outcomes For Year'}
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'دفعات العام' : 'For Year'}
                 );
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
@@ -699,16 +621,16 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             });
         };
 
-        vm.deleteOut = function (contractReceipt) {
-            if (contractReceipt) {
+        vm.deleteOut = function (supplierReceipt) {
+            if (supplierReceipt) {
                 $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف السند وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
-                    ContractReceiptService.remove(contractReceipt.id).then(function () {
-                        var index = vm.receiptsOut.indexOf(contractReceipt);
+                    SupplierReceiptService.remove(supplierReceipt.id).then(function () {
+                        var index = vm.receiptsOut.indexOf(supplierReceipt);
                         vm.receiptsOut.splice(index, 1);
                         vm.setSelectedOut(vm.receiptsOut[0]);
-                        vm.totalAmount = 0;
-                        angular.forEach(vm.receiptsOut, function (contractReceipt) {
-                            vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                        vm.totalAmountOut = 0;
+                        angular.forEach(vm.receiptsOut, function (supplierReceipt) {
+                            vm.totalAmountOut+=supplierReceipt.receipt.amountNumber;
                         });
                     });
                 });
@@ -716,27 +638,27 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             }
 
             $rootScope.showConfirmNotify("حذف البيانات", "هل تود حذف السند وكل ما يتعلق به من حسابات فعلاً؟", "error", "fa-trash", function () {
-                ContractReceiptService.remove(vm.selectedOut.id).then(function () {
+                SupplierReceiptService.remove(vm.selectedOut.id).then(function () {
                     var index = vm.receiptsOut.indexOf(vm.selectedOut);
                     vm.receiptsOut.splice(index, 1);
                     vm.setSelectedOut(vm.receiptsOut[0]);
-                    vm.totalAmount = 0;
-                    angular.forEach(vm.receiptsOut, function (contractReceipt) {
-                        vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                    vm.totalAmountOut = 0;
+                    angular.forEach(vm.receiptsOut, function (supplierReceipt) {
+                        vm.totalAmountOut+=supplierReceipt.receipt.amountNumber;
                     });
                 });
             });
         };
 
-        vm.newContractReceiptOut = function () {
-            ModalProvider.openContractReceiptOutCreateModel().result.then(function (data) {
+        vm.newSupplierReceiptOut = function () {
+            ModalProvider.openSupplierReceiptOutCreateModel().result.then(function (data) {
                 vm.receiptsOut.splice(0, 0, data);
-                vm.totalAmount = 0;
-                angular.forEach(vm.receiptsOut, function (contractReceipt) {
-                    vm.totalAmount+=contractReceipt.receipt.amountNumber;
+                vm.totalAmountOut = 0;
+                angular.forEach(vm.receiptsOut, function (supplierReceipt) {
+                    vm.totalAmountOut+=supplierReceipt.receipt.amountNumber;
                 });
             }, function () {
-                console.info('ContractReceiptCreateModel Closed.');
+                console.info('SupplierReceiptCreateModel Closed.');
             });
         };
 
@@ -744,19 +666,19 @@ app.controller("supplierCtrl", ['SupplierService', 'ModalProvider', '$rootScope'
             {
                 html: '<div class="drop-menu">انشاء سند جديد<span class="fa fa-pencil fa-lg"></span></div>',
                 enabled: function () {
-                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_CONTRACT_RECEIPT_OUT_CREATE']);
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_SUPPLIER_RECEIPT_OUT_CREATE']);
                 },
                 click: function ($itemScope, $event, value) {
-                    vm.newContractReceiptOut();
+                    vm.newSupplierReceiptOut();
                 }
             },
             {
                 html: '<div class="drop-menu">حذف السند<span class="fa fa-trash fa-lg"></span></div>',
                 enabled: function () {
-                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_CONTRACT_RECEIPT_OUT_DELETE']);
+                    return $rootScope.contains($rootScope.me.team.authorities, ['ROLE_SUPPLIER_RECEIPT_OUT_DELETE']);
                 },
                 click: function ($itemScope, $event, value) {
-                    vm.deleteOut($itemScope.contractReceipt);
+                    vm.deleteOut($itemScope.supplierReceipt);
                 }
             }
         ];

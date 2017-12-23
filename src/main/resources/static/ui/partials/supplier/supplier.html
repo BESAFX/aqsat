@@ -15,25 +15,25 @@
             <span class="mdl-layout__title">{{pageTitle}}</span>
 
             <!-- Navigation -->
-            <nav class="mdl-navigation">
+            <nav class="mdl-navigation" ng-init="toggleState=1">
                 <a class="mdl-navigation__link"
                    href=""
-                   ui-sref-active="mdl-color-text--black mdl-color--blue-grey-50"
-                   ui-sref="supplier.list">
+                   ng-class="{'mdl-color-text--black mdl-color--blue-grey-50' : toggleState===1}"
+                   ng-click="toggleState=1">
                     <span ng-if="lang==='AR'">سجل التجار</span>
                     <span ng-if="lang==='EN'">Sellers List</span>
                 </a>
                 <a class="mdl-navigation__link"
                    href=""
-                   ui-sref-active="mdl-color-text--black mdl-color--blue-grey-50"
-                   ui-sref="supplier.receiptIn">
+                   ng-class="{'mdl-color-text--black mdl-color--blue-grey-50' : toggleState===2}"
+                   ng-click="toggleState=2">
                     <span ng-if="lang==='AR'">المبالغ المحصلة</span>
                     <span ng-if="lang==='EN'">Cash In</span>
                 </a>
                 <a class="mdl-navigation__link"
                    href=""
-                   ui-sref-active="mdl-color-text--black mdl-color--blue-grey-50"
-                   ui-sref="supplier.receiptOut">
+                   ng-class="{'mdl-color-text--black mdl-color--blue-grey-50' : toggleState===3}"
+                   ng-click="toggleState=3">
                     <span ng-if="lang==='AR'">المبالغ المصروفة</span>
                     <span ng-if="lang==='EN'">Cash Out</span>
                 </a>
@@ -137,13 +137,6 @@
                 </li>
             </ul>
 
-        </div>
-        <div class="mdl-layout__header-row" style="height: auto!important;padding: 0px !important;">
-            <div class="panel panel-body" style="width: 100%; margin-bottom: 0px !important;">
-
-                <div ui-view="options"></div>
-
-            </div>
         </div>
     </header>
 
@@ -300,7 +293,7 @@
                     </span>
                 </a>
                 <a class="mdl-navigation__link mdl-menu__item mdl-list__item"
-                   href="" ui-sref="supplier.list" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
+                   href="" ui-sref="supplier" ui-sref-active="mdl-navigation__link-active mdl-color--primary"
                    ng-if="contains(me.team.authorities, ['ROLE_SUPPLIER_CREATE', 'ROLE_SUPPLIER_UPDATE', 'ROLE_SUPPLIER_DELETE'])">
                     <span class="mdl-list__item-primary-content">
                         <i class="material-icons mdl-list__item-icon">store</i>
@@ -340,7 +333,23 @@
 
     <main class="mdl-layout__content">
 
-        <div ui-view="body" class="template-body"></div>
+        <div ng-show="toggleState===1" class="row" style="margin-top: 10px">
+
+            <div ng-include="'ui/partials/supplier/state1.html'"></div>
+
+        </div>
+
+        <div ng-show="toggleState===2" class="row" style="margin-top: 10px">
+
+            <div ng-include="'ui/partials/supplier/state2.html'"></div>
+
+        </div>
+
+        <div ng-show="toggleState===3" class="row" style="margin-top: 10px">
+
+            <div ng-include="'ui/partials/supplier/state3.html'"></div>
+
+        </div>
 
     </main>
 

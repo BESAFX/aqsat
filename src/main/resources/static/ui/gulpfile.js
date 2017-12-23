@@ -143,17 +143,16 @@ gulp.task('scripts', function () {
 
         './partials/supplier/supplier.js',
         './partials/supplier/supplierCreateUpdate.js',
+        './partials/supplier/supplierReceiptCreate.js',
 
         './partials/contract/contract.js',
         './partials/contract/contractCreateUpdate.js',
         './partials/contract/contractAttachUpload.js',
         './partials/contract/receiptCreateByContract.js',
+        './partials/contract/contractReceiptCreate.js',
 
         './partials/employee/employee.js',
         './partials/employee/employeeCreateUpdate.js',
-
-        './partials/contractReceipt/contractReceipt.js',
-        './partials/contractReceipt/contractReceiptCreate.js',
 
         './partials/report/report.js',
         './partials/report/person/personsIn.js',

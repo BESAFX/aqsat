@@ -52,14 +52,11 @@ public class SupplierReceiptRest {
     @Autowired
     private NotificationService notificationService;
 
-    @RequestMapping(value = "create/{receiptType}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    @PreAuthorize("hasRole('ROLE_SUPPLIER_RECEIPT_CREATE')")
-    public String create(@PathVariable(value = "receiptType") ReceiptType receiptType, @RequestBody SupplierReceipt supplierReceipt, Principal principal) {
+    private SupplierReceipt create(ReceiptType receiptType, SupplierReceipt supplierReceipt, String byEmail) {
         if (supplierReceipt.getReceipt().getAmountNumber() == 0) {
             throw new CustomException("لا يمكن إنشاء سند بقيمة صفر");
         }
-        Person caller = personService.findByEmail(principal.getName());
+        Person caller = personService.findByEmail(byEmail);
         if (receiptService.findByCode(supplierReceipt.getReceipt().getCode()) != null) {
             throw new CustomException("رقم السند غير متاح، فضلاً ادخل رقم آخر");
         }
@@ -71,8 +68,23 @@ public class SupplierReceiptRest {
         supplierReceipt.setReceipt(receiptService.save(supplierReceipt.getReceipt()));
         supplierReceipt = supplierReceiptService.save(supplierReceipt);
         String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
-        notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم انشاء سند القبض بنجاح" : "Create Supplier Receipt Successfully").type("success").build(), principal.getName());
-        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), supplierReceipt);
+        notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم انشاء السند بنجاح" : "Create Receipt Successfully").type("success").build(), byEmail);
+        return supplierReceipt;
+    }
+
+
+    @RequestMapping(value = "createIn", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_SUPPLIER_RECEIPT_IN_CREATE')")
+    public String createIn(@RequestBody SupplierReceipt supplierReceipt, Principal principal) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), create(ReceiptType.In, supplierReceipt, principal.getName()));
+    }
+
+    @RequestMapping(value = "createOut", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @PreAuthorize("hasRole('ROLE_SUPPLIER_RECEIPT_OUT_CREATE')")
+    public String createOut(@RequestBody SupplierReceipt supplierReceipt, Principal principal) {
+        return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), create(ReceiptType.Out, supplierReceipt, principal.getName()));
     }
 
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
