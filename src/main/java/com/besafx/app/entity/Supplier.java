@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -54,6 +53,9 @@ public class Supplier implements Serializable {
     @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY)
     private List<Contract> contracts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "supplier", fetch = FetchType.LAZY)
+    private List<SupplierReceipt> supplierReceipts = new ArrayList<>();
+
     @JsonCreator
     public static Supplier Create(String jsonString) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -61,33 +63,44 @@ public class Supplier implements Serializable {
         return supplier;
     }
 
-    public Double getBalance() {
-        try {
-            return this.contracts.stream().mapToDouble(Contract::getAmount).sum();
-        } catch (Exception ex) {
-            return 0.0;
-        }
-    }
-
-    public Double getPaid() {
+    public Double getContractsPaidSum() {
         try {
             return this.contracts.stream()
                     .flatMap(contract -> contract.getContractReceipts().stream())
-                    .filter(contractReceipt -> contractReceipt.getReceipt().getReceiptType().equals(ReceiptType.Out))
-                    .map(ContractReceipt::getReceipt)
-                    .collect(Collectors.toList())
-                    .stream()
-                    .mapToDouble(Receipt::getAmountNumber)
-                    .sum();
-
+                    .map(contractReceipt -> contractReceipt.getReceipt())
+                    .mapToDouble(Receipt::getAmountNumber).sum();
         } catch (Exception ex) {
             return 0.0;
         }
     }
 
-    public Double getRemain() {
+    public Double getReceiptsInSum() {
         try {
-            return this.getBalance() - this.getPaid();
+            return this.supplierReceipts.stream()
+                    .map(SupplierReceipt::getReceipt)
+                    .filter(receipt -> receipt.getReceiptType().equals(ReceiptType.In))
+                    .mapToDouble(receipt -> receipt.getAmountNumber())
+                    .sum();
+        } catch (Exception ex) {
+            return 0.0;
+        }
+    }
+
+    public Double getReceiptsOutSum() {
+        try {
+            return this.supplierReceipts.stream()
+                    .map(SupplierReceipt::getReceipt)
+                    .filter(receipt -> receipt.getReceiptType().equals(ReceiptType.Out))
+                    .mapToDouble(receipt -> receipt.getAmountNumber())
+                    .sum();
+        } catch (Exception ex) {
+            return 0.0;
+        }
+    }
+
+    public Double getBalance() {
+        try {
+            return (getContractsPaidSum() + getReceiptsInSum()) - getReceiptsOutSum();
         } catch (Exception ex) {
             return 0.0;
         }

@@ -116,7 +116,7 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
             {'id': 2, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'المبالغ المحصلة' : 'Cash From Sellers'}
         );
 
-        vm.setSelectedReceiptIn = function (object) {
+        vm.setSelectedIn = function (object) {
             if (object) {
                 angular.forEach(vm.receiptsIn, function (supplierReceipt) {
                     if (object.id == supplierReceipt.id) {
@@ -129,7 +129,7 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
             }
         };
 
-        vm.filterReceiptsIn = function () {
+        vm.filterIn = function () {
 
             var search = [];
 
@@ -189,7 +189,7 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
 
             SupplierReceiptService.filter(search.join("")).then(function (data) {
                 vm.receiptsIn = data;
-                vm.setSelectedReceiptIn(data[0]);
+                vm.setSelectedIn(data[0]);
                 vm.totalAmountIn = 0;
                 angular.forEach(data, function (supplierReceipt) {
                     vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
@@ -218,7 +218,7 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
         vm.findSuppliersReceiptsInByToday = function () {
             SupplierReceiptService.findByTodayIn().then(function (data) {
                 vm.receiptsIn = data;
-                vm.setSelectedReceiptIn(data[0]);
+                vm.setSelectedIn(data[0]);
                 vm.totalAmountIn = 0;
                 angular.forEach(data, function (supplierReceipt) {
                     vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
@@ -247,7 +247,7 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
         vm.findSuppliersReceiptsInByWeek = function () {
             SupplierReceiptService.findByWeekIn().then(function (data) {
                 vm.receiptsIn = data;
-                vm.setSelectedReceiptIn(data[0]);
+                vm.setSelectedIn(data[0]);
                 vm.totalAmountIn = 0;
                 angular.forEach(data, function (supplierReceipt) {
                     vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
@@ -276,7 +276,7 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
         vm.findSuppliersReceiptsInByMonth = function () {
             SupplierReceiptService.findByMonthIn().then(function (data) {
                 vm.receiptsIn = data;
-                vm.setSelectedReceiptIn(data[0]);
+                vm.setSelectedIn(data[0]);
                 vm.totalAmountIn = 0;
                 angular.forEach(data, function (supplierReceipt) {
                     vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
@@ -305,7 +305,7 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
         vm.findSuppliersReceiptsInByYear = function () {
             SupplierReceiptService.findByYearIn().then(function (data) {
                 vm.receiptsIn = data;
-                vm.setSelectedReceiptIn(data[0]);
+                vm.setSelectedIn(data[0]);
                 vm.totalAmountIn = 0;
                 angular.forEach(data, function (supplierReceipt) {
                     vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
@@ -337,7 +337,7 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
                     SupplierReceiptService.remove(supplierReceipt.id).then(function () {
                         var index = vm.receiptsIn.indexOf(supplierReceipt);
                         vm.receiptsIn.splice(index, 1);
-                        vm.setSelectedReceiptIn(vm.receiptsIn[0]);
+                        vm.setSelectedIn(vm.receiptsIn[0]);
                         vm.totalAmountIn = 0;
                         angular.forEach(vm.receiptsIn, function (supplierReceipt) {
                             vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
@@ -351,7 +351,7 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
                 SupplierReceiptService.remove(vm.selectedReceiptIn.id).then(function () {
                     var index = vm.receiptsIn.indexOf(vm.selectedReceiptIn);
                     vm.receiptsIn.splice(index, 1);
-                    vm.setSelectedReceiptIn(vm.receiptsIn[0]);
+                    vm.setSelectedIn(vm.receiptsIn[0]);
                     vm.totalAmountIn = 0;
                     angular.forEach(vm.receiptsIn, function (supplierReceipt) {
                         vm.totalAmountIn+=supplierReceipt.receipt.amountNumber;
@@ -685,7 +685,15 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
 
         $timeout(function () {
             vm.fetchSupplierTableData();
-            window.componentHandler.upgradeAllRegistered();
         }, 1500);
+
+        $timeout(function () {
+            vm.findSuppliersReceiptsInByWeek();
+        }, 1600);
+
+        $timeout(function () {
+            vm.findSuppliersReceiptsOutByWeek();
+            window.componentHandler.upgradeAllRegistered();
+        }, 1700);
 
     }]);
