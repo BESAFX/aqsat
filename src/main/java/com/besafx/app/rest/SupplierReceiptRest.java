@@ -8,6 +8,7 @@ import com.besafx.app.search.SupplierReceiptSearch;
 import com.besafx.app.service.PersonService;
 import com.besafx.app.service.ReceiptService;
 import com.besafx.app.service.SupplierReceiptService;
+import com.besafx.app.service.SupplierService;
 import com.besafx.app.util.ArabicLiteralNumberParser;
 import com.besafx.app.util.JSONConverter;
 import com.besafx.app.util.Options;
@@ -36,6 +37,9 @@ public class SupplierReceiptRest {
     private final static Logger log = LoggerFactory.getLogger(SupplierReceiptRest.class);
 
     public static final String FILTER_TABLE = "**,supplier[id,code,name],receipt[**,lastPerson[id,nickname,name]]";
+
+    @Autowired
+    private SupplierService supplierService;
 
     @Autowired
     private SupplierReceiptService supplierReceiptService;
@@ -84,6 +88,10 @@ public class SupplierReceiptRest {
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_SUPPLIER_RECEIPT_OUT_CREATE')")
     public String createOut(@RequestBody SupplierReceipt supplierReceipt, Principal principal) {
+        Double supplierBalance = supplierService.findOne(supplierReceipt.getSupplier().getId()).getBalance();
+        if(supplierReceipt.getReceipt().getAmountNumber() > supplierBalance){
+            throw new CustomException("لا يمكن صرف قيمة أكبر من رصيد التاجر = ".concat(supplierBalance.toString()));
+        }
         return SquigglyUtils.stringify(Squiggly.init(new ObjectMapper(), FILTER_TABLE), create(ReceiptType.Out, supplierReceipt, principal.getName()));
     }
 

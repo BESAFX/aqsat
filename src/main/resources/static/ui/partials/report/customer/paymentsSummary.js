@@ -1,14 +1,16 @@
-app.controller('paymentsSummaryCtrl', ['$scope', '$rootScope', '$timeout', '$uibModalInstance',
-    function ($scope, $rootScope, $timeout, $uibModalInstance) {
+app.controller('paymentsSummaryCtrl', ['CustomerService', '$scope', '$rootScope', '$timeout', '$uibModalInstance',
+    function (CustomerService, $scope, $rootScope, $timeout, $uibModalInstance) {
 
         $scope.buffer = {};
 
+        $timeout(function () {
+            CustomerService.findAllCombo().then(function (data) {
+                $scope.customers = data;
+            });
+        }, 2000);
+
         $scope.submit = function () {
-            window.open('/report/ordersDetailsByDate?'
-                + 'exportType=' + 'PDF'
-                + '&dateFrom=' + $scope.buffer.dateFrom.getTime()
-                + '&dateTo=' + $scope.buffer.dateTo.getTime()
-            );
+            window.open('/report/customer/' + $scope.buffer.customer.id + '/PDF');
         };
 
         $scope.cancel = function () {

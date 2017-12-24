@@ -53,14 +53,16 @@
                                                required=""
                                                disable-validation-message=""
                                                theme="bootstrap">
-                                        <ui-select-match placeholder="{{lang==='AR' ? 'اختر التاجر...' : 'Select Seller Man...'}}">
+                                        <ui-select-match
+                                                placeholder="{{lang==='AR' ? 'اختر التاجر...' : 'Select Seller Man...'}}">
                                             <span ng-if="supplierReceipt.supplier.id">
                                                 <span>[{{$select.selected.code}}] {{$select.selected.name}}</span>
                                             </span>
                                         </ui-select-match>
                                         <ui-select-choices
                                                 repeat="supplier in suppliers | filter: $select.search | orderBy:'code' track by supplier.id">
-                                            <div ng-if="lang==='AR'" ng-bind-html="supplier.name | highlight: $select.search"></div>
+                                            <div ng-if="lang==='AR'"
+                                                 ng-bind-html="supplier.name | highlight: $select.search"></div>
                                             <small>
                                                 <span ng-if="lang==='AR'">رقم الجوال : </span>
                                                 <span ng-if="lang==='EN'">Mobile: </span>
@@ -68,10 +70,21 @@
                                                 <br/>
                                                 <span ng-if="lang==='AR'">رقم البطاقة : </span>
                                                 <span ng-if="lang==='EN'">Identity Number: </span>
-                                                <span ng-if="lang==='AR'" ng-bind-html="''+supplier.identityNumber | highlight: $select.search"></span>
+                                                <span ng-if="lang==='AR'"
+                                                      ng-bind-html="''+supplier.identityNumber | highlight: $select.search"></span>
+                                                <br/>
+                                                <span ng-if="lang==='AR'">رصيد التاجر : </span>
+                                                <span ng-if="lang==='EN'">Balance: </span>
+                                                <span ng-if="lang==='AR'"
+                                                      ng-bind-html="''+supplier.balance | highlight: $select.search"></span>
                                             </small>
                                         </ui-select-choices>
                                     </ui-select>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" ng-if="supplierReceipt.supplier.id">
+                                    <h4 ng-if="lang==='AR'">رصيد التاجر الفعلي حالياً = {{supplierReceipt.supplier.balance}}</h4>
+                                    <h4 ng-if="lang==='EN'">Seller Real Balance Now = {{supplierReceipt.supplier.balance}}</h4>
                                 </div>
 
                                 <div class="form-group row">
@@ -96,8 +109,8 @@
                                         </label>
                                         <input id="amountNumber"
                                                type="number"
-                                               ng-min="0"
-                                               ng-max="supplierReceipt.supplier.remain"
+                                               min="0"
+                                               max="{{receiptType==='Out'?supplierReceipt.supplier.balance:99999999}}"
                                                required=""
                                                disable-validation-message=""
                                                class="form-control"

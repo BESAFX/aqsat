@@ -9,8 +9,8 @@
         <h3 ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="panel-title mdl-list__item">
             <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">print</i>
-                <strong ng-if="lang==='AR'">تقرير مُفصل لطلبات الفحص بالتاريخ</strong>
-                <strong ng-if="lang==='EN'">Orders Details By Date...</strong>
+                <strong ng-if="lang==='AR'">كشف حساب عميل</strong>
+                <strong ng-if="lang==='EN'">Customer Balance Sheet</strong>
             </span>
         </h3>
     </div>
@@ -28,82 +28,39 @@
 
             <div class="form-group row">
 
-                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="dateType==='H'">
-                    <label for="dateFrom" class="control-label">
-                        <span ng-if="lang==='AR'">التاريخ من</span>
-                        <span ng-if="lang==='EN'">Date From</span>
+                <div class="form-group text-right col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                    <label for="customer" class="control-label">
+                        <span ng-if="lang==='AR'">العميل</span>
+                        <span ng-if="lang==='EN'">Customer</span>
+                        <a href="" ng-click="newCustomer()">
+                            <strong ng-if="lang==='AR'">عميل جديد...</strong>
+                            <strong ng-if="lang==='EN'">New Customer...</strong>
+                        </a>
                     </label>
-                    <div dir="ltr" class="input-group">
-                        <input dir="rtl"
-                               id="dateFrom"
-                               type="text"
-                               class="form-control is-calendarPicker"
-                               ng-model="buffer.dateFrom"
-                               ng-required="dateType==='H'"
+                    <ui-select id="customer"
+                               ng-model="buffer.customer"
+                               required=""
                                disable-validation-message=""
-                               calendarType="ummalqura"
-                               language="en"
-                               dateFormat="yyyy/mm/dd"
-                               showOnFocus="false"
-                               readonly="readonly"
-                               kdatepicker>
-                    </div>
-                </div>
-
-                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="dateType==='G'">
-                    <label for="G-dateFrom" class="control-label">
-                        <span ng-if="lang==='AR'">التاريخ من</span>
-                        <span ng-if="lang==='EN'">Date From</span>
-                    </label>
-                    <input id="G-dateFrom"
-                           class="form-control "
-                           type="date"
-                           name="input"
-                           ng-model="buffer.dateFrom"
-                           placeholder="yyyy-MM-dd"
-                           min="2017-01-01"
-                           max="2030-12-31"
-                           ng-required="dateType==='G'"
-                           disable-validation-message=""/>
-                </div>
-
-                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="dateType==='H'">
-                    <label for="dateTo" class="control-label">
-                        <span ng-if="lang==='AR'">التاريخ إلى</span>
-                        <span ng-if="lang==='EN'">Date To</span>
-                    </label>
-                    <div dir="ltr" class="input-group">
-                        <input dir="rtl"
-                               id="dateTo"
-                               type="text"
-                               class="form-control is-calendarPicker"
-                               ng-model="buffer.dateTo"
-                               ng-required="dateType==='H'"
-                               disable-validation-message=""
-                               calendarType="ummalqura"
-                               language="en"
-                               dateFormat="yyyy/mm/dd"
-                               showOnFocus="false"
-                               readonly="readonly"
-                               kdatepicker>
-                    </div>
-                </div>
-
-                <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-if="dateType==='G'">
-                    <label for="G-dateTo" class="control-label">
-                        <span ng-if="lang==='AR'">التاريخ إلى</span>
-                        <span ng-if="lang==='EN'">Date To</span>
-                    </label>
-                    <input id="G-dateTo"
-                           class="form-control "
-                           type="date"
-                           name="input"
-                           ng-model="buffer.dateTo"
-                           placeholder="yyyy-MM-dd"
-                           min="2017-01-01"
-                           max="2030-12-31"
-                           ng-required="dateType==='G'"
-                           disable-validation-message=""/>
+                               theme="bootstrap">
+                        <ui-select-match placeholder="{{lang==='AR' ? 'اختر العميل...' : 'Select Customer...'}}">
+                                <span ng-if="buffer.customer.id">
+                                    <span>[{{$select.selected.code}}] {{$select.selected.name}}</span>
+                                </span>
+                        </ui-select-match>
+                        <ui-select-choices
+                                repeat="customer in customers | filter: $select.search | orderBy:'code' track by customer.id">
+                            <div ng-if="lang==='AR'" ng-bind-html="customer.name | highlight: $select.search"></div>
+                            <small>
+                                <span ng-if="lang==='AR'">رقم الجوال : </span>
+                                <span ng-if="lang==='EN'">Mobile: </span>
+                                <span ng-bind-html="''+customer.mobile | highlight: $select.search"></span>
+                                <br/>
+                                <span ng-if="lang==='AR'">رقم البطاقة : </span>
+                                <span ng-if="lang==='EN'">Identity Number: </span>
+                                <span ng-if="lang==='AR'" ng-bind-html="''+customer.identityNumber | highlight: $select.search"></span>
+                            </small>
+                        </ui-select-choices>
+                    </ui-select>
                 </div>
 
             </div>

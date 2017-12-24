@@ -52,6 +52,9 @@ public class EmployeeRest {
     @PreAuthorize("hasRole('ROLE_EMPLOYEE_CREATE')")
     @Transactional
     public String create(@RequestBody Employee employee, Principal principal) {
+        if(employeeService.count() > 3){
+            throw new CustomException("لا يمكنك تسجيل أكثر من ثلاث موظفين حسب رخصة البرنامج، لزيادة عدد مستخدمين البرنامج قم بالاتصال بالدعم الفني");
+        }
         if (personService.findByEmail(employee.getPerson().getEmail()) != null) {
             throw new CustomException("هذا البريد الإلكتروني غير متاح ، فضلاً ادخل بريد آخر غير مستخدم");
         }
