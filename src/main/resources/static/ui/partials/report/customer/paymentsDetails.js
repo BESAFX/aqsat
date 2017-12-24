@@ -1,4 +1,4 @@
-app.controller('paymentsSummaryCtrl', ['CustomerService', '$scope', '$rootScope', '$timeout', '$uibModalInstance',
+app.controller('paymentsDetailsCtrl', ['CustomerService', '$scope', '$rootScope', '$timeout', '$uibModalInstance',
     function (CustomerService, $scope, $rootScope, $timeout, $uibModalInstance) {
 
         $scope.buffer = {};
@@ -11,7 +11,7 @@ app.controller('paymentsSummaryCtrl', ['CustomerService', '$scope', '$rootScope'
         }, 2000);
 
         $scope.submit = function () {
-            window.open('/report/customer/' + $scope.buffer.customer.id + '/PDF');
+            window.open('/report/customer/payments/' + $scope.buffer.customer.id + '/PDF');
         };
 
         $scope.cancel = function () {

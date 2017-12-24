@@ -81,6 +81,18 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
         });
     };
 
+    this.openCustomerPaymentsDetailsReportModel = function () {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: "/ui/partials/report/customer/paymentsDetails.html",
+            controller: "paymentsDetailsCtrl",
+            backdrop: 'static',
+            keyboard: false
+        });
+    };
+
     /**************************************************************
      *                                                            *
      * Supplier Model                                             *
@@ -163,6 +175,18 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
                     return 'Out';
                 }
             }
+        });
+    };
+
+    this.openSupplierBalanceSummaryReportModel = function () {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: "/ui/partials/report/supplier/balanceSummary.html",
+            controller: "balanceSummaryCtrl",
+            backdrop: 'static',
+            keyboard: false
         });
     };
 

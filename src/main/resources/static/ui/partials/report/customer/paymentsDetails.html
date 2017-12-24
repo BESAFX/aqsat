@@ -9,8 +9,8 @@
         <h3 ng-class="{'pull-right' : lang==='AR', 'pull-left' : lang==='EN'}" class="panel-title mdl-list__item">
             <span class="mdl-list__item-primary-content">
                 <i class="material-icons mdl-list__item-icon">print</i>
-                <strong ng-if="lang==='AR'">كشف حساب تاجر</strong>
-                <strong ng-if="lang==='EN'">Seller Balance Sheet</strong>
+                <strong ng-if="lang==='AR'">كشف حساب عميل مفصل</strong>
+                <strong ng-if="lang==='EN'">Customer Balance Sheet In Details</strong>
             </span>
         </h3>
     </div>
@@ -29,31 +29,31 @@
             <div class="form-group row">
 
                 <div class="form-group text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <label for="seller" class="control-label">
-                        <span ng-if="lang==='AR'">التاجر</span>
-                        <span ng-if="lang==='EN'">Seller</span>
+                    <label for="customer" class="control-label">
+                        <span ng-if="lang==='AR'">العميل</span>
+                        <span ng-if="lang==='EN'">Customer</span>
                     </label>
-                    <ui-select id="seller"
-                               ng-model="buffer.supplier"
+                    <ui-select id="customer"
+                               ng-model="buffer.customer"
                                required=""
                                disable-validation-message=""
                                theme="bootstrap">
-                        <ui-select-match placeholder="{{lang==='AR' ? 'اختر التاجر...' : 'Select Seller Man...'}}">
-                                <span ng-if="buffer.supplier.id">
+                        <ui-select-match placeholder="{{lang==='AR' ? 'اختر العميل...' : 'Select Customer...'}}">
+                                <span ng-if="buffer.customer.id">
                                     <span>[{{$select.selected.code}}] {{$select.selected.name}}</span>
                                 </span>
                         </ui-select-match>
                         <ui-select-choices
-                                repeat="supplier in suppliers | filter: $select.search | orderBy:'code' track by supplier.id">
-                            <div ng-if="lang==='AR'" ng-bind-html="supplier.name | highlight: $select.search"></div>
+                                repeat="customer in customers | filter: $select.search | orderBy:'code' track by customer.id">
+                            <div ng-if="lang==='AR'" ng-bind-html="customer.name | highlight: $select.search"></div>
                             <small>
                                 <span ng-if="lang==='AR'">رقم الجوال : </span>
                                 <span ng-if="lang==='EN'">Mobile: </span>
-                                <span ng-bind-html="''+supplier.mobile | highlight: $select.search"></span>
+                                <span ng-bind-html="''+customer.mobile | highlight: $select.search"></span>
                                 <br/>
                                 <span ng-if="lang==='AR'">رقم البطاقة : </span>
                                 <span ng-if="lang==='EN'">Identity Number: </span>
-                                <span ng-if="lang==='AR'" ng-bind-html="''+supplier.identityNumber | highlight: $select.search"></span>
+                                <span ng-if="lang==='AR'" ng-bind-html="''+customer.identityNumber | highlight: $select.search"></span>
                             </small>
                         </ui-select-choices>
                     </ui-select>

@@ -155,8 +155,9 @@ gulp.task('scripts', function () {
         './partials/employee/employeeCreateUpdate.js',
 
         './partials/report/report.js',
-        './partials/report/customer/paymentsSummery.js',
-        './partials/report/supplier/balanceSummery.js',
+        './partials/report/customer/paymentsSummary.js',
+        './partials/report/customer/paymentsDetails.js',
+        './partials/report/supplier/balanceSummary.js',
         './partials/report/person/personsIn.js',
 
         './partials/help/help.js',
