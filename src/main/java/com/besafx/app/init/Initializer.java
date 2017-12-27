@@ -83,7 +83,7 @@ public class Initializer implements CommandLineRunner {
         log.info("انشاء الشركة");
         Company company = new Company();
         company.setCode(1);
-        company.setName("مؤسسة النقزي");
+        company.setName("مكتب مال واستثمار للتقسيط");
         company.setPhone("0138099353");
         company.setFax("0138099352");
         company.setEmail("info@ararhni.com");

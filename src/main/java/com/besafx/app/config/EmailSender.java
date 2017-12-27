@@ -64,7 +64,7 @@ public class EmailSender {
             message = new MimeMessage(mailSession);
             message.setSubject(title, "UTF-8");
             message.setText(content, "UTF-8", "html");
-            message.setFrom(new InternetAddress("admin@ararhni.com", "مؤسسة النقزي", "UTF-8"));
+            message.setFrom(new InternetAddress("admin@ararhni.com", "مكتب مال واستثمار للتقسيط", "UTF-8"));
             toEmailList.stream().distinct().forEach(email -> {
                 try {
                     message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
@@ -93,7 +93,7 @@ public class EmailSender {
             log.info("Trying sending email to this destinations: " + toEmailList);
             transport = mailSession.getTransport();
             message = new MimeMessage(mailSession);
-            message.setFrom(new InternetAddress("admin@ararhni.com", "مؤسسة النقزي", "UTF-8"));
+            message.setFrom(new InternetAddress("admin@ararhni.com", "مكتب مال واستثمار للتقسيط", "UTF-8"));
             message.setSubject(title, "UTF-8");
             toEmailList.stream().distinct().forEach(email -> {
                 try {
@@ -139,7 +139,7 @@ public class EmailSender {
             message = new MimeMessage(mailSession);
             message.setSubject(title, "UTF-8");
             message.setText(content, "UTF-8", "html");
-            message.setFrom(new InternetAddress("admin@ararhni.com", "مؤسسة النقزي", "UTF-8"));
+            message.setFrom(new InternetAddress("admin@ararhni.com", "مكتب مال واستثمار للتقسيط", "UTF-8"));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             transport.connect(SMTP_HOST_NAME, SMTP_HOST_PORT, SMTP_AUTH_USER, SMTP_AUTH_PWD);
             transport.sendMessage(message, message.getRecipients(Message.RecipientType.TO));
@@ -161,7 +161,7 @@ public class EmailSender {
             log.info("Trying sending email to this destinations: " + email);
             transport = mailSession.getTransport();
             message = new MimeMessage(mailSession);
-            message.setFrom(new InternetAddress("admin@ararhni.com", "مؤسسة النقزي", "UTF-8"));
+            message.setFrom(new InternetAddress("admin@ararhni.com", "مكتب مال واستثمار للتقسيط", "UTF-8"));
             message.setSubject(title, "UTF-8");
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
             BodyPart messageBodyPart = new MimeBodyPart();

@@ -68,7 +68,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="PT Bold Heading" size="10" isBold="true"/>
 					</textElement>
-					<text><![CDATA[مؤسسة النقزي للاقساط]]></text>
+					<text><![CDATA[مكتب مال واستثمار للتقسيط للاقساط]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="0" y="70" width="200" height="20" uuid="9ad14ee5-e674-4a4d-b885-ac24f7add9af"/>
