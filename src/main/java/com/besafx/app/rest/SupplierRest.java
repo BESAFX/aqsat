@@ -3,8 +3,7 @@ package com.besafx.app.rest;
 import com.besafx.app.config.CustomException;
 import com.besafx.app.entity.Person;
 import com.besafx.app.entity.Supplier;
-import com.besafx.app.service.PersonService;
-import com.besafx.app.service.SupplierService;
+import com.besafx.app.service.*;
 import com.besafx.app.util.JSONConverter;
 import com.besafx.app.util.Options;
 import com.besafx.app.ws.Notification;
@@ -25,6 +24,7 @@ import java.security.Principal;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/supplier/")
@@ -37,6 +37,24 @@ public class SupplierRest {
 
     @Autowired
     private SupplierService supplierService;
+
+    @Autowired
+    private SupplierReceiptService supplierReceiptService;
+
+    @Autowired
+    private ContractReceiptService contractReceiptService;
+
+    @Autowired
+    private ContractAttachService contractAttachService;
+
+    @Autowired
+    private AttachService attachService;
+
+    @Autowired
+    private ContractService contractService;
+
+    @Autowired
+    private ReceiptService receiptService;
 
     @Autowired
     private PersonService personService;
@@ -115,13 +133,62 @@ public class SupplierRest {
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_SUPPLIER_DELETE')")
-    public void delete(@PathVariable Long id, Principal principal) {
+    public void delete(@PathVariable Long id, Principal principal) throws InterruptedException {
         Supplier supplier = supplierService.findOne(id);
         if (supplier != null) {
+
+            log.info("Delete All SupplierReceipts");
+            supplierReceiptService.delete(supplier.getSupplierReceipts());
+
+            Thread.sleep(500);
+
+            log.info("Delete All Receipts");
+            receiptService.delete(supplier.getSupplierReceipts().stream()
+                    .map(supplierReceipt -> supplierReceipt.getReceipt())
+                    .collect(Collectors.toList()));
+
+            Thread.sleep(500);
+
+            log.info("Delete All ContractReceipts");
+            contractReceiptService.delete(supplier.getContracts().stream()
+                    .flatMap(contract -> contract.getContractReceipts().stream())
+                    .collect(Collectors.toList())
+            );
+
+            Thread.sleep(500);
+
+            log.info("Delete All Receipts");
+            receiptService.delete(supplier.getContracts().stream()
+                    .flatMap(contract -> contract.getContractReceipts().stream())
+                    .map(contractReceipt -> contractReceipt.getReceipt())
+                    .collect(Collectors.toList())
+            );
+
+            Thread.sleep(500);
+
+            log.info("Delete All ContractAttach");
+            contractAttachService.delete(supplier.getContracts().stream()
+                    .flatMap(contract -> contract.getContractAttaches().stream())
+                    .collect(Collectors.toList())
+            );
+
+            log.info("Delete All Attach");
+            attachService.delete(supplier.getContracts().stream()
+                            .flatMap(contract -> contract.getContractAttaches().stream())
+                            .map(contractAttach -> contractAttach.getAttach())
+                            .collect(Collectors.toList()));
+
+            Thread.sleep(500);
+
+            log.info("Delete All Contracts");
+            contractService.delete(supplier.getContracts());
+
+            log.info("Delete Supplier");
             supplierService.delete(id);
+
             Person caller = personService.findByEmail(principal.getName());
             String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
-            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم حذف حساب التاجر وكل ما يتعلق به من حسابات بنجاح" : "Delete Supplier Account With All Related Successfully").type("error").icon("fa-trash").build(), principal.getName());
+            notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم حذف حساب التاجر وكل ما يتعلق به من حسابات وعقود بنجاح" : "Delete Supplier Account With All Related Successfully").type("error").icon("fa-trash").build(), principal.getName());
         }
     }
 

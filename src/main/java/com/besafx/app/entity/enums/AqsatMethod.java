@@ -2,6 +2,7 @@ package com.besafx.app.entity.enums;
 
 public enum AqsatMethod {
     Monthly("شهري"),
+    Half("نصف سنوي"),
     Annual("سنوي");
     private String name;
 
