@@ -64,6 +64,10 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
             window.open('/report/supplier/' + supplier.id + '/PDF');
         };
 
+        vm.printCustomers = function (supplier) {
+            window.open('/report/supplier/' + supplier.id + '/customers/' +  '/PDF');
+        };
+
         vm.rowMenuSupplier = [
             {
                 html: '<div class="drop-menu">انشاء تاجر جديد<span class="fa fa-pencil fa-lg"></span></div>',
@@ -99,6 +103,15 @@ app.controller("supplierCtrl", ['SupplierService', 'SupplierReceiptService', 'Mo
                 },
                 click: function ($itemScope, $event, value) {
                     vm.print($itemScope.supplier);
+                }
+            },
+            {
+                html: '<div class="drop-menu">كشف العملاء<span class="fa fa-print fa-lg"></span></div>',
+                enabled: function () {
+                    return true;
+                },
+                click: function ($itemScope, $event, value) {
+                    vm.printCustomers($itemScope.supplier);
                 }
             }
         ];

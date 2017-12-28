@@ -12,6 +12,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -61,6 +62,14 @@ public class Supplier implements Serializable {
         ObjectMapper mapper = new ObjectMapper();
         Supplier supplier = mapper.readValue(jsonString, Supplier.class);
         return supplier;
+    }
+
+    public List<Customer> findCustomers(){
+        try{
+            return this.contracts.stream().map(Contract::getCustomer).collect(Collectors.toList());
+        }catch (Exception ex){
+            return new ArrayList<>();
+        }
     }
 
     public Double getContractsPaidSum() {

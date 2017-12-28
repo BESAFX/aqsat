@@ -4,8 +4,7 @@ import com.besafx.app.config.CustomException;
 import com.besafx.app.entity.Customer;
 import com.besafx.app.entity.Person;
 import com.besafx.app.search.CustomerSearch;
-import com.besafx.app.service.CustomerService;
-import com.besafx.app.service.PersonService;
+import com.besafx.app.service.*;
 import com.besafx.app.util.JSONConverter;
 import com.besafx.app.util.Options;
 import com.besafx.app.ws.Notification;
@@ -26,6 +25,7 @@ import java.security.Principal;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api/customer/")
@@ -39,6 +39,21 @@ public class CustomerRest {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private ContractReceiptService contractReceiptService;
+
+    @Autowired
+    private ContractAttachService contractAttachService;
+
+    @Autowired
+    private AttachService attachService;
+
+    @Autowired
+    private ContractService contractService;
+
+    @Autowired
+    private ReceiptService receiptService;
 
     @Autowired
     private CustomerSearch customerSearch;
@@ -120,10 +135,46 @@ public class CustomerRest {
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_CUSTOMER_DELETE')")
-    public void delete(@PathVariable Long id, Principal principal) {
+    public void delete(@PathVariable Long id, Principal principal) throws Exception{
         Customer customer = customerService.findOne(id);
         if (customer != null) {
+            log.info("Delete All ContractReceipts");
+            contractReceiptService.delete(customer.getContracts().stream()
+                    .flatMap(contract -> contract.getContractReceipts().stream())
+                    .collect(Collectors.toList())
+            );
+
+            Thread.sleep(500);
+
+            log.info("Delete All Receipts");
+            receiptService.delete(customer.getContracts().stream()
+                    .flatMap(contract -> contract.getContractReceipts().stream())
+                    .map(contractReceipt -> contractReceipt.getReceipt())
+                    .collect(Collectors.toList())
+            );
+
+            Thread.sleep(500);
+
+            log.info("Delete All ContractAttach");
+            contractAttachService.delete(customer.getContracts().stream()
+                    .flatMap(contract -> contract.getContractAttaches().stream())
+                    .collect(Collectors.toList())
+            );
+
+            log.info("Delete All Attach");
+            attachService.delete(customer.getContracts().stream()
+                    .flatMap(contract -> contract.getContractAttaches().stream())
+                    .map(contractAttach -> contractAttach.getAttach())
+                    .collect(Collectors.toList()));
+
+            Thread.sleep(500);
+
+            log.info("Delete All Contracts");
+            contractService.delete(customer.getContracts());
+
+            log.info("Delete Customer Finally");
             customerService.delete(id);
+
             Person caller = personService.findByEmail(principal.getName());
             String lang = JSONConverter.toObject(caller.getOptions(), Options.class).getLang();
             notificationService.notifyOne(Notification.builder().message(lang.equals("AR") ? "تم حذف حساب العميل وكل ما يتعلق به من حسابات بنجاح" : "Delete Customer Account With All Related Successfully").type("error").build(), principal.getName());

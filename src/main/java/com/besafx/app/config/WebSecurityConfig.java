@@ -86,6 +86,7 @@ WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.sessionManagement()
                 .maximumSessions(1)
+                .expiredUrl("/logout")
                 .sessionRegistry(sessionRegistry());
     }
 

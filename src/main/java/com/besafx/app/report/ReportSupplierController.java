@@ -35,9 +35,23 @@ public class ReportSupplierController {
             HttpServletResponse response) throws Exception {
         Map<String, Object> map = new HashMap<>();
         map.put("supplier", supplierService.findOne(id));
-
         map.put("logo", new ClassPathResource("/report/img/logo.png").getInputStream());
         ClassPathResource jrxmlFile = new ClassPathResource("/report/supplier/Report.jrxml");
+        JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map);
+        reportExporter.export(exportType, response, jasperPrint);
+    }
+
+    @RequestMapping(value = "/report/supplier/{id}/customers/{exportType}", method = RequestMethod.GET, produces = MediaType.ALL_VALUE)
+    @ResponseBody
+    public void ReportSupplierCustomers(
+            @PathVariable("id") Long id,
+            @PathVariable(value = "exportType") ExportType exportType,
+            HttpServletResponse response) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("supplier", supplierService.findOne(id));
+        map.put("logo", new ClassPathResource("/report/img/logo.png").getInputStream());
+        ClassPathResource jrxmlFile = new ClassPathResource("/report/supplier/Customers.jrxml");
         JasperReport jasperReport = JasperCompileManager.compileReport(jrxmlFile.getInputStream());
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, map);
         reportExporter.export(exportType, response, jasperPrint);
