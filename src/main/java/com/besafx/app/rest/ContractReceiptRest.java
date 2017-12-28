@@ -65,7 +65,6 @@ public class ContractReceiptRest {
         }
         contractReceipt.getReceipt().setAmountString(ArabicLiteralNumberParser.literalValueOf(contractReceipt.getReceipt().getAmountNumber()));
         contractReceipt.getReceipt().setReceiptType(receiptType);
-        contractReceipt.getReceipt().setDate(new DateTime().toDate());
         contractReceipt.getReceipt().setLastUpdate(new DateTime().toDate());
         contractReceipt.getReceipt().setLastPerson(caller);
         contractReceipt.setReceipt(receiptService.save(contractReceipt.getReceipt()));
