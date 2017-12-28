@@ -83,7 +83,7 @@
 					</textElement>
 					<text><![CDATA[عملاء التجار]]></text>
 				</staticText>
-				<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle" isUsingCache="false" isLazy="true" onErrorType="Icon">
+				<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle" isUsingCache="true" isLazy="true" onErrorType="Icon">
 					<reportElement x="72" y="0" width="50" height="50" uuid="3365758c-fd5a-49f8-a2be-4217ce7693e1"/>
 					<imageExpression><![CDATA[$P{logo}]]></imageExpression>
 				</image>

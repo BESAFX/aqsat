@@ -190,6 +190,18 @@ app.service('ModalProvider', ['$uibModal', '$log', '$rootScope', function ($uibM
         });
     };
 
+    this.openSupplierCustomersListReportModel = function () {
+        return $uibModal.open({
+            animation: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            templateUrl: "/ui/partials/report/supplier/customersList.html",
+            controller: "customersListCtrl",
+            backdrop: 'static',
+            keyboard: false
+        });
+    };
+
     /**************************************************************
      *                                                            *
      * Contract Model                                             *
