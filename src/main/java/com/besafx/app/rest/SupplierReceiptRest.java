@@ -76,7 +76,6 @@ public class SupplierReceiptRest {
         return supplierReceipt;
     }
 
-
     @RequestMapping(value = "createIn", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @PreAuthorize("hasRole('ROLE_SUPPLIER_RECEIPT_IN_CREATE')")
