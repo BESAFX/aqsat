@@ -2,6 +2,7 @@ package com.besafx.app.entity.enums;
 
 public enum GoodsType {
     Shares("أسهم"),
+    Half_Shares("نصف سهم"),
     Cars("سيارات");
     private String name;
 
