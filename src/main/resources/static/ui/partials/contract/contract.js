@@ -8,6 +8,7 @@ app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'Con
          *************************************************************/
         $scope.selected = {};
         $scope.contracts = [];
+        $scope.param = {};
         
         $scope.items = [];
         $scope.items.push(
@@ -90,6 +91,39 @@ app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'Con
                     $scope.totalPayments+=contract.paid;
                     $scope.totalRemain+=contract.remain;
                 });
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
+            });
+        };
+
+        $scope.findAllContracts = function () {
+            ContractService.findAll().then(function (data) {
+                $scope.contracts = data;
+                $scope.setSelected(data[0]);
+                $scope.totalAmount = 0;
+                $scope.totalPayments = 0;
+                $scope.totalRemain = 0;
+                angular.forEach(data, function (contract) {
+                    $scope.totalAmount+=contract.amount;
+                    $scope.totalPayments+=contract.paid;
+                    $scope.totalRemain+=contract.remain;
+                });
+                $scope.items = [];
+                $scope.items.push(
+                    {
+                        'id': 1,
+                        'type': 'link',
+                        'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application',
+                        'link': 'menu'
+                    },
+                    {
+                        'id': 2,
+                        'type': 'title',
+                        'name': $rootScope.lang === 'AR' ? 'العقود' : 'Contracts'
+                    },
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'كل العقود' : 'All Contracts'}
+                );
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();
                 }, 500);
@@ -454,6 +488,7 @@ app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'Con
             {'id': 1, 'type': 'link', 'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application', 'link': 'menu'},
             {'id': 2, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'}
         );
+        $scope.paramIn = {};
 
         $scope.setSelectedIn = function (object) {
             if (object) {
@@ -586,6 +621,35 @@ app.controller("contractCtrl", ['ContractService', 'ContractAttachService', 'Con
                         'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
                     },
                     {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'بحث مخصص' : 'Custom Filters'}
+                );
+                $timeout(function () {
+                    window.componentHandler.upgradeAllRegistered();
+                }, 500);
+            });
+        };
+
+        $scope.findAllContractsReceiptsIn = function () {
+            ContractReceiptService.findAllIn().then(function (data) {
+                $scope.contractReceiptsIn = data;
+                $scope.setSelectedIn(data[0]);
+                $scope.totalAmount = 0;
+                angular.forEach(data, function (contractReceipt) {
+                    $scope.totalAmount+=contractReceipt.receipt.amountNumber;
+                });
+                $scope.itemsIn = [];
+                $scope.itemsIn.push(
+                    {
+                        'id': 1,
+                        'type': 'link',
+                        'name': $rootScope.lang === 'AR' ? 'البرامج' : 'Application',
+                        'link': 'menu'
+                    },
+                    {
+                        'id': 2,
+                        'type': 'title',
+                        'name': $rootScope.lang === 'AR' ? 'ايرادات العقود' : 'Contract Receipts'
+                    },
+                    {'id': 3, 'type': 'title', 'name': $rootScope.lang === 'AR' ? 'كل الايرادات' : 'All Contract Incomes'}
                 );
                 $timeout(function () {
                     window.componentHandler.upgradeAllRegistered();

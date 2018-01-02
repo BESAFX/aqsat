@@ -23,6 +23,14 @@
                     class="mdl-menu mdl-js-menu mdl-js-ripple-effect"
                     for="contract-view-menu-lower-right">
                     <li class="mdl-menu__item mdl-list__item"
+                        ng-click="findAllContracts()">
+                        <span class="mdl-list__item-primary-content">
+                            <i class="material-icons mdl-list__item-icon">filter_list</i>
+                            <span ng-if="lang==='AR'">كل العقود</span>
+                            <span ng-if="lang==='EN'">View All Contracts</span>
+                        </span>
+                    </li>
+                    <li class="mdl-menu__item mdl-list__item"
                         ng-click="findContractsByToday()">
                         <span class="mdl-list__item-primary-content">
                             <i class="material-icons mdl-list__item-icon">filter_list</i>
@@ -123,7 +131,13 @@
 
                             <div class="form-group row">
 
-                                <form name="form" ng-submit="filter()" novalidate="novalidate" focus-group="" focus-stack="" focus-group-head="loop" focus-group-tail="loop">
+                                <form name="form"
+                                      ng-submit="filter()"
+                                      novalidate="novalidate"
+                                      focus-group=""
+                                      focus-stack=""
+                                      focus-group-head="loop"
+                                      focus-group-tail="loop">
 
                                     <div class="row">
 
@@ -245,6 +259,43 @@
                                                        type="text"
                                                        class="form-control"
                                                        ng-model="param.customerIdentityNumber">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group row">
+
+                                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                <label for="supplierName" class="control-label">
+                                                    <span ng-if="lang==='AR'">اسم التاجر</span>
+                                                    <span ng-if="lang==='EN'">Seller Name</span>
+                                                </label>
+                                                <input id="supplierName"
+                                                       type="text"
+                                                       class="form-control"
+                                                       ng-model="param.supplierName">
+                                            </div>
+
+                                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                <label for="supplierMobile" class="control-label">
+                                                    <span ng-if="lang==='AR'">رقم جوال التاجر</span>
+                                                    <span ng-if="lang==='EN'">Seller Mobile</span>
+                                                </label>
+                                                <input id="supplierMobile"
+                                                       type="text"
+                                                       class="form-control"
+                                                       ng-model="param.supplierMobile">
+                                            </div>
+
+                                            <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                                <label for="supplierIdentityNumber" class="control-label">
+                                                    <span ng-if="lang==='AR'">رقم بطاقة التاجر</span>
+                                                    <span ng-if="lang==='EN'">Seller Identity Number</span>
+                                                </label>
+                                                <input id="supplierIdentityNumber"
+                                                       type="text"
+                                                       class="form-control"
+                                                       ng-model="param.supplierIdentityNumber">
                                             </div>
 
                                         </div>

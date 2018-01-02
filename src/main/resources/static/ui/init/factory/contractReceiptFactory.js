@@ -1,6 +1,11 @@
 app.factory("ContractReceiptService",
     ['$http', '$log', function ($http, $log) {
         return {
+            findAllIn: function () {
+                return $http.get("/api/contractReceipt/findAllIn").then(function (response) {
+                    return response.data;
+                });
+            },
             findOne: function (id) {
                 return $http.get("/api/contractReceipt/findOne/" + id).then(function (response) {
                     return response.data;

@@ -138,6 +138,30 @@ public class ContractReceiptSearch {
         }
     }
 
+    public List<ContractReceipt> findAllIn() {
+        List<Specification> predicates = new ArrayList<>();
+        predicates.add((root, cq, cb) -> cb.equal(root.get("receipt").get("receiptType"), ReceiptType.In));
+        Specification result = predicates.get(0);
+        for (int i = 1; i < predicates.size(); i++) {
+            result = Specifications.where(result).and(predicates.get(i));
+        }
+        List<ContractReceipt> list = contractReceiptService.findAll(result);
+        list.sort(Comparator.comparing(contractReceipt -> contractReceipt.getReceipt().getCode()));
+        return list;
+    }
+
+    public List<ContractReceipt> findAllOut() {
+        List<Specification> predicates = new ArrayList<>();
+        predicates.add((root, cq, cb) -> cb.equal(root.get("receipt").get("receiptType"), ReceiptType.Out));
+        Specification result = predicates.get(0);
+        for (int i = 1; i < predicates.size(); i++) {
+            result = Specifications.where(result).and(predicates.get(i));
+        }
+        List<ContractReceipt> list = contractReceiptService.findAll(result);
+        list.sort(Comparator.comparing(contractReceipt -> contractReceipt.getReceipt().getCode()));
+        return list;
+    }
+
     public List<ContractReceipt> findByToday(final ReceiptType receiptType) {
         List<Specification> predicates = new ArrayList<>();
         DateTime today = new DateTime().withTimeAtStartOfDay();
