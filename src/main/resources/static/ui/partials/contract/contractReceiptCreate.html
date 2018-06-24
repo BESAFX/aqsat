@@ -90,6 +90,8 @@
                                                    type="text"
                                                    class="form-control is-calendarPicker"
                                                    ng-model="contractReceipt.receipt.date"
+                                                   required="required"
+                                                   disable-validation-message=""
                                                    calendarType="ummalqura"
                                                    language="en"
                                                    dateFormat="yyyy/mm/dd"
@@ -109,6 +111,8 @@
                                                type="date"
                                                name="input"
                                                ng-model="contractReceipt.receipt.data"
+                                               required="required"
+                                               disable-validation-message=""
                                                placeholder="yyyy-MM-dd"
                                                min="2017-01-01"
                                                max="2030-12-31"/>
